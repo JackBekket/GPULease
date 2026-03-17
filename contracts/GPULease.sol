@@ -12,10 +12,14 @@ contract GPULease is AccessControl, ReentrancyGuard {
         address provider;
         uint startTime;
         uint duration;
-        uint pricePerSecond;
-        uint totalAmount;
+        uint storagePricePerSecond; // Price per second for storage
+        uint computePricePerSecond; // Price per second for computation
+        uint totalAmount; // Total amount to be paid (both storage and compute)
         bool active;
         bool completed;
+        bool paused; // Lease can be paused during execution
+        uint lastPausedTime; // Time when lease was last paused
+        uint pausedDuration; // Cumulative duration of pauses in seconds
     }
 
     // User balances mapping
@@ -38,6 +42,8 @@ contract GPULease is AccessControl, ReentrancyGuard {
     event PlatformFeeCollected(uint leaseId, uint feeAmount);
     event UserDeposited(address user, uint amount);
     event UserWithdrawn(address user, uint amount);
+    event LeasePaused(uint leaseId);
+    event LeaseResumed(uint leaseId);
     
     address public deployer;
 
@@ -86,14 +92,19 @@ contract GPULease is AccessControl, ReentrancyGuard {
     
     function startLeaseWithUser(
         uint _duration,
-        uint _pricePerSecond,
+        uint _storagePricePerSecond,
+        uint _computePricePerSecond,
         address _provider,
         address _user
     ) public onlyAdminOrContract nonReentrant returns (uint leaseId) {
         require(_duration > 0, "Duration must be > 0");
-        require(_pricePerSecond > 0, "Price per second must be > 0");
+        require(_storagePricePerSecond > 0 || _computePricePerSecond > 0, "At least one price must be > 0");
         
-        uint totalAmount = _duration * _pricePerSecond;
+        // Calculate total amounts for both storage and compute
+        uint totalStorageAmount = _duration * _storagePricePerSecond;
+        uint totalComputeAmount = _duration * _computePricePerSecond;
+        uint totalAmount = totalStorageAmount + totalComputeAmount;
+        
         require(userBalances[_user] >= totalAmount, "Insufficient token balance");
         
         // Calculate platform fee
@@ -111,10 +122,14 @@ contract GPULease is AccessControl, ReentrancyGuard {
             provider: _provider,
             startTime: block.timestamp,
             duration: _duration,
-            pricePerSecond: _pricePerSecond,
+            storagePricePerSecond: _storagePricePerSecond,
+            computePricePerSecond: _computePricePerSecond,
             totalAmount: totalAmount,
             active: true,
-            completed: false
+            completed: false,
+            paused: false,
+            lastPausedTime: 0,
+            pausedDuration: 0
         });
         
         emit LeaseStarted(leaseId, _user, _provider, _duration, totalAmount);
@@ -126,12 +141,63 @@ contract GPULease is AccessControl, ReentrancyGuard {
     
     function startLease(
         uint _duration,
-        uint _pricePerSecond,
+        uint _storagePricePerSecond,
+        uint _computePricePerSecond,
         address _provider
     ) external nonReentrant returns (uint leaseId) {
         // Anyone can call this - they start a lease for themselves
-        uint lid = this.startLeaseWithUser(_duration, _pricePerSecond, _provider, msg.sender);
+        uint lid = this.startLeaseWithUser(_duration, _storagePricePerSecond, _computePricePerSecond, _provider, msg.sender);
         return lid;
+    }
+    
+    function pauseLease(uint _leaseId) external onlyLeaseOwner(_leaseId) nonReentrant {
+        Lease storage lease = leases[_leaseId];
+        require(lease.active, "Lease is not active");
+        require(!lease.completed, "Lease already completed");
+        require(!lease.paused, "Lease is already paused");
+        
+        // Set the pause time
+        lease.lastPausedTime = block.timestamp;
+        lease.paused = true;
+        
+        emit LeasePaused(_leaseId);
+    }
+    
+    function resumeLease(uint _leaseId) external onlyLeaseOwner(_leaseId) nonReentrant {
+        Lease storage lease = leases[_leaseId];
+        require(lease.active, "Lease is not active");
+        require(!lease.completed, "Lease already completed");
+        require(lease.paused, "Lease is not paused");
+        
+        // Calculate the duration of this pause
+        uint pauseDuration = block.timestamp - lease.lastPausedTime;
+        lease.pausedDuration += pauseDuration;
+        lease.lastPausedTime = 0; // Reset last paused time
+        lease.paused = false;
+        
+        emit LeaseResumed(_leaseId);
+    }
+    
+    function calculateActualCost(uint _leaseId) internal view returns (uint actualStorageCost, uint actualComputeCost) {
+        Lease storage lease = leases[_leaseId];
+        
+        // Calculate the effective duration by excluding paused time
+        uint effectiveDuration;
+        if (lease.paused) {
+            // If currently paused, don't count the current pause period in the effective duration 
+            effectiveDuration = block.timestamp - lease.startTime - lease.pausedDuration;
+        } else {
+            // If not paused, use full duration minus pauses
+            effectiveDuration = block.timestamp - lease.startTime - lease.pausedDuration;
+        }
+        
+        // Ensure we have a valid duration (cannot be negative)
+        if (effectiveDuration > lease.duration) {
+            effectiveDuration = lease.duration;
+        }
+        
+        actualStorageCost = effectiveDuration * lease.storagePricePerSecond;
+        actualComputeCost = effectiveDuration * lease.computePricePerSecond;
     }
     
     function completeLease(uint _leaseId) external onlyLeaseOwner(_leaseId) nonReentrant {
@@ -139,13 +205,17 @@ contract GPULease is AccessControl, ReentrancyGuard {
         require(lease.active, "Lease is not active");
         require(!lease.completed, "Lease already completed");
         
-        uint actualDuration = block.timestamp - lease.startTime;
-        uint actualCost = actualDuration * lease.pricePerSecond;
-        uint refund = lease.totalAmount - actualCost;
+        uint actualStorageCost;
+        uint actualComputeCost;
+        (actualStorageCost, actualComputeCost) = calculateActualCost(_leaseId);
         
-        // Calculate platform fee from the actual cost
-        uint platformFee = (actualCost * platformFeePercentage) / 100;
-        uint providerAmount = actualCost - platformFee;
+        // Total cost based on the effective duration
+        uint actualTotalCost = actualStorageCost + actualComputeCost; 
+        uint refund = lease.totalAmount - actualTotalCost;
+        
+        // Calculate platform fee from the total actual cost
+        uint platformFee = (actualTotalCost * platformFeePercentage) / 100;
+        uint providerAmount = actualTotalCost - platformFee;
         
         // Refund unused amount back to user's balance
         if (refund > 0) {
@@ -191,9 +261,9 @@ contract GPULease is AccessControl, ReentrancyGuard {
         emit LeaseCancelled(_leaseId, refund);
     }
     
-    function getLeaseStatus(uint _leaseId) external view returns (bool active, bool completed, uint startTime, uint duration) {
+    function getLeaseStatus(uint _leaseId) external view returns (bool active, bool completed, bool paused, uint startTime, uint duration, uint pausedDuration) {
         Lease storage lease = leases[_leaseId];
-        return (lease.active, lease.completed, lease.startTime, lease.duration);
+        return (lease.active, lease.completed, lease.paused, lease.startTime, lease.duration, lease.pausedDuration);
     }
     
     function getContractBalance() external view returns (uint) {
