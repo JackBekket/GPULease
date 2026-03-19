@@ -23,7 +23,12 @@ contract GPULease is Ownable {
         uint pausedDuration; // Cumulative duration of pauses in seconds
     }
 
+    struct FrozenFundsInfo {
+        uint leaseId;
+        uint256 amount;
+    }
 
+    mapping(address => uint[]) public userActiveLeases;
     mapping(address => uint256) public balances;
     mapping(uint => uint256) public frozenFunds;
     mapping(uint => Lease) public leases;
@@ -121,9 +126,8 @@ contract GPULease is Ownable {
             pausedAt: 0,
             pausedDuration: 0
         });
-        
+        userActiveLeases[_user].push(leaseId);
         emit LeaseStarted(leaseId, _user, _provider, _duration, totalAmount);
-        
         return leaseId;
     }
 
@@ -182,12 +186,21 @@ contract GPULease is Ownable {
         
         lease.completed = true;
         lease.active = false;
-        
+
+            address user = leases[_leaseId].user;
+    uint[] storage leasesList = userActiveLeases[user];
+    for (uint i = 0; i < leasesList.length; i++) {
+        if (leasesList[i] == _leaseId) {
+            leasesList[i] = leasesList[leasesList.length - 1];
+            leasesList.pop();
+            break;
+        }
+    }
         emit LeaseCompleted(_leaseId);
     }
 
 
-   function calculateActualCost(uint _leaseId) 
+    function calculateActualCost(uint _leaseId) 
     internal 
     view 
     returns (uint actualStorageCost, uint actualComputeCost) 
@@ -211,5 +224,24 @@ contract GPULease is Ownable {
     return (actualStorageCost, actualComputeCost);
 }
     
+   function getUserFrozenFunds(address user) 
+    external
+    view
+    returns (FrozenFundsInfo[] memory result) 
+{
+    uint[] storage leasesList = userActiveLeases[user];
+    result = new FrozenFundsInfo[](leasesList.length);
+
+    for (uint i = 0; i < leasesList.length; i++) {
+        uint leaseId = leasesList[i];
+
+        result[i] = FrozenFundsInfo({
+            leaseId: leaseId,
+            amount: frozenFunds[leaseId]
+        });
+    }
+
+    return result;
+}
 
 }
