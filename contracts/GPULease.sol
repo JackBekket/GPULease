@@ -14,6 +14,7 @@ contract GPULease is Ownable {
         address user;
         address provider;
         uint startTime;
+        uint duration;
         uint storagePricePerSecond; // Price per second for storage
         uint computePricePerSecond; // Price per second for computation
         bool active;
@@ -118,6 +119,7 @@ contract GPULease is Ownable {
             user: _user,
             provider: _provider,
             startTime: block.timestamp - 5 minutes, //so we won't need any cancel function
+            duration: _duration,
             storagePricePerSecond: _storagePricePerSecond,
             computePricePerSecond: _computePricePerSecond,
             active: true,
@@ -200,25 +202,35 @@ contract GPULease is Ownable {
     }
 
 
-    function calculateActualCost(uint _leaseId) 
-    internal 
-    view 
-    returns (uint actualStorageCost, uint actualComputeCost) 
+    function calculateActualCost(uint _leaseId)
+    internal
+    view
+    returns (uint actualStorageCost, uint actualComputeCost)
 {
     Lease storage lease = leases[_leaseId];
 
     require(lease.startTime > 0, "Lease not started");
 
-    uint duration = block.timestamp - lease.startTime;
+    uint elapsed = block.timestamp - lease.startTime;
 
-    uint totalPaused = lease.pausedDuration;
-    if (lease.paused) {
-        totalPaused += (block.timestamp - lease.pausedAt);
+    if (elapsed > lease.duration) {
+        elapsed = lease.duration;
     }
 
-    actualStorageCost = duration * lease.storagePricePerSecond;
+    uint totalPaused = lease.pausedDuration;
 
-    uint activeDuration = duration > totalPaused ? duration - totalPaused : 0;
+    if (lease.paused) {
+        uint currentPause = block.timestamp - lease.pausedAt;
+        totalPaused += currentPause;
+    }
+
+    if (totalPaused > elapsed) {
+        totalPaused = elapsed;
+    }
+
+    uint activeDuration = elapsed - totalPaused;
+
+    actualStorageCost = elapsed * lease.storagePricePerSecond;
     actualComputeCost = activeDuration * lease.computePricePerSecond;
 
     return (actualStorageCost, actualComputeCost);

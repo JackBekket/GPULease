@@ -151,4 +151,6 @@ describe("GPULease", function () {
     const newTreasury = await lease.treasury();
     expect(newTreasury).to.equal(provider.address);
   });
+
+  
 });
