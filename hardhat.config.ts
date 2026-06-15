@@ -12,20 +12,18 @@ export default defineConfig({
   solidity: {
     profiles: {
       default: {
-        version: "0.8.28",
+        version: "0.8.31",
         settings: {
           optimizer: {
-            enabled: true,
-            runs: 1,
+            enabled: false,
           },
         },
       },
       production: {
-        version: "0.8.28",
+        version: "0.8.31",
         settings: {
           optimizer: {
-            enabled: true,
-            runs: 1,
+            enabled: false,
           },
         },
       },
@@ -51,6 +49,11 @@ export default defineConfig({
       chainType: "op",
       url: "https://mainnet.base.org",
       accounts: [configVariable("BASE_PRIVATE_KEY")],
+    },
+  },
+  verify: {
+    etherscan: {
+      apiKey: configVariable("BASESCAN_API_KEY"),
     },
   },
 });
