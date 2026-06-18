@@ -1,0 +1,38 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_31-f0c64f36e5dc52c0b4f2faf93fa8c64a3ce67e33",
+  "solcVersion": "0.8.31",
+  "solcLongVersion": "0.8.31+commit.fd3a2265",
+  "userSourceNameMap": {
+    "contracts/Verifier.sol": "project/contracts/Verifier.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": false
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "evm.methodIdentifiers",
+            "metadata"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Verifier.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.31;\n\ncontract Verifier {\n    event WalletVerified(address indexed wallet, string userId);\n\n    function verify(string calldata userId) external {\n        emit WalletVerified(msg.sender, userId);\n    }\n}\n"
+      }
+    }
+  }
+}

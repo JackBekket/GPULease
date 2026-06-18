@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "hardhat build",
+    "deploy:base:verifier": "hardhat run scripts/deploy-verifier.ts --network base",
     "deploy:base:factory": "hardhat run scripts/deploy-campaign-factory.ts --network base",
     "verify:base": "npm run verify:base:gpulease && npm run verify:base:factory",
     "verify:base:factory": "hardhat verify etherscan --network base --contract contracts/CampaignFactory.sol:LLMFundraisingFactory 0x189e6b446A1DB5E0f38d52D00434f4B285B4dE11 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 0x222e1a492Ddd4B48b23Dab8005Ddadf67302D6f5",
