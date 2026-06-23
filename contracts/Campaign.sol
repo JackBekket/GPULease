@@ -49,21 +49,22 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         LEAD_BACKER
     }
 
-    uint256 public immutable campaignId;
-    uint256 public immutable targetAmount;
-    uint256 public immutable startTimestamp;
-    uint256 public immutable duration;
-    uint256 public immutable templateId;
+    uint256 public campaignId;
+    uint256 public targetAmount;
+    uint256 public startTimestamp;
+    uint256 public duration;
+    uint256 public templateId;
     string public campaignName;
 
-    IERC20 public immutable usdc;
-    IGPULeaseWallet public immutable gpuLeaseWallet;
-    ICampaignParticipantRegistry public immutable participantRegistry;
-    ICampaignMetadataRenderer public immutable metadataRenderer;
+    IERC20 public usdc;
+    IGPULeaseWallet public gpuLeaseWallet;
+    ICampaignParticipantRegistry public participantRegistry;
+    ICampaignMetadataRenderer public metadataRenderer;
 
     CampaignState public state;
     uint256 public totalRaised;
-    uint256 public nextRewardTokenId = 1;
+    uint256 public nextRewardTokenId;
+    bool public initialized;
 
     address[] private _donors;
     mapping(address => uint256) public donations;
@@ -97,7 +98,19 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         BackerGrade grade
     );
 
-    constructor(
+    constructor() Ownable(msg.sender) ERC721("LLM Fundraising Backer", "LLMBACKER") {
+        initialized = true;
+    }
+
+    function name() public pure override returns (string memory) {
+        return "LLM Fundraising Backer";
+    }
+
+    function symbol() public pure override returns (string memory) {
+        return "LLMBACKER";
+    }
+
+    function initialize(
         uint256 _campaignId,
         uint256 _targetAmount,
         uint256 _duration,
@@ -109,7 +122,10 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         address _participantRegistry,
         address _metadataRenderer,
         address _campaignOwner
-    ) Ownable(_campaignOwner) ERC721("LLM Fundraising Backer", "LLMBACKER") {
+    ) external {
+        require(!initialized, "already initialized");
+        initialized = true;
+
         require(_usdc != address(0), "zero usdc");
         require(_gpuLeaseWallet != address(0), "zero wallet");
         require(_participantRegistry != address(0), "zero registry");
@@ -133,6 +149,8 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         metadataRenderer = ICampaignMetadataRenderer(_metadataRenderer);
 
         state = CampaignState.ACTIVE;
+        nextRewardTokenId = 1;
+        _transferOwnership(_campaignOwner);
     }
 
     function deadline() public view returns (uint256) {

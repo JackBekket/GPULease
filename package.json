@@ -7,8 +7,8 @@
     "deploy:base:verifier": "hardhat run scripts/deploy-verifier.ts --network base",
     "deploy:base:factory": "hardhat run scripts/deploy-campaign-factory.ts --network base",
     "verify:base": "npm run verify:base:gpulease && npm run verify:base:factory",
-    "verify:base:factory": "hardhat verify etherscan --network base --contract contracts/CampaignFactory.sol:LLMFundraisingFactory 0x189e6b446A1DB5E0f38d52D00434f4B285B4dE11 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 0x222e1a492Ddd4B48b23Dab8005Ddadf67302D6f5",
-    "verify:base:gpulease": "hardhat verify etherscan --network base --contract contracts/GPULease.sol:GPULease 0x222e1a492Ddd4B48b23Dab8005Ddadf67302D6f5 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 0x80CFfF5C710E3e21050AaB272201B574a53A66B3",
+    "verify:base:factory": "hardhat verify etherscan --network base --contract contracts/CampaignFactory.sol:LLMFundraisingFactory $CAMPAIGN_FACTORY_ADDRESS $USDC_ADDRESS $GPULEASE_WALLET_ADDRESS $CAMPAIGN_METADATA_RENDERER_ADDRESS",
+    "verify:base:gpulease": "hardhat verify etherscan --network base --contract contracts/GPULease.sol:GPULease $GPULEASE_ADDRESS $GPULEASE_WALLET_ADDRESS $TREASURY_ADDRESS",
     "test": "hardhat test"
   },
   "keywords": [],

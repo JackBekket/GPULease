@@ -18,10 +18,14 @@ Backend должен хранить адреса:
 
 ## Главные Изменения С Прошлой Версии
 
-- `GPULease.deposit`, `GPULease.withdraw`, `GPULease.userBalance`
+- `GPULease.deposit`, `GPULease.withdraw`, `GPULease.userBalance`, `GPULease.depositFor` удалены.
 - `deposit`, `depositFor`, `withdraw`, `userBalance` теперь вызываются только на `GPULeaseWallet`.
 - `Campaign` и `CampaignFactory` теперь работают с `GPULeaseWallet`, а не с `GPULease`, для депозитов.
-
+- `CampaignFactory` constructor теперь принимает `metadataRenderer`.
+- `CampaignFactory` теперь создает кампании через OpenZeppelin `Clones`: один `LLMFundraising` implementation деплоится при создании factory, а каждая кампания это minimal proxy + `initialize(...)`.
+- Reward NFT metadata теперь рендерится через `CampaignMetadataRenderer`.
+- NFT metadata содержит `image` как base64-encoded SVG-карточку с текстом: название кампании и уровень бэкерства.
+- Реферальная выплата теперь считается как доля от комиссии, а не отдельный процент от стоимости аренды.
 
 ## Пользовательские Балансы
 
@@ -258,6 +262,8 @@ LLMFundraisingFactory(
 
 Backend/deploy script должен сначала задеплоить `CampaignMetadataRenderer`, потом передать его адрес в factory.
 
+Factory внутри constructor деплоит один `LLMFundraising` implementation. При `createCampaign(...)` она создает minimal proxy clone и вызывает на нем `initialize(...)`. Implementation заблокирован от прямого initialize, а clones возвращают ERC721 `name()` и `symbol()` через константный override. Для backend flow почти не меняется: адрес кампании по-прежнему берется из `campaignById(campaignId)` или события `CampaignCreated`.
+
 ### Создать Кампанию
 
 ```ts
@@ -422,8 +428,7 @@ wallet displays NFT image from tokenURI metadata
 - `GPULeaseWallet` должен быть долгоживущим контрактом. Не redeploy без миграции балансов.
 - `GPULease` можно заменить, но активные leases живут в конкретном экземпляре `GPULease`.
 - Перед заменой `GPULease` лучше завершить активные аренды или реализовать lease migration.
-- `CampaignFactory` сейчас превышает bytecode size limit в тестовой сети Hardhat. Это отдельный блокер campaign-тестов.
-- `CampaignMetadataRenderer` уже вынесен отдельно, но factory все еще нужно уменьшать или менять паттерн деплоя.
+- `CampaignFactory` использует clone pattern, чтобы не зашивать полный creation bytecode `LLMFundraising` в factory.
 
 ## Минимальный ABI, Который Нужен Backend
 

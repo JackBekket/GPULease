@@ -47,6 +47,8 @@ describe("LLMFundraising campaigns", function () {
       campaignAddress
     );
     expect(await campaign.campaignId()).to.equal(expectedCampaignId);
+    expect(await campaign.name()).to.equal("LLM Fundraising Backer");
+    expect(await campaign.symbol()).to.equal("LLMBACKER");
 
     return campaign;
   }
@@ -111,6 +113,33 @@ describe("LLMFundraising campaigns", function () {
     expect(info.grade).to.equal(3);
     expect(info.wasRefunded).to.equal(false);
     expect(info.rewardTokenId).to.equal(0);
+  });
+
+  it("uses clones and keeps the implementation locked", async () => {
+    const implementationAddress = await factory.campaignImplementation();
+    const implementation = await ethers.getContractAt(
+      "LLMFundraising",
+      implementationAddress
+    );
+
+    await expect(
+      implementation.initialize(
+        999,
+        targetAmount,
+        7 * 24 * 60 * 60,
+        1,
+        1,
+        campaignName,
+        token.target,
+        wallet.target,
+        factory.target,
+        metadataRenderer.target,
+        owner.address
+      )
+    ).to.be.revertedWith("already initialized");
+
+    const campaign = await deployCampaign();
+    expect(await campaign.getAddress()).to.not.equal(implementationAddress);
   });
 
   it("indexes campaigns by participant in the factory", async () => {

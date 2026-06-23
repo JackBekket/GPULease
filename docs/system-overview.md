@@ -370,7 +370,10 @@ Main public/external functions:
 
 Main flow:
 
-- Factory deploys `LLMFundraising` campaign contracts.
+- Factory deploys one `LLMFundraising` implementation in its constructor.
+- Each new campaign is an OpenZeppelin `Clones` minimal proxy pointing to that implementation.
+- After cloning, factory calls `initialize(...)` on the campaign clone.
+- The implementation contract is locked against direct initialization, and campaign clones expose constant ERC721 `name()` and `symbol()`.
 - Tracks campaigns by ID and creator.
 - Campaign contracts register participants back into the factory.
 
@@ -487,14 +490,5 @@ Full test command:
 Current result:
 
 ```text
-37 passing
-1 failing
+39 passing
 ```
-
-The failing test is in `LLMFundraising campaigns` during `beforeEach`, because `LLMFundraisingFactory` deployment reverts with:
-
-```text
-trying to deploy a contract whose code is too large
-```
-
-This failure is unrelated to the wallet, fee, referral, or `GPULease` changes. It is a CampaignFactory bytecode-size issue and should be handled separately, likely by further shrinking `LLMFundraising`, enabling optimizer/viaIR, or changing the factory deployment pattern.

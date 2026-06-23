@@ -3,6 +3,7 @@ pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/proxy/Clones.sol";
 
 import {
     ICampaignParticipantRegistry,
@@ -11,11 +12,14 @@ import {
 } from "./Campaign.sol";
 
 contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
+    using Clones for address;
+
     uint256 public nextCampaignId = 1;
 
     IERC20 public immutable usdc;
     IGPULeaseWallet public immutable gpuLeaseWallet;
     address public immutable metadataRenderer;
+    address public immutable campaignImplementation;
 
     address[] public campaigns;
     mapping(uint256 => address) public campaignById;
@@ -51,6 +55,8 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
         usdc = IERC20(_usdc);
         gpuLeaseWallet = IGPULeaseWallet(_gpuLeaseWallet);
         metadataRenderer = _metadataRenderer;
+
+        campaignImplementation = address(new LLMFundraising());
     }
 
     function createCampaign(
@@ -63,20 +69,19 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
         campaignId = nextCampaignId;
         nextCampaignId += 1;
 
-        campaign = address(
-            new LLMFundraising(
-                campaignId,
-                targetAmount,
-                duration,
-                startTimestamp,
-                templateId,
-                campaignName,
-                address(usdc),
-                address(gpuLeaseWallet),
-                address(this),
-                metadataRenderer,
-                msg.sender
-            )
+        campaign = campaignImplementation.clone();
+        LLMFundraising(campaign).initialize(
+            campaignId,
+            targetAmount,
+            duration,
+            startTimestamp,
+            templateId,
+            campaignName,
+            address(usdc),
+            address(gpuLeaseWallet),
+            address(this),
+            metadataRenderer,
+            msg.sender
         );
 
         campaigns.push(campaign);

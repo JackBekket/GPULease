@@ -370,7 +370,10 @@ Metadata для reward NFT рендерится через `CampaignMetadataRend
 
 Основной поток:
 
-- Factory деплоит контракты `LLMFundraising`.
+- Factory деплоит один `LLMFundraising` implementation в своем constructor.
+- Каждая новая кампания создается как OpenZeppelin `Clones` minimal proxy, указывающий на этот implementation.
+- После clone factory вызывает `initialize(...)` на campaign clone.
+- Implementation-контракт заблокирован от прямого initialize, а campaign clones возвращают константные ERC721 `name()` и `symbol()`.
 - Отслеживает кампании по ID и creator.
 - Campaign-контракты регистрируют participants обратно в factory.
 
@@ -487,14 +490,5 @@ Metadata для reward NFT рендерится через `CampaignMetadataRend
 Текущий результат:
 
 ```text
-37 passing
-1 failing
+39 passing
 ```
-
-Падающий тест находится в `LLMFundraising campaigns` на этапе `beforeEach`, потому что деплой `LLMFundraisingFactory` ревертится с ошибкой:
-
-```text
-trying to deploy a contract whose code is too large
-```
-
-Этот fail не связан с изменениями кошелька, комиссий, рефералки или `GPULease`. Это отдельная проблема размера bytecode у CampaignFactory/Campaign-части. Ее стоит решать отдельно: дальше уменьшать `LLMFundraising`, включать optimizer/viaIR или менять паттерн деплоя factory.
