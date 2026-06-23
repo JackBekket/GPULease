@@ -9,9 +9,8 @@ describe("GPULease duration edge cases", function () {
   let treasury: any;
 
   let token: any;
+  let wallet: any;
   let lease: any;
-
-  const platformFeePercent = 5; // совпадает с контрактом
 
   beforeEach(async () => {
     [owner, user, provider, treasury] = await ethers.getSigners();
@@ -20,11 +19,15 @@ describe("GPULease duration edge cases", function () {
     token = await Token.deploy("Mock", "MOCK");
     await token.mint(user.address, ethers.parseEther("1000"));
 
-    const Lease = await ethers.getContractFactory("GPULease");
-    lease = await Lease.deploy(token.target, treasury.address);
+    const Wallet = await ethers.getContractFactory("GPULeaseWallet");
+    wallet = await Wallet.deploy(token.target);
 
-    await token.connect(user).approve(lease.target, ethers.parseEther("1000"));
-    await lease.connect(user).deposit(ethers.parseEther("1000"));
+    const Lease = await ethers.getContractFactory("GPULease");
+    lease = await Lease.deploy(wallet.target, treasury.address);
+    await wallet.setLeaseManager(lease.target);
+
+    await token.connect(user).approve(wallet.target, ethers.parseEther("1000"));
+    await wallet.connect(user).deposit(ethers.parseEther("1000"));
   });
 
   // Хелпер для расчёта expected payout по контрактной логике
@@ -48,7 +51,7 @@ describe("GPULease duration edge cases", function () {
     const actualComputeCost = BigInt(activeDuration) * BigInt(info.computePricePerSecond);
     const actualTotal = actualStorageCost + actualComputeCost;
   
-    const fee = (actualTotal * BigInt(platformFeePercent)) / 100n;
+    const fee = (actualTotal * BigInt(info.leaseFeePercentage)) / 100n;
     const providerAmount = actualTotal - fee;
   
     return { fee, providerAmount, total: actualTotal };
@@ -67,8 +70,8 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0);
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 
   it("duration < declared, with pause", async () => {
@@ -87,8 +90,8 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0);
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 
   it("duration > declared, no pause", async () => {
@@ -104,8 +107,8 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0);
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 
   it("duration > declared, with pause", async () => {
@@ -124,8 +127,8 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0);
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 
   it("duration < declared, paused at completion", async () => {
@@ -141,8 +144,8 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0); // paused на момент завершения
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 
   it("duration > declared, paused at completion", async () => {
@@ -158,7 +161,7 @@ describe("GPULease duration edge cases", function () {
     await lease.completeLease(0); // paused на момент завершения
 
     const { fee, providerAmount } = await expectedPayout(0);
-    expect(await lease.userBalance(provider.address)).to.equal(providerAmount);
-    expect(await lease.userBalance(treasury.address)).to.equal(fee);
+    expect(await wallet.userBalance(provider.address)).to.equal(providerAmount);
+    expect(await wallet.userBalance(treasury.address)).to.equal(fee);
   });
 });

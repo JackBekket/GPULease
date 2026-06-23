@@ -2,12 +2,16 @@
 pragma solidity ^0.8.28;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./GPULeaseWallet.sol";
+
+interface IGPULeaseReferral {
+    function referrerOf(address user) external view returns (address);
+    function referralShareBps() external view returns (uint);
+}
 
 contract GPULease is Ownable {
-    using SafeERC20 for IERC20;
-    IERC20 public credit; 
+    GPULeaseWallet public immutable wallet;
+    IGPULeaseReferral public referralManager;
     address public treasury;
 
      struct Lease {
@@ -17,6 +21,7 @@ contract GPULease is Ownable {
         uint duration;
         uint storagePricePerSecond; // Price per second for storage
         uint computePricePerSecond; // Price per second for computation
+        uint leaseFeePercentage;
         bool active;
         bool completed;
         bool paused; // Lease can be paused during execution 
@@ -29,17 +34,33 @@ contract GPULease is Ownable {
         uint256 amount;
     }
 
+    struct LeaseReferralInfo {
+        address referrer;
+        uint referralShareBps;
+    }
+
+    struct LeaseRequest {
+        uint duration;
+        uint storagePricePerSecond;
+        uint computePricePerSecond;
+        address provider;
+        address user;
+    }
+
     mapping(address => uint[]) public userActiveLeases;
-    mapping(address => uint256) public balances;
+    mapping(address => uint) public userFeePercentage;
+    mapping(address => bool) public hasCustomUserFee;
     mapping(uint => uint256) public frozenFunds;
     mapping(uint => Lease) public leases;
+    mapping(uint => LeaseReferralInfo) public leaseReferralInfo;
     uint public leaseCount = 0;
 
-    uint public platformFeePercentage = 5; // 5% platform fee
+    uint public platformFeePercentage = 10; // 10% default platform fee
 
-    event Deposit(address indexed user, uint256 amount);
-    event Withdraw(address indexed user, uint256 amount);
-    
+    event PlatformFeeUpdated(uint previousFeePercentage, uint newFeePercentage);
+    event UserFeeUpdated(address indexed user, uint feePercentage);
+    event UserFeeCleared(address indexed user);
+    event ReferralManagerUpdated(address indexed previousManager, address indexed newManager);
     event LeaseStarted(uint leaseId, address user, address provider, uint duration, uint amount);
     event LeaseCompleted(uint leaseId);
     event LeasePaused(uint leaseId);
@@ -47,8 +68,10 @@ contract GPULease is Ownable {
 
  
 
-    constructor(address credit_, address treasury_) Ownable(msg.sender) {
-        credit = IERC20(credit_);
+    constructor(address wallet_, address treasury_) Ownable(msg.sender) {
+        require(wallet_ != address(0), "zero wallet");
+        require(treasury_ != address(0), "zero treasury");
+        wallet = GPULeaseWallet(wallet_);
         treasury = treasury_;
     }
 
@@ -56,33 +79,42 @@ contract GPULease is Ownable {
     //admin stuff
     function setPlatformFee(uint _feePercentage) public onlyOwner {
         require(_feePercentage <= 100, "Fee too high");
+        emit PlatformFeeUpdated(platformFeePercentage, _feePercentage);
         platformFeePercentage = _feePercentage;
     }
+
+    function setUserFee(address user, uint _feePercentage) external onlyOwner {
+        require(user != address(0), "invalid user");
+        require(_feePercentage <= 100, "Fee too high");
+        userFeePercentage[user] = _feePercentage;
+        hasCustomUserFee[user] = true;
+        emit UserFeeUpdated(user, _feePercentage);
+    }
+
+    function clearUserFee(address user) external onlyOwner {
+        require(user != address(0), "invalid user");
+        delete userFeePercentage[user];
+        delete hasCustomUserFee[user];
+        emit UserFeeCleared(user);
+    }
+
+    function setReferralManager(address newReferralManager) external onlyOwner {
+        emit ReferralManagerUpdated(address(referralManager), newReferralManager);
+        referralManager = IGPULeaseReferral(newReferralManager);
+    }
+
     function setTreasury(address newTreasury) external onlyOwner {
         require(newTreasury != address(0), "zero treasury");
-        uint amount = userBalance(treasury);
-        balances[newTreasury] += amount;
-        balances[treasury] = 0;    
+        wallet.moveBalance(treasury, newTreasury);
         treasury = newTreasury;
     }
 
+    function feePercentageForUser(address user) public view returns (uint) {
+        if (hasCustomUserFee[user]) {
+            return userFeePercentage[user];
+        }
 
-   //wallet stuff
-    function deposit(uint256 amount) external {
-        credit.safeTransferFrom(msg.sender, address(this), amount);
-        balances[msg.sender] += amount;
-        emit Deposit(msg.sender, amount);
-    }
-
-    function withdraw(uint256 amount) external {
-        require(balances[msg.sender] >= amount, "insufficient balance");
-        credit.safeTransfer(msg.sender, amount);
-        balances[msg.sender] -= amount;
-        emit Withdraw(msg.sender, amount);
-    }
-   
-    function userBalance(address user) public view returns (uint256) {
-    return balances[user];
+        return platformFeePercentage;
     }
 
 
@@ -94,42 +126,63 @@ contract GPULease is Ownable {
         address _provider,
         address _user
     ) public onlyOwner returns (uint leaseId) {
-        require(_duration > 0, "Duration must be > 0");
-        require(_storagePricePerSecond > 0 || _computePricePerSecond > 0, "At least one price must be > 0");
-        require(_user != address(0), "invalid user");
-        require(_provider != address(0), "invalid provider");
+        return _startLease(LeaseRequest({
+            duration: _duration,
+            storagePricePerSecond: _storagePricePerSecond,
+            computePricePerSecond: _computePricePerSecond,
+            provider: _provider,
+            user: _user
+        }));
+    }
+
+    function _startLease(LeaseRequest memory request) internal returns (uint leaseId) {
+        require(request.duration > 0, "Duration must be > 0");
+        require(request.storagePricePerSecond > 0 || request.computePricePerSecond > 0, "At least one price must be > 0");
+        require(request.user != address(0), "invalid user");
+        require(request.provider != address(0), "invalid provider");
         
-        // Calculate total amounts for both storage and compute
-        uint totalStorageAmount = _duration * _storagePricePerSecond;
-        uint totalComputeAmount = _duration * _computePricePerSecond;
-        uint totalAmount = totalStorageAmount + totalComputeAmount;
-        uint platformFee = (totalAmount * platformFeePercentage) / 100;
-        totalAmount += platformFee; 
+        uint totalAmount;
+        uint leaseFeePercentage = feePercentageForUser(request.user);
+        address referrer;
+        uint referralShareBps;
+
+        {
+            // Calculate total amounts for both storage and compute
+            totalAmount =
+                (request.duration * request.storagePricePerSecond) +
+                (request.duration * request.computePricePerSecond);
+            uint platformFee = (totalAmount * leaseFeePercentage) / 100;
+            totalAmount += platformFee;
+            (referrer, referralShareBps) = _referralInfoForLease(request.user);
+        }
        
-        require(balances[_user] >= totalAmount, "Insufficient token balance");
-                
         // Deduct funds from user balance and lock them in lockedFunds mapping by leaseId
-        balances[_user] = balances[_user] - totalAmount;
+        wallet.debitBalance(request.user, totalAmount);
         frozenFunds[leaseCount] = totalAmount;
         
         leaseId = leaseCount;
         leaseCount++;
         
         leases[leaseId] = Lease({
-            user: _user,
-            provider: _provider,
+            user: request.user,
+            provider: request.provider,
             startTime: block.timestamp - 5 minutes, //so we won't need any cancel function
-            duration: _duration,
-            storagePricePerSecond: _storagePricePerSecond,
-            computePricePerSecond: _computePricePerSecond,
+            duration: request.duration,
+            storagePricePerSecond: request.storagePricePerSecond,
+            computePricePerSecond: request.computePricePerSecond,
+            leaseFeePercentage: leaseFeePercentage,
             active: true,
             completed: false,
             paused: false,
             pausedAt: 0,
             pausedDuration: 0
         });
-        userActiveLeases[_user].push(leaseId);
-        emit LeaseStarted(leaseId, _user, _provider, _duration, totalAmount);
+        leaseReferralInfo[leaseId] = LeaseReferralInfo({
+            referrer: referrer,
+            referralShareBps: referralShareBps
+        });
+        userActiveLeases[request.user].push(leaseId);
+        emit LeaseStarted(leaseId, leases[leaseId].user, leases[leaseId].provider, leases[leaseId].duration, frozenFunds[leaseId]);
         return leaseId;
     }
 
@@ -174,15 +227,22 @@ contract GPULease is Ownable {
         
         
         // Calculate platform fee from the total actual cost
-        uint platformFee = (actualTotalCost * platformFeePercentage) / 100;
-        balances[treasury] += platformFee;
+        uint platformFee = (actualTotalCost * lease.leaseFeePercentage) / 100;
+        uint referralAmount = 0;
+        LeaseReferralInfo storage referralInfo = leaseReferralInfo[_leaseId];
+        if (referralInfo.referrer != address(0) && referralInfo.referralShareBps > 0) {
+            referralAmount = (platformFee * referralInfo.referralShareBps) / 10_000;
+            wallet.creditBalance(referralInfo.referrer, referralAmount);
+        }
+
+        wallet.creditBalance(treasury, platformFee - referralAmount);
         frozenFunds[_leaseId] -= platformFee;
 
         uint providerAmount = actualTotalCost - platformFee;
-        balances[lease.provider] += providerAmount;
+        wallet.creditBalance(lease.provider, providerAmount);
         frozenFunds[_leaseId] -= providerAmount;
 
-        balances[lease.user] += frozenFunds[_leaseId];
+        wallet.creditBalance(lease.user, frozenFunds[_leaseId]);
 
         delete frozenFunds[_leaseId];
         
@@ -235,6 +295,24 @@ contract GPULease is Ownable {
 
     return (actualStorageCost, actualComputeCost);
 }
+
+    function _referralInfoForLease(address user)
+        internal
+        view
+        returns (address referrer, uint referralShareBps)
+    {
+        if (address(referralManager) == address(0)) {
+            return (address(0), 0);
+        }
+
+        referrer = referralManager.referrerOf(user);
+        if (referrer == address(0)) {
+            return (address(0), 0);
+        }
+
+        referralShareBps = referralManager.referralShareBps();
+        require(referralShareBps <= 10_000, "Referral share too high");
+    }
     
    function getUserFrozenFunds(address user) 
     external

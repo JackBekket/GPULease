@@ -10,7 +10,8 @@ describe("LLMFundraising campaigns", function () {
   let treasury: any;
 
   let token: any;
-  let gpuLease: any;
+  let wallet: any;
+  let metadataRenderer: any;
   let factory: any;
 
   const campaignName = "Open LLM GPU Fund";
@@ -59,11 +60,20 @@ describe("LLMFundraising campaigns", function () {
     await token.mint(donor.address, ethers.parseEther("2000"));
     await token.mint(secondDonor.address, ethers.parseEther("2000"));
 
-    const GPULease = await ethers.getContractFactory("GPULease");
-    gpuLease = await GPULease.deploy(token.target, treasury.address);
+    const Wallet = await ethers.getContractFactory("GPULeaseWallet");
+    wallet = await Wallet.deploy(token.target);
+
+    const MetadataRenderer = await ethers.getContractFactory(
+      "CampaignMetadataRenderer"
+    );
+    metadataRenderer = await MetadataRenderer.deploy();
 
     const Factory = await ethers.getContractFactory("LLMFundraisingFactory");
-    factory = await Factory.deploy(token.target, gpuLease.target);
+    factory = await Factory.deploy(
+      token.target,
+      wallet.target,
+      metadataRenderer.target
+    );
   });
 
   it("stores campaign name and indexes participants inside the campaign", async () => {
@@ -175,6 +185,12 @@ describe("LLMFundraising campaigns", function () {
       trait_type: "Backer Level",
       value: "Lead Backer",
     });
+    expect(metadata.image).to.match(/^data:image\/svg\+xml;base64,/);
+
+    const encodedSvg = metadata.image.replace("data:image/svg+xml;base64,", "");
+    const svg = Buffer.from(encodedSvg, "base64").toString();
+    expect(svg).to.include(campaignName);
+    expect(svg).to.include("Lead Backer");
   });
 
   it("does not allow reward minting before success or double minting", async () => {

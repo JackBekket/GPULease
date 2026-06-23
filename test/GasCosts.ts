@@ -4,6 +4,7 @@ import { expect } from "chai";
 
 describe("GPULease Gas Tests (raw wei)", function () {
   let lease: any;
+  let wallet: any;
   let token: any;
   let owner: any;
   let user: any;
@@ -31,16 +32,21 @@ describe("GPULease Gas Tests (raw wei)", function () {
     token = await Token.deploy("Mock", "MCK");
     await token.waitForDeployment();
 
+    const Wallet = await ethers.getContractFactory("GPULeaseWallet");
+    wallet = await Wallet.deploy(token.target);
+    await wallet.waitForDeployment();
+
     // Deploy lease contract
     const Lease = await ethers.getContractFactory("GPULease");
-    lease = await Lease.deploy(token.target, treasury.address);
+    lease = await Lease.deploy(wallet.target, treasury.address);
     await lease.waitForDeployment();
+    await wallet.setLeaseManager(lease.target);
 
     // Setup balances
     await token.mint(user.address, ethers.parseEther("10000"));
-    await token.connect(user).approve(lease.target, ethers.parseEther("10000"));
+    await token.connect(user).approve(wallet.target, ethers.parseEther("10000"));
 
-    await lease.connect(user).deposit(ethers.parseEther("1000"));
+    await wallet.connect(user).deposit(ethers.parseEther("1000"));
   });
 
   it("startLease gas", async () => {
@@ -85,13 +91,13 @@ describe("GPULease Gas Tests (raw wei)", function () {
   });
 
   it("deposit + withdraw gas", async () => {
-    await logGas(
-      await lease.connect(user).deposit(ethers.parseEther("100")),
+      await logGas(
+      await wallet.connect(user).deposit(ethers.parseEther("100")),
       "deposit"
     );
 
     await logGas(
-      await lease.connect(user).withdraw(ethers.parseEther("50")),
+      await wallet.connect(user).withdraw(ethers.parseEther("50")),
       "withdraw"
     );
   });

@@ -1,0 +1,43 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "ICampaignMetadataRenderer",
+  "sourceName": "contracts/Campaign.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "campaignName",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "campaignId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "grade",
+          "type": "uint8"
+        }
+      ],
+      "name": "tokenURI",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/contracts/Campaign.sol",
+  "buildInfoId": "solc-0_8_31-d0c8f6c5583185c17f649e978723da32242b1841"
+}

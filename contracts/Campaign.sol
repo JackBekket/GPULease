@@ -5,11 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/Base64.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 
-interface IGPULease {
+interface IGPULeaseWallet {
     function deposit(uint256 amount) external;
 }
 
@@ -17,9 +15,16 @@ interface ICampaignParticipantRegistry {
     function registerParticipant(address participant) external;
 }
 
+interface ICampaignMetadataRenderer {
+    function tokenURI(
+        string memory campaignName,
+        uint256 campaignId,
+        uint8 grade
+    ) external view returns (string memory);
+}
+
 contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     using SafeERC20 for IERC20;
-    using Strings for uint256;
 
     // Backer tiers are calculated in basis points (bps) of the campaign target.
     // BPS is 100%, so 100 bps = 1%, 500 bps = 5%, and 1,500 bps = 15%.
@@ -29,15 +34,6 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     uint256 private constant CONTRIBUTOR_MIN_BPS = 100;
     uint256 private constant FOUNDING_BACKER_MIN_BPS = 500;
     uint256 private constant LEAD_BACKER_MIN_BPS = 1_500;
-    bytes1 private constant JSON_QUOTE = 0x22;
-    bytes1 private constant JSON_BACKSLASH = 0x5c;
-    bytes1 private constant ASCII_0 = 0x30;
-    bytes1 private constant ASCII_B = 0x62;
-    bytes1 private constant ASCII_F = 0x66;
-    bytes1 private constant ASCII_N = 0x6e;
-    bytes1 private constant ASCII_R = 0x72;
-    bytes1 private constant ASCII_T = 0x74;
-    bytes1 private constant ASCII_U = 0x75;
 
     enum CampaignState {
         ACTIVE,
@@ -61,8 +57,9 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     string public campaignName;
 
     IERC20 public immutable usdc;
-    IGPULease public immutable gpuLease;
+    IGPULeaseWallet public immutable gpuLeaseWallet;
     ICampaignParticipantRegistry public immutable participantRegistry;
+    ICampaignMetadataRenderer public immutable metadataRenderer;
 
     CampaignState public state;
     uint256 public totalRaised;
@@ -92,7 +89,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     event CampaignSucceeded(uint256 totalRaised);
     event CampaignFailed(uint256 totalRaised);
     event Refunded(address indexed donor, uint256 amount);
-    event FundsTransferred(address indexed gpuLease, uint256 amount);
+    event FundsTransferred(address indexed wallet, uint256 amount);
     event BackerRewardMinted(
         address indexed donor,
         uint256 indexed tokenId,
@@ -108,13 +105,15 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         uint256 _templateId,
         string memory _campaignName,
         address _usdc,
-        address _gpuLease,
+        address _gpuLeaseWallet,
         address _participantRegistry,
+        address _metadataRenderer,
         address _campaignOwner
     ) Ownable(_campaignOwner) ERC721("LLM Fundraising Backer", "LLMBACKER") {
         require(_usdc != address(0), "zero usdc");
-        require(_gpuLease != address(0), "zero gpuLease");
+        require(_gpuLeaseWallet != address(0), "zero wallet");
         require(_participantRegistry != address(0), "zero registry");
+        require(_metadataRenderer != address(0), "zero renderer");
         require(_targetAmount > 0, "zero target");
         require(_duration > 0, "zero duration");
         require(bytes(_campaignName).length > 0, "empty name");
@@ -127,10 +126,11 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         campaignName = _campaignName;
 
         usdc = IERC20(_usdc);
-        gpuLease = IGPULease(_gpuLease);
+        gpuLeaseWallet = IGPULeaseWallet(_gpuLeaseWallet);
         participantRegistry = ICampaignParticipantRegistry(
             _participantRegistry
         );
+        metadataRenderer = ICampaignMetadataRenderer(_metadataRenderer);
 
         state = CampaignState.ACTIVE;
     }
@@ -250,31 +250,11 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         uint256 tokenId
     ) public view override returns (string memory) {
         _requireOwned(tokenId);
-
-        string memory gradeName = _backerGradeName(rewardTokenGrades[tokenId]);
-        string memory escapedCampaignName = _escapeJson(campaignName);
-        string memory escapedGradeName = _escapeJson(gradeName);
-
-        bytes memory metadata = abi.encodePacked(
-            '{"name":"',
-            escapedCampaignName,
-            " - ",
-            escapedGradeName,
-            '","description":"Backer reward NFT for a successful LLM fundraising campaign.",',
-            '"attributes":[{"trait_type":"Campaign","value":"',
-            escapedCampaignName,
-            '"},{"trait_type":"Backer Level","value":"',
-            escapedGradeName,
-            '"},{"trait_type":"Campaign ID","value":"',
-            campaignId.toString(),
-            '"}]}'
+        return metadataRenderer.tokenURI(
+            campaignName,
+            campaignId,
+            uint8(rewardTokenGrades[tokenId])
         );
-
-        return
-            string.concat(
-                "data:application/json;base64,",
-                Base64.encode(metadata)
-            );
     }
 
     function donate(uint256 amount) external nonReentrant {
@@ -338,7 +318,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
 
         state = CampaignState.SUCCESS;
 
-        _transferToGPULease(balance);
+        _transferToWallet(balance);
 
         emit CampaignSucceeded(balance);
     }
@@ -351,14 +331,14 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         emit CampaignFailed(totalRaised);
     }
 
-    function _transferToGPULease(uint256 amount) internal {
+    function _transferToWallet(uint256 amount) internal {
         require(amount > 0, "no funds");
 
-        usdc.forceApprove(address(gpuLease), amount);
+        usdc.forceApprove(address(gpuLeaseWallet), amount);
 
-        gpuLease.deposit(amount);
+        gpuLeaseWallet.deposit(amount);
 
-        emit FundsTransferred(address(gpuLease), amount);
+        emit FundsTransferred(address(gpuLeaseWallet), amount);
     }
 
     function _mintBackerReward(
@@ -435,76 +415,4 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         );
     }
 
-    function _backerGradeName(
-        BackerGrade grade
-    ) internal pure returns (string memory) {
-        if (grade == BackerGrade.LEAD_BACKER) {
-            return "Lead Backer";
-        }
-
-        if (grade == BackerGrade.FOUNDING_BACKER) {
-            return "Founding Backer";
-        }
-
-        if (grade == BackerGrade.CONTRIBUTOR) {
-            return "Contributor";
-        }
-
-        if (grade == BackerGrade.SUPPORTER) {
-            return "Supporter";
-        }
-
-        return "None";
-    }
-
-    function _escapeJson(
-        string memory value
-    ) internal pure returns (string memory) {
-        bytes memory input = bytes(value);
-        bytes memory output = new bytes(input.length * 6);
-        uint256 outputLength;
-
-        for (uint256 i = 0; i < input.length; i++) {
-            bytes1 char = input[i];
-
-            if (char == JSON_QUOTE) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = JSON_QUOTE;
-            } else if (char == JSON_BACKSLASH) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = JSON_BACKSLASH;
-            } else if (char == 0x08) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_B;
-            } else if (char == 0x09) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_T;
-            } else if (char == 0x0a) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_N;
-            } else if (char == 0x0c) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_F;
-            } else if (char == 0x0d) {
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_R;
-            } else if (uint8(char) < 0x20) {
-                bytes16 hexSymbols = "0123456789abcdef";
-                output[outputLength++] = JSON_BACKSLASH;
-                output[outputLength++] = ASCII_U;
-                output[outputLength++] = ASCII_0;
-                output[outputLength++] = ASCII_0;
-                output[outputLength++] = hexSymbols[uint8(char) >> 4];
-                output[outputLength++] = hexSymbols[uint8(char) & 0x0f];
-            } else {
-                output[outputLength++] = char;
-            }
-        }
-
-        assembly ("memory-safe") {
-            mstore(output, outputLength)
-        }
-
-        return string(output);
-    }
 }

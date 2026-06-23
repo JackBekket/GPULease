@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import {
     ICampaignParticipantRegistry,
-    IGPULease,
+    IGPULeaseWallet,
     LLMFundraising
 } from "./Campaign.sol";
 
@@ -14,7 +14,8 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
     uint256 public nextCampaignId = 1;
 
     IERC20 public immutable usdc;
-    IGPULease public immutable gpuLease;
+    IGPULeaseWallet public immutable gpuLeaseWallet;
+    address public immutable metadataRenderer;
 
     address[] public campaigns;
     mapping(uint256 => address) public campaignById;
@@ -38,12 +39,18 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
         address indexed campaign
     );
 
-    constructor(address _usdc, address _gpuLease) Ownable(msg.sender) {
+    constructor(
+        address _usdc,
+        address _gpuLeaseWallet,
+        address _metadataRenderer
+    ) Ownable(msg.sender) {
         require(_usdc != address(0), "zero usdc");
-        require(_gpuLease != address(0), "zero gpuLease");
+        require(_gpuLeaseWallet != address(0), "zero wallet");
+        require(_metadataRenderer != address(0), "zero renderer");
 
         usdc = IERC20(_usdc);
-        gpuLease = IGPULease(_gpuLease);
+        gpuLeaseWallet = IGPULeaseWallet(_gpuLeaseWallet);
+        metadataRenderer = _metadataRenderer;
     }
 
     function createCampaign(
@@ -65,8 +72,9 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
                 templateId,
                 campaignName,
                 address(usdc),
-                address(gpuLease),
+                address(gpuLeaseWallet),
                 address(this),
+                metadataRenderer,
                 msg.sender
             )
         );
