@@ -1,0 +1,1 @@
+[{"inputs":[{"internalType":"string","name":"campaignName","type":"string"},{"internalType":"uint256","name":"campaignId","type":"uint256"},{"internalType":"uint8","name":"grade","type":"uint8"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"pure","type":"function"}]

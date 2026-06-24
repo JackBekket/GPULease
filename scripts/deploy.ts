@@ -5,7 +5,8 @@ const { ethers } = await network.connect();
 
 async function main() {
   // Получаем токен (например, USDC)
-  const USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // USDC на Sepolia
+  const USDC = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"; // USDC на Base
+  const TREASURY = "0x80CFfF5C710E3e21050AaB272201B574a53A66B3";
 
   const GPULeaseWallet = await ethers.getContractFactory("GPULeaseWallet");
   const wallet = await GPULeaseWallet.deploy(USDC);
@@ -16,8 +17,7 @@ async function main() {
   await referral.waitForDeployment();
 
   const GPULease = await ethers.getContractFactory("GPULease");
-  const treasury = await (await ethers.getSigners())[0].getAddress();
-  const gpuLease = await GPULease.deploy(await wallet.getAddress(), treasury);
+  const gpuLease = await GPULease.deploy(await wallet.getAddress(), TREASURY);
   await gpuLease.waitForDeployment();
 
   await wallet.setLeaseManager(await gpuLease.getAddress());

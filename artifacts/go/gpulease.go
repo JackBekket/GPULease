@@ -37,7 +37,7 @@ type GPULeaseFrozenFundsInfo struct {
 
 // GPULeaseMetaData contains all meta data concerning the GPULease contract.
 var GPULeaseMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"credit_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"treasury_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"SafeERC20FailedOperation\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeasePaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseResumed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"LeaseStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Withdraw\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"completeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"credit\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"frozenFunds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserFrozenFunds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"internalType\":\"structGPULease.FrozenFundsInfo[]\",\"name\":\"result\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leases\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"paused\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"pausedAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"pausedDuration\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"pauseLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"platformFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"resumeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setPlatformFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newTreasury\",\"type\":\"address\"}],\"name\":\"setTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_provider\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"startLease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"treasury\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"userActiveLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"userBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"wallet_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"treasury_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeasePaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseResumed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"LeaseStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"previousFeePercentage\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newFeePercentage\",\"type\":\"uint256\"}],\"name\":\"PlatformFeeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousManager\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"ReferralManagerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"UserFeeCleared\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feePercentage\",\"type\":\"uint256\"}],\"name\":\"UserFeeUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"clearUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"completeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"feePercentageForUser\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"frozenFunds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserFrozenFunds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"internalType\":\"structGPULease.FrozenFundsInfo[]\",\"name\":\"result\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"hasCustomUserFee\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseReferralInfo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"referrer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"referralShareBps\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leases\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"leaseFeePercentage\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"paused\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"pausedAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"pausedDuration\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"pauseLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"platformFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"referralManager\",\"outputs\":[{\"internalType\":\"contractIGPULeaseReferral\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"resumeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setPlatformFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newReferralManager\",\"type\":\"address\"}],\"name\":\"setReferralManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newTreasury\",\"type\":\"address\"}],\"name\":\"setTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_provider\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"startLease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"treasury\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"userActiveLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"wallet\",\"outputs\":[{\"internalType\":\"contractGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // GPULeaseABI is the input ABI used to generate the binding from.
@@ -186,12 +186,12 @@ func (_GPULease *GPULeaseTransactorRaw) Transact(opts *bind.TransactOpts, method
 	return _GPULease.Contract.contract.Transact(opts, method, params...)
 }
 
-// Balances is a free data retrieval call binding the contract method 0x27e235e3.
+// FeePercentageForUser is a free data retrieval call binding the contract method 0xa8f4214e.
 //
-// Solidity: function balances(address ) view returns(uint256)
-func (_GPULease *GPULeaseCaller) Balances(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
+// Solidity: function feePercentageForUser(address user) view returns(uint256)
+func (_GPULease *GPULeaseCaller) FeePercentageForUser(opts *bind.CallOpts, user common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _GPULease.contract.Call(opts, &out, "balances", arg0)
+	err := _GPULease.contract.Call(opts, &out, "feePercentageForUser", user)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -203,49 +203,18 @@ func (_GPULease *GPULeaseCaller) Balances(opts *bind.CallOpts, arg0 common.Addre
 
 }
 
-// Balances is a free data retrieval call binding the contract method 0x27e235e3.
+// FeePercentageForUser is a free data retrieval call binding the contract method 0xa8f4214e.
 //
-// Solidity: function balances(address ) view returns(uint256)
-func (_GPULease *GPULeaseSession) Balances(arg0 common.Address) (*big.Int, error) {
-	return _GPULease.Contract.Balances(&_GPULease.CallOpts, arg0)
+// Solidity: function feePercentageForUser(address user) view returns(uint256)
+func (_GPULease *GPULeaseSession) FeePercentageForUser(user common.Address) (*big.Int, error) {
+	return _GPULease.Contract.FeePercentageForUser(&_GPULease.CallOpts, user)
 }
 
-// Balances is a free data retrieval call binding the contract method 0x27e235e3.
+// FeePercentageForUser is a free data retrieval call binding the contract method 0xa8f4214e.
 //
-// Solidity: function balances(address ) view returns(uint256)
-func (_GPULease *GPULeaseCallerSession) Balances(arg0 common.Address) (*big.Int, error) {
-	return _GPULease.Contract.Balances(&_GPULease.CallOpts, arg0)
-}
-
-// Credit is a free data retrieval call binding the contract method 0xa06d083c.
-//
-// Solidity: function credit() view returns(address)
-func (_GPULease *GPULeaseCaller) Credit(opts *bind.CallOpts) (common.Address, error) {
-	var out []interface{}
-	err := _GPULease.contract.Call(opts, &out, "credit")
-
-	if err != nil {
-		return *new(common.Address), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
-
-	return out0, err
-
-}
-
-// Credit is a free data retrieval call binding the contract method 0xa06d083c.
-//
-// Solidity: function credit() view returns(address)
-func (_GPULease *GPULeaseSession) Credit() (common.Address, error) {
-	return _GPULease.Contract.Credit(&_GPULease.CallOpts)
-}
-
-// Credit is a free data retrieval call binding the contract method 0xa06d083c.
-//
-// Solidity: function credit() view returns(address)
-func (_GPULease *GPULeaseCallerSession) Credit() (common.Address, error) {
-	return _GPULease.Contract.Credit(&_GPULease.CallOpts)
+// Solidity: function feePercentageForUser(address user) view returns(uint256)
+func (_GPULease *GPULeaseCallerSession) FeePercentageForUser(user common.Address) (*big.Int, error) {
+	return _GPULease.Contract.FeePercentageForUser(&_GPULease.CallOpts, user)
 }
 
 // FrozenFunds is a free data retrieval call binding the contract method 0xa641992a.
@@ -310,6 +279,37 @@ func (_GPULease *GPULeaseCallerSession) GetUserFrozenFunds(user common.Address) 
 	return _GPULease.Contract.GetUserFrozenFunds(&_GPULease.CallOpts, user)
 }
 
+// HasCustomUserFee is a free data retrieval call binding the contract method 0xe67d3732.
+//
+// Solidity: function hasCustomUserFee(address ) view returns(bool)
+func (_GPULease *GPULeaseCaller) HasCustomUserFee(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "hasCustomUserFee", arg0)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// HasCustomUserFee is a free data retrieval call binding the contract method 0xe67d3732.
+//
+// Solidity: function hasCustomUserFee(address ) view returns(bool)
+func (_GPULease *GPULeaseSession) HasCustomUserFee(arg0 common.Address) (bool, error) {
+	return _GPULease.Contract.HasCustomUserFee(&_GPULease.CallOpts, arg0)
+}
+
+// HasCustomUserFee is a free data retrieval call binding the contract method 0xe67d3732.
+//
+// Solidity: function hasCustomUserFee(address ) view returns(bool)
+func (_GPULease *GPULeaseCallerSession) HasCustomUserFee(arg0 common.Address) (bool, error) {
+	return _GPULease.Contract.HasCustomUserFee(&_GPULease.CallOpts, arg0)
+}
+
 // LeaseCount is a free data retrieval call binding the contract method 0xb4c0498b.
 //
 // Solidity: function leaseCount() view returns(uint256)
@@ -341,9 +341,54 @@ func (_GPULease *GPULeaseCallerSession) LeaseCount() (*big.Int, error) {
 	return _GPULease.Contract.LeaseCount(&_GPULease.CallOpts)
 }
 
+// LeaseReferralInfo is a free data retrieval call binding the contract method 0x4f9479a2.
+//
+// Solidity: function leaseReferralInfo(uint256 ) view returns(address referrer, uint256 referralShareBps)
+func (_GPULease *GPULeaseCaller) LeaseReferralInfo(opts *bind.CallOpts, arg0 *big.Int) (struct {
+	Referrer         common.Address
+	ReferralShareBps *big.Int
+}, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "leaseReferralInfo", arg0)
+
+	outstruct := new(struct {
+		Referrer         common.Address
+		ReferralShareBps *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.Referrer = *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+	outstruct.ReferralShareBps = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
+}
+
+// LeaseReferralInfo is a free data retrieval call binding the contract method 0x4f9479a2.
+//
+// Solidity: function leaseReferralInfo(uint256 ) view returns(address referrer, uint256 referralShareBps)
+func (_GPULease *GPULeaseSession) LeaseReferralInfo(arg0 *big.Int) (struct {
+	Referrer         common.Address
+	ReferralShareBps *big.Int
+}, error) {
+	return _GPULease.Contract.LeaseReferralInfo(&_GPULease.CallOpts, arg0)
+}
+
+// LeaseReferralInfo is a free data retrieval call binding the contract method 0x4f9479a2.
+//
+// Solidity: function leaseReferralInfo(uint256 ) view returns(address referrer, uint256 referralShareBps)
+func (_GPULease *GPULeaseCallerSession) LeaseReferralInfo(arg0 *big.Int) (struct {
+	Referrer         common.Address
+	ReferralShareBps *big.Int
+}, error) {
+	return _GPULease.Contract.LeaseReferralInfo(&_GPULease.CallOpts, arg0)
+}
+
 // Leases is a free data retrieval call binding the contract method 0x8927a106.
 //
-// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
+// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, uint256 leaseFeePercentage, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
 func (_GPULease *GPULeaseCaller) Leases(opts *bind.CallOpts, arg0 *big.Int) (struct {
 	User                  common.Address
 	Provider              common.Address
@@ -351,6 +396,7 @@ func (_GPULease *GPULeaseCaller) Leases(opts *bind.CallOpts, arg0 *big.Int) (str
 	Duration              *big.Int
 	StoragePricePerSecond *big.Int
 	ComputePricePerSecond *big.Int
+	LeaseFeePercentage    *big.Int
 	Active                bool
 	Completed             bool
 	Paused                bool
@@ -367,6 +413,7 @@ func (_GPULease *GPULeaseCaller) Leases(opts *bind.CallOpts, arg0 *big.Int) (str
 		Duration              *big.Int
 		StoragePricePerSecond *big.Int
 		ComputePricePerSecond *big.Int
+		LeaseFeePercentage    *big.Int
 		Active                bool
 		Completed             bool
 		Paused                bool
@@ -383,11 +430,12 @@ func (_GPULease *GPULeaseCaller) Leases(opts *bind.CallOpts, arg0 *big.Int) (str
 	outstruct.Duration = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
 	outstruct.StoragePricePerSecond = *abi.ConvertType(out[4], new(*big.Int)).(**big.Int)
 	outstruct.ComputePricePerSecond = *abi.ConvertType(out[5], new(*big.Int)).(**big.Int)
-	outstruct.Active = *abi.ConvertType(out[6], new(bool)).(*bool)
-	outstruct.Completed = *abi.ConvertType(out[7], new(bool)).(*bool)
-	outstruct.Paused = *abi.ConvertType(out[8], new(bool)).(*bool)
-	outstruct.PausedAt = *abi.ConvertType(out[9], new(*big.Int)).(**big.Int)
-	outstruct.PausedDuration = *abi.ConvertType(out[10], new(*big.Int)).(**big.Int)
+	outstruct.LeaseFeePercentage = *abi.ConvertType(out[6], new(*big.Int)).(**big.Int)
+	outstruct.Active = *abi.ConvertType(out[7], new(bool)).(*bool)
+	outstruct.Completed = *abi.ConvertType(out[8], new(bool)).(*bool)
+	outstruct.Paused = *abi.ConvertType(out[9], new(bool)).(*bool)
+	outstruct.PausedAt = *abi.ConvertType(out[10], new(*big.Int)).(**big.Int)
+	outstruct.PausedDuration = *abi.ConvertType(out[11], new(*big.Int)).(**big.Int)
 
 	return *outstruct, err
 
@@ -395,7 +443,7 @@ func (_GPULease *GPULeaseCaller) Leases(opts *bind.CallOpts, arg0 *big.Int) (str
 
 // Leases is a free data retrieval call binding the contract method 0x8927a106.
 //
-// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
+// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, uint256 leaseFeePercentage, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
 func (_GPULease *GPULeaseSession) Leases(arg0 *big.Int) (struct {
 	User                  common.Address
 	Provider              common.Address
@@ -403,6 +451,7 @@ func (_GPULease *GPULeaseSession) Leases(arg0 *big.Int) (struct {
 	Duration              *big.Int
 	StoragePricePerSecond *big.Int
 	ComputePricePerSecond *big.Int
+	LeaseFeePercentage    *big.Int
 	Active                bool
 	Completed             bool
 	Paused                bool
@@ -414,7 +463,7 @@ func (_GPULease *GPULeaseSession) Leases(arg0 *big.Int) (struct {
 
 // Leases is a free data retrieval call binding the contract method 0x8927a106.
 //
-// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
+// Solidity: function leases(uint256 ) view returns(address user, address provider, uint256 startTime, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, uint256 leaseFeePercentage, bool active, bool completed, bool paused, uint256 pausedAt, uint256 pausedDuration)
 func (_GPULease *GPULeaseCallerSession) Leases(arg0 *big.Int) (struct {
 	User                  common.Address
 	Provider              common.Address
@@ -422,6 +471,7 @@ func (_GPULease *GPULeaseCallerSession) Leases(arg0 *big.Int) (struct {
 	Duration              *big.Int
 	StoragePricePerSecond *big.Int
 	ComputePricePerSecond *big.Int
+	LeaseFeePercentage    *big.Int
 	Active                bool
 	Completed             bool
 	Paused                bool
@@ -493,6 +543,37 @@ func (_GPULease *GPULeaseCallerSession) PlatformFeePercentage() (*big.Int, error
 	return _GPULease.Contract.PlatformFeePercentage(&_GPULease.CallOpts)
 }
 
+// ReferralManager is a free data retrieval call binding the contract method 0x2ccd9623.
+//
+// Solidity: function referralManager() view returns(address)
+func (_GPULease *GPULeaseCaller) ReferralManager(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "referralManager")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// ReferralManager is a free data retrieval call binding the contract method 0x2ccd9623.
+//
+// Solidity: function referralManager() view returns(address)
+func (_GPULease *GPULeaseSession) ReferralManager() (common.Address, error) {
+	return _GPULease.Contract.ReferralManager(&_GPULease.CallOpts)
+}
+
+// ReferralManager is a free data retrieval call binding the contract method 0x2ccd9623.
+//
+// Solidity: function referralManager() view returns(address)
+func (_GPULease *GPULeaseCallerSession) ReferralManager() (common.Address, error) {
+	return _GPULease.Contract.ReferralManager(&_GPULease.CallOpts)
+}
+
 // Treasury is a free data retrieval call binding the contract method 0x61d027b3.
 //
 // Solidity: function treasury() view returns(address)
@@ -555,12 +636,12 @@ func (_GPULease *GPULeaseCallerSession) UserActiveLeases(arg0 common.Address, ar
 	return _GPULease.Contract.UserActiveLeases(&_GPULease.CallOpts, arg0, arg1)
 }
 
-// UserBalance is a free data retrieval call binding the contract method 0x0103c92b.
+// UserFeePercentage is a free data retrieval call binding the contract method 0xd36824b0.
 //
-// Solidity: function userBalance(address user) view returns(uint256)
-func (_GPULease *GPULeaseCaller) UserBalance(opts *bind.CallOpts, user common.Address) (*big.Int, error) {
+// Solidity: function userFeePercentage(address ) view returns(uint256)
+func (_GPULease *GPULeaseCaller) UserFeePercentage(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
 	var out []interface{}
-	err := _GPULease.contract.Call(opts, &out, "userBalance", user)
+	err := _GPULease.contract.Call(opts, &out, "userFeePercentage", arg0)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -572,18 +653,70 @@ func (_GPULease *GPULeaseCaller) UserBalance(opts *bind.CallOpts, user common.Ad
 
 }
 
-// UserBalance is a free data retrieval call binding the contract method 0x0103c92b.
+// UserFeePercentage is a free data retrieval call binding the contract method 0xd36824b0.
 //
-// Solidity: function userBalance(address user) view returns(uint256)
-func (_GPULease *GPULeaseSession) UserBalance(user common.Address) (*big.Int, error) {
-	return _GPULease.Contract.UserBalance(&_GPULease.CallOpts, user)
+// Solidity: function userFeePercentage(address ) view returns(uint256)
+func (_GPULease *GPULeaseSession) UserFeePercentage(arg0 common.Address) (*big.Int, error) {
+	return _GPULease.Contract.UserFeePercentage(&_GPULease.CallOpts, arg0)
 }
 
-// UserBalance is a free data retrieval call binding the contract method 0x0103c92b.
+// UserFeePercentage is a free data retrieval call binding the contract method 0xd36824b0.
 //
-// Solidity: function userBalance(address user) view returns(uint256)
-func (_GPULease *GPULeaseCallerSession) UserBalance(user common.Address) (*big.Int, error) {
-	return _GPULease.Contract.UserBalance(&_GPULease.CallOpts, user)
+// Solidity: function userFeePercentage(address ) view returns(uint256)
+func (_GPULease *GPULeaseCallerSession) UserFeePercentage(arg0 common.Address) (*big.Int, error) {
+	return _GPULease.Contract.UserFeePercentage(&_GPULease.CallOpts, arg0)
+}
+
+// Wallet is a free data retrieval call binding the contract method 0x521eb273.
+//
+// Solidity: function wallet() view returns(address)
+func (_GPULease *GPULeaseCaller) Wallet(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "wallet")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// Wallet is a free data retrieval call binding the contract method 0x521eb273.
+//
+// Solidity: function wallet() view returns(address)
+func (_GPULease *GPULeaseSession) Wallet() (common.Address, error) {
+	return _GPULease.Contract.Wallet(&_GPULease.CallOpts)
+}
+
+// Wallet is a free data retrieval call binding the contract method 0x521eb273.
+//
+// Solidity: function wallet() view returns(address)
+func (_GPULease *GPULeaseCallerSession) Wallet() (common.Address, error) {
+	return _GPULease.Contract.Wallet(&_GPULease.CallOpts)
+}
+
+// ClearUserFee is a paid mutator transaction binding the contract method 0xfbea0c1a.
+//
+// Solidity: function clearUserFee(address user) returns()
+func (_GPULease *GPULeaseTransactor) ClearUserFee(opts *bind.TransactOpts, user common.Address) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "clearUserFee", user)
+}
+
+// ClearUserFee is a paid mutator transaction binding the contract method 0xfbea0c1a.
+//
+// Solidity: function clearUserFee(address user) returns()
+func (_GPULease *GPULeaseSession) ClearUserFee(user common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.ClearUserFee(&_GPULease.TransactOpts, user)
+}
+
+// ClearUserFee is a paid mutator transaction binding the contract method 0xfbea0c1a.
+//
+// Solidity: function clearUserFee(address user) returns()
+func (_GPULease *GPULeaseTransactorSession) ClearUserFee(user common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.ClearUserFee(&_GPULease.TransactOpts, user)
 }
 
 // CompleteLease is a paid mutator transaction binding the contract method 0x95e6e242.
@@ -605,27 +738,6 @@ func (_GPULease *GPULeaseSession) CompleteLease(_leaseId *big.Int) (*types.Trans
 // Solidity: function completeLease(uint256 _leaseId) returns()
 func (_GPULease *GPULeaseTransactorSession) CompleteLease(_leaseId *big.Int) (*types.Transaction, error) {
 	return _GPULease.Contract.CompleteLease(&_GPULease.TransactOpts, _leaseId)
-}
-
-// Deposit is a paid mutator transaction binding the contract method 0xb6b55f25.
-//
-// Solidity: function deposit(uint256 amount) returns()
-func (_GPULease *GPULeaseTransactor) Deposit(opts *bind.TransactOpts, amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.contract.Transact(opts, "deposit", amount)
-}
-
-// Deposit is a paid mutator transaction binding the contract method 0xb6b55f25.
-//
-// Solidity: function deposit(uint256 amount) returns()
-func (_GPULease *GPULeaseSession) Deposit(amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.Contract.Deposit(&_GPULease.TransactOpts, amount)
-}
-
-// Deposit is a paid mutator transaction binding the contract method 0xb6b55f25.
-//
-// Solidity: function deposit(uint256 amount) returns()
-func (_GPULease *GPULeaseTransactorSession) Deposit(amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.Contract.Deposit(&_GPULease.TransactOpts, amount)
 }
 
 // PauseLease is a paid mutator transaction binding the contract method 0xb8eeaa78.
@@ -712,6 +824,27 @@ func (_GPULease *GPULeaseTransactorSession) SetPlatformFee(_feePercentage *big.I
 	return _GPULease.Contract.SetPlatformFee(&_GPULease.TransactOpts, _feePercentage)
 }
 
+// SetReferralManager is a paid mutator transaction binding the contract method 0xc5f3a4c4.
+//
+// Solidity: function setReferralManager(address newReferralManager) returns()
+func (_GPULease *GPULeaseTransactor) SetReferralManager(opts *bind.TransactOpts, newReferralManager common.Address) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "setReferralManager", newReferralManager)
+}
+
+// SetReferralManager is a paid mutator transaction binding the contract method 0xc5f3a4c4.
+//
+// Solidity: function setReferralManager(address newReferralManager) returns()
+func (_GPULease *GPULeaseSession) SetReferralManager(newReferralManager common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.SetReferralManager(&_GPULease.TransactOpts, newReferralManager)
+}
+
+// SetReferralManager is a paid mutator transaction binding the contract method 0xc5f3a4c4.
+//
+// Solidity: function setReferralManager(address newReferralManager) returns()
+func (_GPULease *GPULeaseTransactorSession) SetReferralManager(newReferralManager common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.SetReferralManager(&_GPULease.TransactOpts, newReferralManager)
+}
+
 // SetTreasury is a paid mutator transaction binding the contract method 0xf0f44260.
 //
 // Solidity: function setTreasury(address newTreasury) returns()
@@ -731,6 +864,27 @@ func (_GPULease *GPULeaseSession) SetTreasury(newTreasury common.Address) (*type
 // Solidity: function setTreasury(address newTreasury) returns()
 func (_GPULease *GPULeaseTransactorSession) SetTreasury(newTreasury common.Address) (*types.Transaction, error) {
 	return _GPULease.Contract.SetTreasury(&_GPULease.TransactOpts, newTreasury)
+}
+
+// SetUserFee is a paid mutator transaction binding the contract method 0x809ad1f3.
+//
+// Solidity: function setUserFee(address user, uint256 _feePercentage) returns()
+func (_GPULease *GPULeaseTransactor) SetUserFee(opts *bind.TransactOpts, user common.Address, _feePercentage *big.Int) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "setUserFee", user, _feePercentage)
+}
+
+// SetUserFee is a paid mutator transaction binding the contract method 0x809ad1f3.
+//
+// Solidity: function setUserFee(address user, uint256 _feePercentage) returns()
+func (_GPULease *GPULeaseSession) SetUserFee(user common.Address, _feePercentage *big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SetUserFee(&_GPULease.TransactOpts, user, _feePercentage)
+}
+
+// SetUserFee is a paid mutator transaction binding the contract method 0x809ad1f3.
+//
+// Solidity: function setUserFee(address user, uint256 _feePercentage) returns()
+func (_GPULease *GPULeaseTransactorSession) SetUserFee(user common.Address, _feePercentage *big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SetUserFee(&_GPULease.TransactOpts, user, _feePercentage)
 }
 
 // StartLease is a paid mutator transaction binding the contract method 0xf648da80.
@@ -773,172 +927,6 @@ func (_GPULease *GPULeaseSession) TransferOwnership(newOwner common.Address) (*t
 // Solidity: function transferOwnership(address newOwner) returns()
 func (_GPULease *GPULeaseTransactorSession) TransferOwnership(newOwner common.Address) (*types.Transaction, error) {
 	return _GPULease.Contract.TransferOwnership(&_GPULease.TransactOpts, newOwner)
-}
-
-// Withdraw is a paid mutator transaction binding the contract method 0x2e1a7d4d.
-//
-// Solidity: function withdraw(uint256 amount) returns()
-func (_GPULease *GPULeaseTransactor) Withdraw(opts *bind.TransactOpts, amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.contract.Transact(opts, "withdraw", amount)
-}
-
-// Withdraw is a paid mutator transaction binding the contract method 0x2e1a7d4d.
-//
-// Solidity: function withdraw(uint256 amount) returns()
-func (_GPULease *GPULeaseSession) Withdraw(amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.Contract.Withdraw(&_GPULease.TransactOpts, amount)
-}
-
-// Withdraw is a paid mutator transaction binding the contract method 0x2e1a7d4d.
-//
-// Solidity: function withdraw(uint256 amount) returns()
-func (_GPULease *GPULeaseTransactorSession) Withdraw(amount *big.Int) (*types.Transaction, error) {
-	return _GPULease.Contract.Withdraw(&_GPULease.TransactOpts, amount)
-}
-
-// GPULeaseDepositIterator is returned from FilterDeposit and is used to iterate over the raw logs and unpacked data for Deposit events raised by the GPULease contract.
-type GPULeaseDepositIterator struct {
-	Event *GPULeaseDeposit // Event containing the contract specifics and raw log
-
-	contract *bind.BoundContract // Generic contract to use for unpacking event data
-	event    string              // Event name to use for unpacking event data
-
-	logs chan types.Log        // Log channel receiving the found contract events
-	sub  ethereum.Subscription // Subscription for errors, completion and termination
-	done bool                  // Whether the subscription completed delivering logs
-	fail error                 // Occurred error to stop iteration
-}
-
-// Next advances the iterator to the subsequent event, returning whether there
-// are any more events found. In case of a retrieval or parsing error, false is
-// returned and Error() can be queried for the exact failure.
-func (it *GPULeaseDepositIterator) Next() bool {
-	// If the iterator failed, stop iterating
-	if it.fail != nil {
-		return false
-	}
-	// If the iterator completed, deliver directly whatever's available
-	if it.done {
-		select {
-		case log := <-it.logs:
-			it.Event = new(GPULeaseDeposit)
-			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-				it.fail = err
-				return false
-			}
-			it.Event.Raw = log
-			return true
-
-		default:
-			return false
-		}
-	}
-	// Iterator still in progress, wait for either a data or an error event
-	select {
-	case log := <-it.logs:
-		it.Event = new(GPULeaseDeposit)
-		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
-			it.fail = err
-			return false
-		}
-		it.Event.Raw = log
-		return true
-
-	case err := <-it.sub.Err():
-		it.done = true
-		it.fail = err
-		return it.Next()
-	}
-}
-
-// Error returns any retrieval or parsing error occurred during filtering.
-func (it *GPULeaseDepositIterator) Error() error {
-	return it.fail
-}
-
-// Close terminates the iteration process, releasing any pending underlying
-// resources.
-func (it *GPULeaseDepositIterator) Close() error {
-	it.sub.Unsubscribe()
-	return nil
-}
-
-// GPULeaseDeposit represents a Deposit event raised by the GPULease contract.
-type GPULeaseDeposit struct {
-	User   common.Address
-	Amount *big.Int
-	Raw    types.Log // Blockchain specific contextual infos
-}
-
-// FilterDeposit is a free log retrieval operation binding the contract event 0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c.
-//
-// Solidity: event Deposit(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) FilterDeposit(opts *bind.FilterOpts, user []common.Address) (*GPULeaseDepositIterator, error) {
-
-	var userRule []interface{}
-	for _, userItem := range user {
-		userRule = append(userRule, userItem)
-	}
-
-	logs, sub, err := _GPULease.contract.FilterLogs(opts, "Deposit", userRule)
-	if err != nil {
-		return nil, err
-	}
-	return &GPULeaseDepositIterator{contract: _GPULease.contract, event: "Deposit", logs: logs, sub: sub}, nil
-}
-
-// WatchDeposit is a free log subscription operation binding the contract event 0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c.
-//
-// Solidity: event Deposit(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) WatchDeposit(opts *bind.WatchOpts, sink chan<- *GPULeaseDeposit, user []common.Address) (event.Subscription, error) {
-
-	var userRule []interface{}
-	for _, userItem := range user {
-		userRule = append(userRule, userItem)
-	}
-
-	logs, sub, err := _GPULease.contract.WatchLogs(opts, "Deposit", userRule)
-	if err != nil {
-		return nil, err
-	}
-	return event.NewSubscription(func(quit <-chan struct{}) error {
-		defer sub.Unsubscribe()
-		for {
-			select {
-			case log := <-logs:
-				// New log arrived, parse the event and forward to the user
-				event := new(GPULeaseDeposit)
-				if err := _GPULease.contract.UnpackLog(event, "Deposit", log); err != nil {
-					return err
-				}
-				event.Raw = log
-
-				select {
-				case sink <- event:
-				case err := <-sub.Err():
-					return err
-				case <-quit:
-					return nil
-				}
-			case err := <-sub.Err():
-				return err
-			case <-quit:
-				return nil
-			}
-		}
-	}), nil
-}
-
-// ParseDeposit is a log parse operation binding the contract event 0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c.
-//
-// Solidity: event Deposit(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) ParseDeposit(log types.Log) (*GPULeaseDeposit, error) {
-	event := new(GPULeaseDeposit)
-	if err := _GPULease.contract.UnpackLog(event, "Deposit", log); err != nil {
-		return nil, err
-	}
-	event.Raw = log
-	return event, nil
 }
 
 // GPULeaseLeaseCompletedIterator is returned from FilterLeaseCompleted and is used to iterate over the raw logs and unpacked data for LeaseCompleted events raised by the GPULease contract.
@@ -1634,9 +1622,9 @@ func (_GPULease *GPULeaseFilterer) ParseOwnershipTransferred(log types.Log) (*GP
 	return event, nil
 }
 
-// GPULeaseWithdrawIterator is returned from FilterWithdraw and is used to iterate over the raw logs and unpacked data for Withdraw events raised by the GPULease contract.
-type GPULeaseWithdrawIterator struct {
-	Event *GPULeaseWithdraw // Event containing the contract specifics and raw log
+// GPULeasePlatformFeeUpdatedIterator is returned from FilterPlatformFeeUpdated and is used to iterate over the raw logs and unpacked data for PlatformFeeUpdated events raised by the GPULease contract.
+type GPULeasePlatformFeeUpdatedIterator struct {
+	Event *GPULeasePlatformFeeUpdated // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -1650,7 +1638,7 @@ type GPULeaseWithdrawIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *GPULeaseWithdrawIterator) Next() bool {
+func (it *GPULeasePlatformFeeUpdatedIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -1659,7 +1647,7 @@ func (it *GPULeaseWithdrawIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(GPULeaseWithdraw)
+			it.Event = new(GPULeasePlatformFeeUpdated)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -1674,7 +1662,7 @@ func (it *GPULeaseWithdrawIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(GPULeaseWithdraw)
+		it.Event = new(GPULeasePlatformFeeUpdated)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -1690,52 +1678,42 @@ func (it *GPULeaseWithdrawIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *GPULeaseWithdrawIterator) Error() error {
+func (it *GPULeasePlatformFeeUpdatedIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *GPULeaseWithdrawIterator) Close() error {
+func (it *GPULeasePlatformFeeUpdatedIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// GPULeaseWithdraw represents a Withdraw event raised by the GPULease contract.
-type GPULeaseWithdraw struct {
-	User   common.Address
-	Amount *big.Int
-	Raw    types.Log // Blockchain specific contextual infos
+// GPULeasePlatformFeeUpdated represents a PlatformFeeUpdated event raised by the GPULease contract.
+type GPULeasePlatformFeeUpdated struct {
+	PreviousFeePercentage *big.Int
+	NewFeePercentage      *big.Int
+	Raw                   types.Log // Blockchain specific contextual infos
 }
 
-// FilterWithdraw is a free log retrieval operation binding the contract event 0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364.
+// FilterPlatformFeeUpdated is a free log retrieval operation binding the contract event 0xd347e206f25a89b917fc9482f1a2d294d749baa4dc9bde7fb495ee11fe491643.
 //
-// Solidity: event Withdraw(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) FilterWithdraw(opts *bind.FilterOpts, user []common.Address) (*GPULeaseWithdrawIterator, error) {
+// Solidity: event PlatformFeeUpdated(uint256 previousFeePercentage, uint256 newFeePercentage)
+func (_GPULease *GPULeaseFilterer) FilterPlatformFeeUpdated(opts *bind.FilterOpts) (*GPULeasePlatformFeeUpdatedIterator, error) {
 
-	var userRule []interface{}
-	for _, userItem := range user {
-		userRule = append(userRule, userItem)
-	}
-
-	logs, sub, err := _GPULease.contract.FilterLogs(opts, "Withdraw", userRule)
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "PlatformFeeUpdated")
 	if err != nil {
 		return nil, err
 	}
-	return &GPULeaseWithdrawIterator{contract: _GPULease.contract, event: "Withdraw", logs: logs, sub: sub}, nil
+	return &GPULeasePlatformFeeUpdatedIterator{contract: _GPULease.contract, event: "PlatformFeeUpdated", logs: logs, sub: sub}, nil
 }
 
-// WatchWithdraw is a free log subscription operation binding the contract event 0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364.
+// WatchPlatformFeeUpdated is a free log subscription operation binding the contract event 0xd347e206f25a89b917fc9482f1a2d294d749baa4dc9bde7fb495ee11fe491643.
 //
-// Solidity: event Withdraw(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) WatchWithdraw(opts *bind.WatchOpts, sink chan<- *GPULeaseWithdraw, user []common.Address) (event.Subscription, error) {
+// Solidity: event PlatformFeeUpdated(uint256 previousFeePercentage, uint256 newFeePercentage)
+func (_GPULease *GPULeaseFilterer) WatchPlatformFeeUpdated(opts *bind.WatchOpts, sink chan<- *GPULeasePlatformFeeUpdated) (event.Subscription, error) {
 
-	var userRule []interface{}
-	for _, userItem := range user {
-		userRule = append(userRule, userItem)
-	}
-
-	logs, sub, err := _GPULease.contract.WatchLogs(opts, "Withdraw", userRule)
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "PlatformFeeUpdated")
 	if err != nil {
 		return nil, err
 	}
@@ -1745,8 +1723,8 @@ func (_GPULease *GPULeaseFilterer) WatchWithdraw(opts *bind.WatchOpts, sink chan
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(GPULeaseWithdraw)
-				if err := _GPULease.contract.UnpackLog(event, "Withdraw", log); err != nil {
+				event := new(GPULeasePlatformFeeUpdated)
+				if err := _GPULease.contract.UnpackLog(event, "PlatformFeeUpdated", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1767,12 +1745,454 @@ func (_GPULease *GPULeaseFilterer) WatchWithdraw(opts *bind.WatchOpts, sink chan
 	}), nil
 }
 
-// ParseWithdraw is a log parse operation binding the contract event 0x884edad9ce6fa2440d8a54cc123490eb96d2768479d49ff9c7366125a9424364.
+// ParsePlatformFeeUpdated is a log parse operation binding the contract event 0xd347e206f25a89b917fc9482f1a2d294d749baa4dc9bde7fb495ee11fe491643.
 //
-// Solidity: event Withdraw(address indexed user, uint256 amount)
-func (_GPULease *GPULeaseFilterer) ParseWithdraw(log types.Log) (*GPULeaseWithdraw, error) {
-	event := new(GPULeaseWithdraw)
-	if err := _GPULease.contract.UnpackLog(event, "Withdraw", log); err != nil {
+// Solidity: event PlatformFeeUpdated(uint256 previousFeePercentage, uint256 newFeePercentage)
+func (_GPULease *GPULeaseFilterer) ParsePlatformFeeUpdated(log types.Log) (*GPULeasePlatformFeeUpdated, error) {
+	event := new(GPULeasePlatformFeeUpdated)
+	if err := _GPULease.contract.UnpackLog(event, "PlatformFeeUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseReferralManagerUpdatedIterator is returned from FilterReferralManagerUpdated and is used to iterate over the raw logs and unpacked data for ReferralManagerUpdated events raised by the GPULease contract.
+type GPULeaseReferralManagerUpdatedIterator struct {
+	Event *GPULeaseReferralManagerUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseReferralManagerUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseReferralManagerUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseReferralManagerUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseReferralManagerUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseReferralManagerUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseReferralManagerUpdated represents a ReferralManagerUpdated event raised by the GPULease contract.
+type GPULeaseReferralManagerUpdated struct {
+	PreviousManager common.Address
+	NewManager      common.Address
+	Raw             types.Log // Blockchain specific contextual infos
+}
+
+// FilterReferralManagerUpdated is a free log retrieval operation binding the contract event 0x8fb6763bbb7019b7a1b61a1fcf72799033d91373edd63d44a6304d464fe903e6.
+//
+// Solidity: event ReferralManagerUpdated(address indexed previousManager, address indexed newManager)
+func (_GPULease *GPULeaseFilterer) FilterReferralManagerUpdated(opts *bind.FilterOpts, previousManager []common.Address, newManager []common.Address) (*GPULeaseReferralManagerUpdatedIterator, error) {
+
+	var previousManagerRule []interface{}
+	for _, previousManagerItem := range previousManager {
+		previousManagerRule = append(previousManagerRule, previousManagerItem)
+	}
+	var newManagerRule []interface{}
+	for _, newManagerItem := range newManager {
+		newManagerRule = append(newManagerRule, newManagerItem)
+	}
+
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "ReferralManagerUpdated", previousManagerRule, newManagerRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseReferralManagerUpdatedIterator{contract: _GPULease.contract, event: "ReferralManagerUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchReferralManagerUpdated is a free log subscription operation binding the contract event 0x8fb6763bbb7019b7a1b61a1fcf72799033d91373edd63d44a6304d464fe903e6.
+//
+// Solidity: event ReferralManagerUpdated(address indexed previousManager, address indexed newManager)
+func (_GPULease *GPULeaseFilterer) WatchReferralManagerUpdated(opts *bind.WatchOpts, sink chan<- *GPULeaseReferralManagerUpdated, previousManager []common.Address, newManager []common.Address) (event.Subscription, error) {
+
+	var previousManagerRule []interface{}
+	for _, previousManagerItem := range previousManager {
+		previousManagerRule = append(previousManagerRule, previousManagerItem)
+	}
+	var newManagerRule []interface{}
+	for _, newManagerItem := range newManager {
+		newManagerRule = append(newManagerRule, newManagerItem)
+	}
+
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "ReferralManagerUpdated", previousManagerRule, newManagerRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseReferralManagerUpdated)
+				if err := _GPULease.contract.UnpackLog(event, "ReferralManagerUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseReferralManagerUpdated is a log parse operation binding the contract event 0x8fb6763bbb7019b7a1b61a1fcf72799033d91373edd63d44a6304d464fe903e6.
+//
+// Solidity: event ReferralManagerUpdated(address indexed previousManager, address indexed newManager)
+func (_GPULease *GPULeaseFilterer) ParseReferralManagerUpdated(log types.Log) (*GPULeaseReferralManagerUpdated, error) {
+	event := new(GPULeaseReferralManagerUpdated)
+	if err := _GPULease.contract.UnpackLog(event, "ReferralManagerUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseUserFeeClearedIterator is returned from FilterUserFeeCleared and is used to iterate over the raw logs and unpacked data for UserFeeCleared events raised by the GPULease contract.
+type GPULeaseUserFeeClearedIterator struct {
+	Event *GPULeaseUserFeeCleared // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseUserFeeClearedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseUserFeeCleared)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseUserFeeCleared)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseUserFeeClearedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseUserFeeClearedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseUserFeeCleared represents a UserFeeCleared event raised by the GPULease contract.
+type GPULeaseUserFeeCleared struct {
+	User common.Address
+	Raw  types.Log // Blockchain specific contextual infos
+}
+
+// FilterUserFeeCleared is a free log retrieval operation binding the contract event 0xdd35a637cf2e753ff8db76de0e69ba771854c070874289c1d4d0698178144177.
+//
+// Solidity: event UserFeeCleared(address indexed user)
+func (_GPULease *GPULeaseFilterer) FilterUserFeeCleared(opts *bind.FilterOpts, user []common.Address) (*GPULeaseUserFeeClearedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "UserFeeCleared", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseUserFeeClearedIterator{contract: _GPULease.contract, event: "UserFeeCleared", logs: logs, sub: sub}, nil
+}
+
+// WatchUserFeeCleared is a free log subscription operation binding the contract event 0xdd35a637cf2e753ff8db76de0e69ba771854c070874289c1d4d0698178144177.
+//
+// Solidity: event UserFeeCleared(address indexed user)
+func (_GPULease *GPULeaseFilterer) WatchUserFeeCleared(opts *bind.WatchOpts, sink chan<- *GPULeaseUserFeeCleared, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "UserFeeCleared", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseUserFeeCleared)
+				if err := _GPULease.contract.UnpackLog(event, "UserFeeCleared", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUserFeeCleared is a log parse operation binding the contract event 0xdd35a637cf2e753ff8db76de0e69ba771854c070874289c1d4d0698178144177.
+//
+// Solidity: event UserFeeCleared(address indexed user)
+func (_GPULease *GPULeaseFilterer) ParseUserFeeCleared(log types.Log) (*GPULeaseUserFeeCleared, error) {
+	event := new(GPULeaseUserFeeCleared)
+	if err := _GPULease.contract.UnpackLog(event, "UserFeeCleared", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseUserFeeUpdatedIterator is returned from FilterUserFeeUpdated and is used to iterate over the raw logs and unpacked data for UserFeeUpdated events raised by the GPULease contract.
+type GPULeaseUserFeeUpdatedIterator struct {
+	Event *GPULeaseUserFeeUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseUserFeeUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseUserFeeUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseUserFeeUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseUserFeeUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseUserFeeUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseUserFeeUpdated represents a UserFeeUpdated event raised by the GPULease contract.
+type GPULeaseUserFeeUpdated struct {
+	User          common.Address
+	FeePercentage *big.Int
+	Raw           types.Log // Blockchain specific contextual infos
+}
+
+// FilterUserFeeUpdated is a free log retrieval operation binding the contract event 0x4a8c85f9ead8a36e5bfa09e1d7b5f83286089f8bb79e4cb0668049659c8cc919.
+//
+// Solidity: event UserFeeUpdated(address indexed user, uint256 feePercentage)
+func (_GPULease *GPULeaseFilterer) FilterUserFeeUpdated(opts *bind.FilterOpts, user []common.Address) (*GPULeaseUserFeeUpdatedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "UserFeeUpdated", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseUserFeeUpdatedIterator{contract: _GPULease.contract, event: "UserFeeUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchUserFeeUpdated is a free log subscription operation binding the contract event 0x4a8c85f9ead8a36e5bfa09e1d7b5f83286089f8bb79e4cb0668049659c8cc919.
+//
+// Solidity: event UserFeeUpdated(address indexed user, uint256 feePercentage)
+func (_GPULease *GPULeaseFilterer) WatchUserFeeUpdated(opts *bind.WatchOpts, sink chan<- *GPULeaseUserFeeUpdated, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "UserFeeUpdated", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseUserFeeUpdated)
+				if err := _GPULease.contract.UnpackLog(event, "UserFeeUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUserFeeUpdated is a log parse operation binding the contract event 0x4a8c85f9ead8a36e5bfa09e1d7b5f83286089f8bb79e4cb0668049659c8cc919.
+//
+// Solidity: event UserFeeUpdated(address indexed user, uint256 feePercentage)
+func (_GPULease *GPULeaseFilterer) ParseUserFeeUpdated(log types.Log) (*GPULeaseUserFeeUpdated, error) {
+	event := new(GPULeaseUserFeeUpdated)
+	if err := _GPULease.contract.UnpackLog(event, "UserFeeUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

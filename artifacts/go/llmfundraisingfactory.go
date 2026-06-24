@@ -31,7 +31,7 @@ var (
 
 // LLMFundraisingFactoryMetaData contains all meta data concerning the LLMFundraisingFactory contract.
 var LLMFundraisingFactoryMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_usdc\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_gpuLease\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"targetAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startTimestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"templateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"}],\"name\":\"CampaignCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"name\":\"CampaignParticipantRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"campaignById\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"campaigns\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"}],\"name\":\"campaignsByCreator\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"campaignsByParticipant\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"templateId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"}],\"name\":\"createCampaign\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gpuLease\",\"outputs\":[{\"internalType\":\"contractIGPULease\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"name\":\"hasParticipatedInCampaign\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isCampaign\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextCampaignId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"participantCampaignAt\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"participantCampaignsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"registerParticipant\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"usdc\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_usdc\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_gpuLeaseWallet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_metadataRenderer\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"FailedDeployment\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"needed\",\"type\":\"uint256\"}],\"name\":\"InsufficientBalance\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"targetAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startTimestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"templateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"}],\"name\":\"CampaignCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"name\":\"CampaignParticipantRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"campaignById\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignImplementation\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"campaigns\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"}],\"name\":\"campaignsByCreator\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"campaignsByParticipant\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"targetAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"templateId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"}],\"name\":\"createCampaign\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"campaignId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gpuLeaseWallet\",\"outputs\":[{\"internalType\":\"contractIGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"campaign\",\"type\":\"address\"}],\"name\":\"hasParticipatedInCampaign\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isCampaign\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"metadataRenderer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextCampaignId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"participantCampaignAt\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"participantCampaignsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"registerParticipant\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"usdc\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // LLMFundraisingFactoryABI is the input ABI used to generate the binding from.
@@ -211,6 +211,37 @@ func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) CampaignById(a
 	return _LLMFundraisingFactory.Contract.CampaignById(&_LLMFundraisingFactory.CallOpts, arg0)
 }
 
+// CampaignImplementation is a free data retrieval call binding the contract method 0x62a6e065.
+//
+// Solidity: function campaignImplementation() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCaller) CampaignImplementation(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _LLMFundraisingFactory.contract.Call(opts, &out, "campaignImplementation")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// CampaignImplementation is a free data retrieval call binding the contract method 0x62a6e065.
+//
+// Solidity: function campaignImplementation() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactorySession) CampaignImplementation() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.CampaignImplementation(&_LLMFundraisingFactory.CallOpts)
+}
+
+// CampaignImplementation is a free data retrieval call binding the contract method 0x62a6e065.
+//
+// Solidity: function campaignImplementation() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) CampaignImplementation() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.CampaignImplementation(&_LLMFundraisingFactory.CallOpts)
+}
+
 // Campaigns is a free data retrieval call binding the contract method 0x141961bc.
 //
 // Solidity: function campaigns(uint256 ) view returns(address)
@@ -335,12 +366,12 @@ func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) CampaignsCount
 	return _LLMFundraisingFactory.Contract.CampaignsCount(&_LLMFundraisingFactory.CallOpts)
 }
 
-// GpuLease is a free data retrieval call binding the contract method 0x3358970b.
+// GpuLeaseWallet is a free data retrieval call binding the contract method 0x2b350856.
 //
-// Solidity: function gpuLease() view returns(address)
-func (_LLMFundraisingFactory *LLMFundraisingFactoryCaller) GpuLease(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function gpuLeaseWallet() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCaller) GpuLeaseWallet(opts *bind.CallOpts) (common.Address, error) {
 	var out []interface{}
-	err := _LLMFundraisingFactory.contract.Call(opts, &out, "gpuLease")
+	err := _LLMFundraisingFactory.contract.Call(opts, &out, "gpuLeaseWallet")
 
 	if err != nil {
 		return *new(common.Address), err
@@ -352,18 +383,18 @@ func (_LLMFundraisingFactory *LLMFundraisingFactoryCaller) GpuLease(opts *bind.C
 
 }
 
-// GpuLease is a free data retrieval call binding the contract method 0x3358970b.
+// GpuLeaseWallet is a free data retrieval call binding the contract method 0x2b350856.
 //
-// Solidity: function gpuLease() view returns(address)
-func (_LLMFundraisingFactory *LLMFundraisingFactorySession) GpuLease() (common.Address, error) {
-	return _LLMFundraisingFactory.Contract.GpuLease(&_LLMFundraisingFactory.CallOpts)
+// Solidity: function gpuLeaseWallet() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactorySession) GpuLeaseWallet() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.GpuLeaseWallet(&_LLMFundraisingFactory.CallOpts)
 }
 
-// GpuLease is a free data retrieval call binding the contract method 0x3358970b.
+// GpuLeaseWallet is a free data retrieval call binding the contract method 0x2b350856.
 //
-// Solidity: function gpuLease() view returns(address)
-func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) GpuLease() (common.Address, error) {
-	return _LLMFundraisingFactory.Contract.GpuLease(&_LLMFundraisingFactory.CallOpts)
+// Solidity: function gpuLeaseWallet() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) GpuLeaseWallet() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.GpuLeaseWallet(&_LLMFundraisingFactory.CallOpts)
 }
 
 // HasParticipatedInCampaign is a free data retrieval call binding the contract method 0x9b287abb.
@@ -426,6 +457,37 @@ func (_LLMFundraisingFactory *LLMFundraisingFactorySession) IsCampaign(arg0 comm
 // Solidity: function isCampaign(address ) view returns(bool)
 func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) IsCampaign(arg0 common.Address) (bool, error) {
 	return _LLMFundraisingFactory.Contract.IsCampaign(&_LLMFundraisingFactory.CallOpts, arg0)
+}
+
+// MetadataRenderer is a free data retrieval call binding the contract method 0x70319970.
+//
+// Solidity: function metadataRenderer() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCaller) MetadataRenderer(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _LLMFundraisingFactory.contract.Call(opts, &out, "metadataRenderer")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// MetadataRenderer is a free data retrieval call binding the contract method 0x70319970.
+//
+// Solidity: function metadataRenderer() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactorySession) MetadataRenderer() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.MetadataRenderer(&_LLMFundraisingFactory.CallOpts)
+}
+
+// MetadataRenderer is a free data retrieval call binding the contract method 0x70319970.
+//
+// Solidity: function metadataRenderer() view returns(address)
+func (_LLMFundraisingFactory *LLMFundraisingFactoryCallerSession) MetadataRenderer() (common.Address, error) {
+	return _LLMFundraisingFactory.Contract.MetadataRenderer(&_LLMFundraisingFactory.CallOpts)
 }
 
 // NextCampaignId is a free data retrieval call binding the contract method 0x7903a756.
