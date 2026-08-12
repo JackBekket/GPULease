@@ -2,6 +2,16 @@
 
 Короткий гайд для backend-интеграции с текущей архитектурой GPULease.
 
+Актуальный Base deployment на 2026-08-12T11:45:55Z:
+
+- `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
+- `GPULeaseWallet`: `0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`
+- `GPULeaseReferral`: `0x2695d98bF8b233539f5a1Fb823298AA055f2a143`
+
+Предыдущий `GPULease` `0xB6E47Eb260160BD6A18A246CC0b27D9240706401`
+выведен из эксплуатации 2026-08-12T11:45:55Z. Новые аренды нужно создавать
+только на актуальном адресе.
+
 ## Что Хранить В Конфиге
 
 Backend должен хранить адреса:
@@ -79,7 +89,8 @@ const balance = await gpuLeaseWallet.balances(userAddress);
 ### Запустить Аренду
 
 ```ts
-await gpuLease.startLease(
+await gpuLease["startLease(uint256,uint256,uint256,uint256,address,address)"](
+  startTimestamp,
   duration,
   storagePricePerSecond,
   computePricePerSecond,
@@ -87,6 +98,12 @@ await gpuLease.startLease(
   userAddress
 );
 ```
+
+`startTimestamp` должен быть положительным Unix timestamp и не может быть в
+будущем. От `startTimestamp` до timestamp транзакции `startLease` начисляется
+только storage. Timestamp транзакции сохраняется в
+`leaseActivationTime[leaseId]`; после него начисляются storage и compute.
+`duration` отсчитывается от `startTimestamp`.
 
 Что происходит:
 
@@ -348,7 +365,7 @@ data:application/json;base64,...
 
 ### GPULease
 
-- `LeaseStarted(leaseId, user, provider, duration, amount)`
+- `LeaseStarted(leaseId, user, provider, startTimestamp, activationTimestamp, duration, amount)`
 - `LeaseCompleted(leaseId)`
 - `LeasePaused(leaseId)`
 - `LeaseResumed(leaseId)`
@@ -462,7 +479,9 @@ function setUserFee(address user, uint256 feePercentage);
 function clearUserFee(address user);
 function setReferralManager(address newReferralManager);
 function setTreasury(address newTreasury);
-function startLease(uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, address provider, address user);
+function startLease(uint256 startTimestamp, uint256 duration, uint256 storagePricePerSecond, uint256 computePricePerSecond, address provider, address user);
+function leaseActivationTime(uint256 leaseId) view returns (uint256);
+function calculateActualCost(uint256 leaseId) view returns (uint256 storageCost, uint256 computeCost);
 function pauseLease(uint256 leaseId);
 function resumeLease(uint256 leaseId);
 function completeLease(uint256 leaseId);

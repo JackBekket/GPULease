@@ -12,6 +12,28 @@ describe("GPULease duration edge cases", function () {
   let wallet: any;
   let lease: any;
 
+  async function startLeaseNow(
+    target: any,
+    duration: number,
+    storagePricePerSecond: bigint,
+    computePricePerSecond: bigint,
+    providerAddress: string,
+    userAddress: string
+  ) {
+    const block = await ethers.provider.getBlock("latest");
+    if (!block) throw new Error("Cannot fetch latest block");
+    const startTimestamp = block.timestamp + 1;
+    await ethers.provider.send("evm_setNextBlockTimestamp", [startTimestamp]);
+    return target.startLease(
+      startTimestamp,
+      duration,
+      storagePricePerSecond,
+      computePricePerSecond,
+      providerAddress,
+      userAddress
+    );
+  }
+
   beforeEach(async () => {
     [owner, user, provider, treasury] = await ethers.getSigners();
 
@@ -38,16 +60,27 @@ describe("GPULease duration edge cases", function () {
   
     const now = block.timestamp;
   
-    let elapsed = now - Number(info.startTime);
-    if (elapsed > Number(info.duration)) elapsed = Number(info.duration);
+    let storageDuration = now - Number(info.startTime);
+    if (storageDuration > Number(info.duration)) {
+      storageDuration = Number(info.duration);
+    }
+
+    const activationTime = Number(await lease.leaseActivationTime(leaseId));
+    const calculationTime = Math.min(
+      now,
+      Number(info.startTime) + Number(info.duration)
+    );
+    const computeDuration = Math.max(0, calculationTime - activationTime);
   
     let totalPaused = Number(info.pausedDuration);
-    if (info.paused) totalPaused += now - Number(info.pausedAt);
-    if (totalPaused > elapsed) totalPaused = elapsed;
+    if (info.paused && calculationTime > Number(info.pausedAt)) {
+      totalPaused += calculationTime - Number(info.pausedAt);
+    }
+    if (totalPaused > computeDuration) totalPaused = computeDuration;
   
-    const activeDuration = elapsed - totalPaused;
+    const activeDuration = computeDuration - totalPaused;
   
-    const actualStorageCost = BigInt(elapsed) * BigInt(info.storagePricePerSecond);
+    const actualStorageCost = BigInt(storageDuration) * BigInt(info.storagePricePerSecond);
     const actualComputeCost = BigInt(activeDuration) * BigInt(info.computePricePerSecond);
     const actualTotal = actualStorageCost + actualComputeCost;
   
@@ -61,7 +94,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     // fast-forward чуть меньше duration
     await ethers.provider.send("evm_increaseTime", [900]);
@@ -78,7 +111,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     await lease.pauseLease(0);
     await ethers.provider.send("evm_increaseTime", [400]);
@@ -98,7 +131,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     // fast-forward больше duration
     await ethers.provider.send("evm_increaseTime", [1500]);
@@ -115,7 +148,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     await lease.pauseLease(0);
     await ethers.provider.send("evm_increaseTime", [500]);
@@ -135,7 +168,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     await lease.pauseLease(0);
     await ethers.provider.send("evm_increaseTime", [700]);
@@ -152,7 +185,7 @@ describe("GPULease duration edge cases", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(duration, price, price, provider.address, user.address);
+    await startLeaseNow(lease, duration, price, price, provider.address, user.address);
 
     await lease.pauseLease(0);
     await ethers.provider.send("evm_increaseTime", [1500]);

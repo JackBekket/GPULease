@@ -15,7 +15,7 @@ export interface ICampaignMetadataRenderer$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/Campaign.sol";
-  readonly buildInfoId: "solc-0_8_31-8e38037669a08b4b81875fdb139ccc02705400f8";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 export interface ICampaignParticipantRegistry$Type {
@@ -29,7 +29,7 @@ export interface ICampaignParticipantRegistry$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/Campaign.sol";
-  readonly buildInfoId: "solc-0_8_31-8e38037669a08b4b81875fdb139ccc02705400f8";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 export interface IGPULeaseWallet$Type {
@@ -43,7 +43,7 @@ export interface IGPULeaseWallet$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/Campaign.sol";
-  readonly buildInfoId: "solc-0_8_31-8e38037669a08b4b81875fdb139ccc02705400f8";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 export interface LLMFundraising$Type {
@@ -57,7 +57,7 @@ export interface LLMFundraising$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/Campaign.sol";
-  readonly buildInfoId: "solc-0_8_31-8e38037669a08b4b81875fdb139ccc02705400f8";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 import "hardhat/types/artifacts";

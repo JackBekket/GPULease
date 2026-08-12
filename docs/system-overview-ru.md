@@ -1,5 +1,9 @@
 # Обзор системы GPULease
 
+Актуальный Base `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
+(обновлен 2026-08-12T11:45:55Z). Постоянный `GPULeaseWallet`:
+`0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`.
+
 Этот документ описывает текущую архитектуру GPULease, денежные потоки, модель обновлений и публичные/внешние функции контрактов.
 
 ## Общая Архитектура
@@ -174,7 +178,7 @@ Owner / backend
 - `UserFeeUpdated(user, feePercentage)`
 - `UserFeeCleared(user)`
 - `ReferralManagerUpdated(previousManager, newManager)`
-- `LeaseStarted(leaseId, user, provider, duration, amount)`
+- `LeaseStarted(leaseId, user, provider, startTimestamp, activationTimestamp, duration, amount)`
 - `LeaseCompleted(leaseId)`
 - `LeasePaused(leaseId)`
 - `LeaseResumed(leaseId)`
@@ -208,7 +212,8 @@ Admin-функции:
 
 Функции жизненного цикла lease:
 
-- `startLease(duration, storagePricePerSecond, computePricePerSecond, provider, user) onlyOwner returns (leaseId)`
+- `startLease(startTimestamp, duration, storagePricePerSecond, computePricePerSecond, provider, user) onlyOwner returns (leaseId)`
+  - Требует положительный `startTimestamp`, который не находится в будущем.
   - Требует положительный duration.
   - Требует, чтобы хотя бы одна цена была больше нуля.
   - Требует non-zero user и provider.
@@ -218,6 +223,10 @@ Admin-функции:
     - `frozen = base + fee`
   - Фиксирует текущий referrer и referral share для lease.
   - Списывает баланс пользователя и сохраняет frozen funds.
+  - От `startTimestamp` до on-chain активации начисляет только storage.
+  - Сохраняет timestamp активации в `leaseActivationTime[leaseId]`.
+  - После активации начисляет storage и compute; паузы вычитаются из compute.
+  - Общий `duration` отсчитывается от `startTimestamp`.
   - Создает активный lease.
 
 - `pauseLease(uint leaseId) onlyOwner`
@@ -249,7 +258,7 @@ Internal-функции:
 - `_startLease(LeaseRequest request)`
   - Internal implementation для `startLease`.
 
-- `calculateActualCost(uint leaseId) internal view`
+- `calculateActualCost(uint leaseId) public view`
   - Считает фактическую стоимость storage и compute.
 
 - `_referralInfoForLease(address user) internal view`

@@ -15,7 +15,7 @@ export interface CampaignMetadataRenderer$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/CampaignMetadataRenderer.sol";
-  readonly buildInfoId: "solc-0_8_31-d0c8f6c5583185c17f649e978723da32242b1841";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 import "hardhat/types/artifacts";

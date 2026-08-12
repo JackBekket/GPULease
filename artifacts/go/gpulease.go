@@ -37,7 +37,7 @@ type GPULeaseFrozenFundsInfo struct {
 
 // GPULeaseMetaData contains all meta data concerning the GPULease contract.
 var GPULeaseMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"wallet_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"treasury_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeasePaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseResumed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"LeaseStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"previousFeePercentage\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newFeePercentage\",\"type\":\"uint256\"}],\"name\":\"PlatformFeeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousManager\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"ReferralManagerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"UserFeeCleared\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feePercentage\",\"type\":\"uint256\"}],\"name\":\"UserFeeUpdated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"clearUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"completeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"feePercentageForUser\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"frozenFunds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserFrozenFunds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"internalType\":\"structGPULease.FrozenFundsInfo[]\",\"name\":\"result\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"hasCustomUserFee\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseReferralInfo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"referrer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"referralShareBps\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leases\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"leaseFeePercentage\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"paused\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"pausedAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"pausedDuration\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"pauseLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"platformFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"referralManager\",\"outputs\":[{\"internalType\":\"contractIGPULeaseReferral\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"resumeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setPlatformFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newReferralManager\",\"type\":\"address\"}],\"name\":\"setReferralManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newTreasury\",\"type\":\"address\"}],\"name\":\"setTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_provider\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"startLease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"treasury\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"userActiveLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"wallet\",\"outputs\":[{\"internalType\":\"contractGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"wallet_\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"treasury_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseCompleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeasePaused\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"name\":\"LeaseResumed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"providerAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"platformFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"referralAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"settledAt\",\"type\":\"uint256\"}],\"name\":\"LeaseSettled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"startTimestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"activationTimestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"LeaseStarted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"previousFeePercentage\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newFeePercentage\",\"type\":\"uint256\"}],\"name\":\"PlatformFeeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousManager\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"ReferralManagerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOperator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOperator\",\"type\":\"address\"}],\"name\":\"SettlementOperatorUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"UserFeeCleared\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"feePercentage\",\"type\":\"uint256\"}],\"name\":\"UserFeeUpdated\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"MAX_SETTLEMENT_BATCH_SIZE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SETTLEMENT_INTERVAL\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"calculateActualCost\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"actualStorageCost\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"actualComputeCost\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"clearUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"completeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"feePercentageForUser\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"frozenFunds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserFrozenFunds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"internalType\":\"structGPULease.FrozenFundsInfo[]\",\"name\":\"result\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"hasCustomUserFee\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"isSettlementDue\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseActivationTime\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseReferralInfo\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"referrer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"referralShareBps\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leaseSettlements\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"providerPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feePaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"referralPaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastSettledAt\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"leases\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"leaseFeePercentage\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"completed\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"paused\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"pausedAt\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"pausedDuration\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"pauseLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"platformFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"referralManager\",\"outputs\":[{\"internalType\":\"contractIGPULeaseReferral\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"resumeLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setPlatformFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newReferralManager\",\"type\":\"address\"}],\"name\":\"setReferralManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newSettlementOperator\",\"type\":\"address\"}],\"name\":\"setSettlementOperator\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newTreasury\",\"type\":\"address\"}],\"name\":\"setTreasury\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_feePercentage\",\"type\":\"uint256\"}],\"name\":\"setUserFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"settleLease\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"leaseIds\",\"type\":\"uint256[]\"}],\"name\":\"settleLeases\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_leaseId\",\"type\":\"uint256\"}],\"name\":\"settlementEntitlement\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"providerEarned\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"feeEarned\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"referralEarned\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"settlementOperator\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_startTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_storagePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_computePricePerSecond\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_provider\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"startLease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"leaseId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"treasury\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"userActiveLeases\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userFeePercentage\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"wallet\",\"outputs\":[{\"internalType\":\"contractGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // GPULeaseABI is the input ABI used to generate the binding from.
@@ -186,6 +186,113 @@ func (_GPULease *GPULeaseTransactorRaw) Transact(opts *bind.TransactOpts, method
 	return _GPULease.Contract.contract.Transact(opts, method, params...)
 }
 
+// MAXSETTLEMENTBATCHSIZE is a free data retrieval call binding the contract method 0xa38e3d5e.
+//
+// Solidity: function MAX_SETTLEMENT_BATCH_SIZE() view returns(uint256)
+func (_GPULease *GPULeaseCaller) MAXSETTLEMENTBATCHSIZE(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "MAX_SETTLEMENT_BATCH_SIZE")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// MAXSETTLEMENTBATCHSIZE is a free data retrieval call binding the contract method 0xa38e3d5e.
+//
+// Solidity: function MAX_SETTLEMENT_BATCH_SIZE() view returns(uint256)
+func (_GPULease *GPULeaseSession) MAXSETTLEMENTBATCHSIZE() (*big.Int, error) {
+	return _GPULease.Contract.MAXSETTLEMENTBATCHSIZE(&_GPULease.CallOpts)
+}
+
+// MAXSETTLEMENTBATCHSIZE is a free data retrieval call binding the contract method 0xa38e3d5e.
+//
+// Solidity: function MAX_SETTLEMENT_BATCH_SIZE() view returns(uint256)
+func (_GPULease *GPULeaseCallerSession) MAXSETTLEMENTBATCHSIZE() (*big.Int, error) {
+	return _GPULease.Contract.MAXSETTLEMENTBATCHSIZE(&_GPULease.CallOpts)
+}
+
+// SETTLEMENTINTERVAL is a free data retrieval call binding the contract method 0x7ab813da.
+//
+// Solidity: function SETTLEMENT_INTERVAL() view returns(uint256)
+func (_GPULease *GPULeaseCaller) SETTLEMENTINTERVAL(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "SETTLEMENT_INTERVAL")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// SETTLEMENTINTERVAL is a free data retrieval call binding the contract method 0x7ab813da.
+//
+// Solidity: function SETTLEMENT_INTERVAL() view returns(uint256)
+func (_GPULease *GPULeaseSession) SETTLEMENTINTERVAL() (*big.Int, error) {
+	return _GPULease.Contract.SETTLEMENTINTERVAL(&_GPULease.CallOpts)
+}
+
+// SETTLEMENTINTERVAL is a free data retrieval call binding the contract method 0x7ab813da.
+//
+// Solidity: function SETTLEMENT_INTERVAL() view returns(uint256)
+func (_GPULease *GPULeaseCallerSession) SETTLEMENTINTERVAL() (*big.Int, error) {
+	return _GPULease.Contract.SETTLEMENTINTERVAL(&_GPULease.CallOpts)
+}
+
+// CalculateActualCost is a free data retrieval call binding the contract method 0x418541c5.
+//
+// Solidity: function calculateActualCost(uint256 _leaseId) view returns(uint256 actualStorageCost, uint256 actualComputeCost)
+func (_GPULease *GPULeaseCaller) CalculateActualCost(opts *bind.CallOpts, _leaseId *big.Int) (struct {
+	ActualStorageCost *big.Int
+	ActualComputeCost *big.Int
+}, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "calculateActualCost", _leaseId)
+
+	outstruct := new(struct {
+		ActualStorageCost *big.Int
+		ActualComputeCost *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.ActualStorageCost = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.ActualComputeCost = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
+}
+
+// CalculateActualCost is a free data retrieval call binding the contract method 0x418541c5.
+//
+// Solidity: function calculateActualCost(uint256 _leaseId) view returns(uint256 actualStorageCost, uint256 actualComputeCost)
+func (_GPULease *GPULeaseSession) CalculateActualCost(_leaseId *big.Int) (struct {
+	ActualStorageCost *big.Int
+	ActualComputeCost *big.Int
+}, error) {
+	return _GPULease.Contract.CalculateActualCost(&_GPULease.CallOpts, _leaseId)
+}
+
+// CalculateActualCost is a free data retrieval call binding the contract method 0x418541c5.
+//
+// Solidity: function calculateActualCost(uint256 _leaseId) view returns(uint256 actualStorageCost, uint256 actualComputeCost)
+func (_GPULease *GPULeaseCallerSession) CalculateActualCost(_leaseId *big.Int) (struct {
+	ActualStorageCost *big.Int
+	ActualComputeCost *big.Int
+}, error) {
+	return _GPULease.Contract.CalculateActualCost(&_GPULease.CallOpts, _leaseId)
+}
+
 // FeePercentageForUser is a free data retrieval call binding the contract method 0xa8f4214e.
 //
 // Solidity: function feePercentageForUser(address user) view returns(uint256)
@@ -310,6 +417,68 @@ func (_GPULease *GPULeaseCallerSession) HasCustomUserFee(arg0 common.Address) (b
 	return _GPULease.Contract.HasCustomUserFee(&_GPULease.CallOpts, arg0)
 }
 
+// IsSettlementDue is a free data retrieval call binding the contract method 0xe254aa06.
+//
+// Solidity: function isSettlementDue(uint256 _leaseId) view returns(bool)
+func (_GPULease *GPULeaseCaller) IsSettlementDue(opts *bind.CallOpts, _leaseId *big.Int) (bool, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "isSettlementDue", _leaseId)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// IsSettlementDue is a free data retrieval call binding the contract method 0xe254aa06.
+//
+// Solidity: function isSettlementDue(uint256 _leaseId) view returns(bool)
+func (_GPULease *GPULeaseSession) IsSettlementDue(_leaseId *big.Int) (bool, error) {
+	return _GPULease.Contract.IsSettlementDue(&_GPULease.CallOpts, _leaseId)
+}
+
+// IsSettlementDue is a free data retrieval call binding the contract method 0xe254aa06.
+//
+// Solidity: function isSettlementDue(uint256 _leaseId) view returns(bool)
+func (_GPULease *GPULeaseCallerSession) IsSettlementDue(_leaseId *big.Int) (bool, error) {
+	return _GPULease.Contract.IsSettlementDue(&_GPULease.CallOpts, _leaseId)
+}
+
+// LeaseActivationTime is a free data retrieval call binding the contract method 0x81ccee96.
+//
+// Solidity: function leaseActivationTime(uint256 ) view returns(uint256)
+func (_GPULease *GPULeaseCaller) LeaseActivationTime(opts *bind.CallOpts, arg0 *big.Int) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "leaseActivationTime", arg0)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// LeaseActivationTime is a free data retrieval call binding the contract method 0x81ccee96.
+//
+// Solidity: function leaseActivationTime(uint256 ) view returns(uint256)
+func (_GPULease *GPULeaseSession) LeaseActivationTime(arg0 *big.Int) (*big.Int, error) {
+	return _GPULease.Contract.LeaseActivationTime(&_GPULease.CallOpts, arg0)
+}
+
+// LeaseActivationTime is a free data retrieval call binding the contract method 0x81ccee96.
+//
+// Solidity: function leaseActivationTime(uint256 ) view returns(uint256)
+func (_GPULease *GPULeaseCallerSession) LeaseActivationTime(arg0 *big.Int) (*big.Int, error) {
+	return _GPULease.Contract.LeaseActivationTime(&_GPULease.CallOpts, arg0)
+}
+
 // LeaseCount is a free data retrieval call binding the contract method 0xb4c0498b.
 //
 // Solidity: function leaseCount() view returns(uint256)
@@ -384,6 +553,61 @@ func (_GPULease *GPULeaseCallerSession) LeaseReferralInfo(arg0 *big.Int) (struct
 	ReferralShareBps *big.Int
 }, error) {
 	return _GPULease.Contract.LeaseReferralInfo(&_GPULease.CallOpts, arg0)
+}
+
+// LeaseSettlements is a free data retrieval call binding the contract method 0x8aabe545.
+//
+// Solidity: function leaseSettlements(uint256 ) view returns(uint256 providerPaid, uint256 feePaid, uint256 referralPaid, uint256 lastSettledAt)
+func (_GPULease *GPULeaseCaller) LeaseSettlements(opts *bind.CallOpts, arg0 *big.Int) (struct {
+	ProviderPaid  *big.Int
+	FeePaid       *big.Int
+	ReferralPaid  *big.Int
+	LastSettledAt *big.Int
+}, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "leaseSettlements", arg0)
+
+	outstruct := new(struct {
+		ProviderPaid  *big.Int
+		FeePaid       *big.Int
+		ReferralPaid  *big.Int
+		LastSettledAt *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.ProviderPaid = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.FeePaid = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+	outstruct.ReferralPaid = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+	outstruct.LastSettledAt = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
+}
+
+// LeaseSettlements is a free data retrieval call binding the contract method 0x8aabe545.
+//
+// Solidity: function leaseSettlements(uint256 ) view returns(uint256 providerPaid, uint256 feePaid, uint256 referralPaid, uint256 lastSettledAt)
+func (_GPULease *GPULeaseSession) LeaseSettlements(arg0 *big.Int) (struct {
+	ProviderPaid  *big.Int
+	FeePaid       *big.Int
+	ReferralPaid  *big.Int
+	LastSettledAt *big.Int
+}, error) {
+	return _GPULease.Contract.LeaseSettlements(&_GPULease.CallOpts, arg0)
+}
+
+// LeaseSettlements is a free data retrieval call binding the contract method 0x8aabe545.
+//
+// Solidity: function leaseSettlements(uint256 ) view returns(uint256 providerPaid, uint256 feePaid, uint256 referralPaid, uint256 lastSettledAt)
+func (_GPULease *GPULeaseCallerSession) LeaseSettlements(arg0 *big.Int) (struct {
+	ProviderPaid  *big.Int
+	FeePaid       *big.Int
+	ReferralPaid  *big.Int
+	LastSettledAt *big.Int
+}, error) {
+	return _GPULease.Contract.LeaseSettlements(&_GPULease.CallOpts, arg0)
 }
 
 // Leases is a free data retrieval call binding the contract method 0x8927a106.
@@ -572,6 +796,87 @@ func (_GPULease *GPULeaseSession) ReferralManager() (common.Address, error) {
 // Solidity: function referralManager() view returns(address)
 func (_GPULease *GPULeaseCallerSession) ReferralManager() (common.Address, error) {
 	return _GPULease.Contract.ReferralManager(&_GPULease.CallOpts)
+}
+
+// SettlementEntitlement is a free data retrieval call binding the contract method 0x8a90af17.
+//
+// Solidity: function settlementEntitlement(uint256 _leaseId) view returns(uint256 providerEarned, uint256 feeEarned, uint256 referralEarned)
+func (_GPULease *GPULeaseCaller) SettlementEntitlement(opts *bind.CallOpts, _leaseId *big.Int) (struct {
+	ProviderEarned *big.Int
+	FeeEarned      *big.Int
+	ReferralEarned *big.Int
+}, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "settlementEntitlement", _leaseId)
+
+	outstruct := new(struct {
+		ProviderEarned *big.Int
+		FeeEarned      *big.Int
+		ReferralEarned *big.Int
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.ProviderEarned = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.FeeEarned = *abi.ConvertType(out[1], new(*big.Int)).(**big.Int)
+	outstruct.ReferralEarned = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+
+	return *outstruct, err
+
+}
+
+// SettlementEntitlement is a free data retrieval call binding the contract method 0x8a90af17.
+//
+// Solidity: function settlementEntitlement(uint256 _leaseId) view returns(uint256 providerEarned, uint256 feeEarned, uint256 referralEarned)
+func (_GPULease *GPULeaseSession) SettlementEntitlement(_leaseId *big.Int) (struct {
+	ProviderEarned *big.Int
+	FeeEarned      *big.Int
+	ReferralEarned *big.Int
+}, error) {
+	return _GPULease.Contract.SettlementEntitlement(&_GPULease.CallOpts, _leaseId)
+}
+
+// SettlementEntitlement is a free data retrieval call binding the contract method 0x8a90af17.
+//
+// Solidity: function settlementEntitlement(uint256 _leaseId) view returns(uint256 providerEarned, uint256 feeEarned, uint256 referralEarned)
+func (_GPULease *GPULeaseCallerSession) SettlementEntitlement(_leaseId *big.Int) (struct {
+	ProviderEarned *big.Int
+	FeeEarned      *big.Int
+	ReferralEarned *big.Int
+}, error) {
+	return _GPULease.Contract.SettlementEntitlement(&_GPULease.CallOpts, _leaseId)
+}
+
+// SettlementOperator is a free data retrieval call binding the contract method 0x1b6984e8.
+//
+// Solidity: function settlementOperator() view returns(address)
+func (_GPULease *GPULeaseCaller) SettlementOperator(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _GPULease.contract.Call(opts, &out, "settlementOperator")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// SettlementOperator is a free data retrieval call binding the contract method 0x1b6984e8.
+//
+// Solidity: function settlementOperator() view returns(address)
+func (_GPULease *GPULeaseSession) SettlementOperator() (common.Address, error) {
+	return _GPULease.Contract.SettlementOperator(&_GPULease.CallOpts)
+}
+
+// SettlementOperator is a free data retrieval call binding the contract method 0x1b6984e8.
+//
+// Solidity: function settlementOperator() view returns(address)
+func (_GPULease *GPULeaseCallerSession) SettlementOperator() (common.Address, error) {
+	return _GPULease.Contract.SettlementOperator(&_GPULease.CallOpts)
 }
 
 // Treasury is a free data retrieval call binding the contract method 0x61d027b3.
@@ -845,6 +1150,27 @@ func (_GPULease *GPULeaseTransactorSession) SetReferralManager(newReferralManage
 	return _GPULease.Contract.SetReferralManager(&_GPULease.TransactOpts, newReferralManager)
 }
 
+// SetSettlementOperator is a paid mutator transaction binding the contract method 0x448758d5.
+//
+// Solidity: function setSettlementOperator(address newSettlementOperator) returns()
+func (_GPULease *GPULeaseTransactor) SetSettlementOperator(opts *bind.TransactOpts, newSettlementOperator common.Address) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "setSettlementOperator", newSettlementOperator)
+}
+
+// SetSettlementOperator is a paid mutator transaction binding the contract method 0x448758d5.
+//
+// Solidity: function setSettlementOperator(address newSettlementOperator) returns()
+func (_GPULease *GPULeaseSession) SetSettlementOperator(newSettlementOperator common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.SetSettlementOperator(&_GPULease.TransactOpts, newSettlementOperator)
+}
+
+// SetSettlementOperator is a paid mutator transaction binding the contract method 0x448758d5.
+//
+// Solidity: function setSettlementOperator(address newSettlementOperator) returns()
+func (_GPULease *GPULeaseTransactorSession) SetSettlementOperator(newSettlementOperator common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.SetSettlementOperator(&_GPULease.TransactOpts, newSettlementOperator)
+}
+
 // SetTreasury is a paid mutator transaction binding the contract method 0xf0f44260.
 //
 // Solidity: function setTreasury(address newTreasury) returns()
@@ -887,25 +1213,67 @@ func (_GPULease *GPULeaseTransactorSession) SetUserFee(user common.Address, _fee
 	return _GPULease.Contract.SetUserFee(&_GPULease.TransactOpts, user, _feePercentage)
 }
 
-// StartLease is a paid mutator transaction binding the contract method 0xf648da80.
+// SettleLease is a paid mutator transaction binding the contract method 0x0f5cd051.
 //
-// Solidity: function startLease(uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
-func (_GPULease *GPULeaseTransactor) StartLease(opts *bind.TransactOpts, _duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
-	return _GPULease.contract.Transact(opts, "startLease", _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
+// Solidity: function settleLease(uint256 _leaseId) returns()
+func (_GPULease *GPULeaseTransactor) SettleLease(opts *bind.TransactOpts, _leaseId *big.Int) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "settleLease", _leaseId)
 }
 
-// StartLease is a paid mutator transaction binding the contract method 0xf648da80.
+// SettleLease is a paid mutator transaction binding the contract method 0x0f5cd051.
 //
-// Solidity: function startLease(uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
-func (_GPULease *GPULeaseSession) StartLease(_duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
-	return _GPULease.Contract.StartLease(&_GPULease.TransactOpts, _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
+// Solidity: function settleLease(uint256 _leaseId) returns()
+func (_GPULease *GPULeaseSession) SettleLease(_leaseId *big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SettleLease(&_GPULease.TransactOpts, _leaseId)
 }
 
-// StartLease is a paid mutator transaction binding the contract method 0xf648da80.
+// SettleLease is a paid mutator transaction binding the contract method 0x0f5cd051.
 //
-// Solidity: function startLease(uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
-func (_GPULease *GPULeaseTransactorSession) StartLease(_duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
-	return _GPULease.Contract.StartLease(&_GPULease.TransactOpts, _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
+// Solidity: function settleLease(uint256 _leaseId) returns()
+func (_GPULease *GPULeaseTransactorSession) SettleLease(_leaseId *big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SettleLease(&_GPULease.TransactOpts, _leaseId)
+}
+
+// SettleLeases is a paid mutator transaction binding the contract method 0x1e2c73b4.
+//
+// Solidity: function settleLeases(uint256[] leaseIds) returns()
+func (_GPULease *GPULeaseTransactor) SettleLeases(opts *bind.TransactOpts, leaseIds []*big.Int) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "settleLeases", leaseIds)
+}
+
+// SettleLeases is a paid mutator transaction binding the contract method 0x1e2c73b4.
+//
+// Solidity: function settleLeases(uint256[] leaseIds) returns()
+func (_GPULease *GPULeaseSession) SettleLeases(leaseIds []*big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SettleLeases(&_GPULease.TransactOpts, leaseIds)
+}
+
+// SettleLeases is a paid mutator transaction binding the contract method 0x1e2c73b4.
+//
+// Solidity: function settleLeases(uint256[] leaseIds) returns()
+func (_GPULease *GPULeaseTransactorSession) SettleLeases(leaseIds []*big.Int) (*types.Transaction, error) {
+	return _GPULease.Contract.SettleLeases(&_GPULease.TransactOpts, leaseIds)
+}
+
+// StartLease is a paid mutator transaction binding the contract method 0x1608ca11.
+//
+// Solidity: function startLease(uint256 _startTimestamp, uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
+func (_GPULease *GPULeaseTransactor) StartLease(opts *bind.TransactOpts, _startTimestamp *big.Int, _duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
+	return _GPULease.contract.Transact(opts, "startLease", _startTimestamp, _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
+}
+
+// StartLease is a paid mutator transaction binding the contract method 0x1608ca11.
+//
+// Solidity: function startLease(uint256 _startTimestamp, uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
+func (_GPULease *GPULeaseSession) StartLease(_startTimestamp *big.Int, _duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.StartLease(&_GPULease.TransactOpts, _startTimestamp, _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
+}
+
+// StartLease is a paid mutator transaction binding the contract method 0x1608ca11.
+//
+// Solidity: function startLease(uint256 _startTimestamp, uint256 _duration, uint256 _storagePricePerSecond, uint256 _computePricePerSecond, address _provider, address _user) returns(uint256 leaseId)
+func (_GPULease *GPULeaseTransactorSession) StartLease(_startTimestamp *big.Int, _duration *big.Int, _storagePricePerSecond *big.Int, _computePricePerSecond *big.Int, _provider common.Address, _user common.Address) (*types.Transaction, error) {
+	return _GPULease.Contract.StartLease(&_GPULease.TransactOpts, _startTimestamp, _duration, _storagePricePerSecond, _computePricePerSecond, _provider, _user)
 }
 
 // TransferOwnership is a paid mutator transaction binding the contract method 0xf2fde38b.
@@ -1331,6 +1699,154 @@ func (_GPULease *GPULeaseFilterer) ParseLeaseResumed(log types.Log) (*GPULeaseLe
 	return event, nil
 }
 
+// GPULeaseLeaseSettledIterator is returned from FilterLeaseSettled and is used to iterate over the raw logs and unpacked data for LeaseSettled events raised by the GPULease contract.
+type GPULeaseLeaseSettledIterator struct {
+	Event *GPULeaseLeaseSettled // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseLeaseSettledIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseLeaseSettled)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseLeaseSettled)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseLeaseSettledIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseLeaseSettledIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseLeaseSettled represents a LeaseSettled event raised by the GPULease contract.
+type GPULeaseLeaseSettled struct {
+	LeaseId        *big.Int
+	ProviderAmount *big.Int
+	PlatformFee    *big.Int
+	ReferralAmount *big.Int
+	SettledAt      *big.Int
+	Raw            types.Log // Blockchain specific contextual infos
+}
+
+// FilterLeaseSettled is a free log retrieval operation binding the contract event 0xdbf3c88eafa214e59b0c2c4ea7f11435e9c894266ba9bdd82040f45243a45c7b.
+//
+// Solidity: event LeaseSettled(uint256 indexed leaseId, uint256 providerAmount, uint256 platformFee, uint256 referralAmount, uint256 settledAt)
+func (_GPULease *GPULeaseFilterer) FilterLeaseSettled(opts *bind.FilterOpts, leaseId []*big.Int) (*GPULeaseLeaseSettledIterator, error) {
+
+	var leaseIdRule []interface{}
+	for _, leaseIdItem := range leaseId {
+		leaseIdRule = append(leaseIdRule, leaseIdItem)
+	}
+
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "LeaseSettled", leaseIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseLeaseSettledIterator{contract: _GPULease.contract, event: "LeaseSettled", logs: logs, sub: sub}, nil
+}
+
+// WatchLeaseSettled is a free log subscription operation binding the contract event 0xdbf3c88eafa214e59b0c2c4ea7f11435e9c894266ba9bdd82040f45243a45c7b.
+//
+// Solidity: event LeaseSettled(uint256 indexed leaseId, uint256 providerAmount, uint256 platformFee, uint256 referralAmount, uint256 settledAt)
+func (_GPULease *GPULeaseFilterer) WatchLeaseSettled(opts *bind.WatchOpts, sink chan<- *GPULeaseLeaseSettled, leaseId []*big.Int) (event.Subscription, error) {
+
+	var leaseIdRule []interface{}
+	for _, leaseIdItem := range leaseId {
+		leaseIdRule = append(leaseIdRule, leaseIdItem)
+	}
+
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "LeaseSettled", leaseIdRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseLeaseSettled)
+				if err := _GPULease.contract.UnpackLog(event, "LeaseSettled", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseLeaseSettled is a log parse operation binding the contract event 0xdbf3c88eafa214e59b0c2c4ea7f11435e9c894266ba9bdd82040f45243a45c7b.
+//
+// Solidity: event LeaseSettled(uint256 indexed leaseId, uint256 providerAmount, uint256 platformFee, uint256 referralAmount, uint256 settledAt)
+func (_GPULease *GPULeaseFilterer) ParseLeaseSettled(log types.Log) (*GPULeaseLeaseSettled, error) {
+	event := new(GPULeaseLeaseSettled)
+	if err := _GPULease.contract.UnpackLog(event, "LeaseSettled", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // GPULeaseLeaseStartedIterator is returned from FilterLeaseStarted and is used to iterate over the raw logs and unpacked data for LeaseStarted events raised by the GPULease contract.
 type GPULeaseLeaseStartedIterator struct {
 	Event *GPULeaseLeaseStarted // Event containing the contract specifics and raw log
@@ -1400,17 +1916,19 @@ func (it *GPULeaseLeaseStartedIterator) Close() error {
 
 // GPULeaseLeaseStarted represents a LeaseStarted event raised by the GPULease contract.
 type GPULeaseLeaseStarted struct {
-	LeaseId  *big.Int
-	User     common.Address
-	Provider common.Address
-	Duration *big.Int
-	Amount   *big.Int
-	Raw      types.Log // Blockchain specific contextual infos
+	LeaseId             *big.Int
+	User                common.Address
+	Provider            common.Address
+	StartTimestamp      *big.Int
+	ActivationTimestamp *big.Int
+	Duration            *big.Int
+	Amount              *big.Int
+	Raw                 types.Log // Blockchain specific contextual infos
 }
 
-// FilterLeaseStarted is a free log retrieval operation binding the contract event 0x4501059f1dbad8e151132c2515ee7ea78d4b2540b9e56e941a03fdb9888efe28.
+// FilterLeaseStarted is a free log retrieval operation binding the contract event 0xfb100b6fa713bcecf49f2cdfc43403fb77398eff636ed6264e4099155c88c4dd.
 //
-// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 duration, uint256 amount)
+// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 startTimestamp, uint256 activationTimestamp, uint256 duration, uint256 amount)
 func (_GPULease *GPULeaseFilterer) FilterLeaseStarted(opts *bind.FilterOpts) (*GPULeaseLeaseStartedIterator, error) {
 
 	logs, sub, err := _GPULease.contract.FilterLogs(opts, "LeaseStarted")
@@ -1420,9 +1938,9 @@ func (_GPULease *GPULeaseFilterer) FilterLeaseStarted(opts *bind.FilterOpts) (*G
 	return &GPULeaseLeaseStartedIterator{contract: _GPULease.contract, event: "LeaseStarted", logs: logs, sub: sub}, nil
 }
 
-// WatchLeaseStarted is a free log subscription operation binding the contract event 0x4501059f1dbad8e151132c2515ee7ea78d4b2540b9e56e941a03fdb9888efe28.
+// WatchLeaseStarted is a free log subscription operation binding the contract event 0xfb100b6fa713bcecf49f2cdfc43403fb77398eff636ed6264e4099155c88c4dd.
 //
-// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 duration, uint256 amount)
+// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 startTimestamp, uint256 activationTimestamp, uint256 duration, uint256 amount)
 func (_GPULease *GPULeaseFilterer) WatchLeaseStarted(opts *bind.WatchOpts, sink chan<- *GPULeaseLeaseStarted) (event.Subscription, error) {
 
 	logs, sub, err := _GPULease.contract.WatchLogs(opts, "LeaseStarted")
@@ -1457,9 +1975,9 @@ func (_GPULease *GPULeaseFilterer) WatchLeaseStarted(opts *bind.WatchOpts, sink 
 	}), nil
 }
 
-// ParseLeaseStarted is a log parse operation binding the contract event 0x4501059f1dbad8e151132c2515ee7ea78d4b2540b9e56e941a03fdb9888efe28.
+// ParseLeaseStarted is a log parse operation binding the contract event 0xfb100b6fa713bcecf49f2cdfc43403fb77398eff636ed6264e4099155c88c4dd.
 //
-// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 duration, uint256 amount)
+// Solidity: event LeaseStarted(uint256 leaseId, address user, address provider, uint256 startTimestamp, uint256 activationTimestamp, uint256 duration, uint256 amount)
 func (_GPULease *GPULeaseFilterer) ParseLeaseStarted(log types.Log) (*GPULeaseLeaseStarted, error) {
 	event := new(GPULeaseLeaseStarted)
 	if err := _GPULease.contract.UnpackLog(event, "LeaseStarted", log); err != nil {
@@ -1904,6 +2422,159 @@ func (_GPULease *GPULeaseFilterer) WatchReferralManagerUpdated(opts *bind.WatchO
 func (_GPULease *GPULeaseFilterer) ParseReferralManagerUpdated(log types.Log) (*GPULeaseReferralManagerUpdated, error) {
 	event := new(GPULeaseReferralManagerUpdated)
 	if err := _GPULease.contract.UnpackLog(event, "ReferralManagerUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseSettlementOperatorUpdatedIterator is returned from FilterSettlementOperatorUpdated and is used to iterate over the raw logs and unpacked data for SettlementOperatorUpdated events raised by the GPULease contract.
+type GPULeaseSettlementOperatorUpdatedIterator struct {
+	Event *GPULeaseSettlementOperatorUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseSettlementOperatorUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseSettlementOperatorUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseSettlementOperatorUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseSettlementOperatorUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseSettlementOperatorUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseSettlementOperatorUpdated represents a SettlementOperatorUpdated event raised by the GPULease contract.
+type GPULeaseSettlementOperatorUpdated struct {
+	PreviousOperator common.Address
+	NewOperator      common.Address
+	Raw              types.Log // Blockchain specific contextual infos
+}
+
+// FilterSettlementOperatorUpdated is a free log retrieval operation binding the contract event 0x1fd86ee97516e805df1aa58110ecb8ff02b3e66f573e25bf47e2c45bd2537c4f.
+//
+// Solidity: event SettlementOperatorUpdated(address indexed previousOperator, address indexed newOperator)
+func (_GPULease *GPULeaseFilterer) FilterSettlementOperatorUpdated(opts *bind.FilterOpts, previousOperator []common.Address, newOperator []common.Address) (*GPULeaseSettlementOperatorUpdatedIterator, error) {
+
+	var previousOperatorRule []interface{}
+	for _, previousOperatorItem := range previousOperator {
+		previousOperatorRule = append(previousOperatorRule, previousOperatorItem)
+	}
+	var newOperatorRule []interface{}
+	for _, newOperatorItem := range newOperator {
+		newOperatorRule = append(newOperatorRule, newOperatorItem)
+	}
+
+	logs, sub, err := _GPULease.contract.FilterLogs(opts, "SettlementOperatorUpdated", previousOperatorRule, newOperatorRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseSettlementOperatorUpdatedIterator{contract: _GPULease.contract, event: "SettlementOperatorUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchSettlementOperatorUpdated is a free log subscription operation binding the contract event 0x1fd86ee97516e805df1aa58110ecb8ff02b3e66f573e25bf47e2c45bd2537c4f.
+//
+// Solidity: event SettlementOperatorUpdated(address indexed previousOperator, address indexed newOperator)
+func (_GPULease *GPULeaseFilterer) WatchSettlementOperatorUpdated(opts *bind.WatchOpts, sink chan<- *GPULeaseSettlementOperatorUpdated, previousOperator []common.Address, newOperator []common.Address) (event.Subscription, error) {
+
+	var previousOperatorRule []interface{}
+	for _, previousOperatorItem := range previousOperator {
+		previousOperatorRule = append(previousOperatorRule, previousOperatorItem)
+	}
+	var newOperatorRule []interface{}
+	for _, newOperatorItem := range newOperator {
+		newOperatorRule = append(newOperatorRule, newOperatorItem)
+	}
+
+	logs, sub, err := _GPULease.contract.WatchLogs(opts, "SettlementOperatorUpdated", previousOperatorRule, newOperatorRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseSettlementOperatorUpdated)
+				if err := _GPULease.contract.UnpackLog(event, "SettlementOperatorUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseSettlementOperatorUpdated is a log parse operation binding the contract event 0x1fd86ee97516e805df1aa58110ecb8ff02b3e66f573e25bf47e2c45bd2537c4f.
+//
+// Solidity: event SettlementOperatorUpdated(address indexed previousOperator, address indexed newOperator)
+func (_GPULease *GPULeaseFilterer) ParseSettlementOperatorUpdated(log types.Log) (*GPULeaseSettlementOperatorUpdated, error) {
+	event := new(GPULeaseSettlementOperatorUpdated)
+	if err := _GPULease.contract.UnpackLog(event, "SettlementOperatorUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

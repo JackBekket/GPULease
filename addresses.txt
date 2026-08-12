@@ -1,7 +1,8 @@
 # GPULeaseSC Base deployment
-# Deployed at: 2026-06-24
+# Last updated at: 2026-08-12T11:45:55Z
 
-0xB6E47Eb260160BD6A18A246CC0b27D9240706401 -- GPULease main SC base address
+0xCCD732200366886e04F508D12F561ee94Eb03110 -- GPULease main SC base address (updated 2026-08-12T11:45:55Z)
+0xB6E47Eb260160BD6A18A246CC0b27D9240706401 -- previous GPULease base address, retired 2026-08-12T11:45:55Z
 0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340 -- GPULeaseWallet base address
 0x2695d98bF8b233539f5a1Fb823298AA055f2a143 -- GPULeaseReferral base address
 0xCACcBAE9C50668d7061702E8077E5f04712e38d6 -- LLMFundraisingFactory base address

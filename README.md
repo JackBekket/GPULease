@@ -1,5 +1,8 @@
 # GPULease - Ethereum GPU Leasing Platform
 
+Current Base GPULease address (updated 2026-08-12T11:45:55Z):
+`0xCCD732200366886e04F508D12F561ee94Eb03110`.
+
 A smart contract for leasing GPU computing resources with flexible pricing and pause/resume functionality.
 
 ## Overview
@@ -24,7 +27,7 @@ GPULease is a decentralized smart contract that enables users to lease GPU compu
 struct Lease {
     address user;                    // The lease requester
     address provider;                // The GPU provider
-    uint startTime;                  // When the lease started
+    uint startTime;                  // Supplied start of storage billing
     uint duration;                   // Total lease duration in seconds
     uint storagePricePerSecond;      // Price per second for storage
     uint computePricePerSecond;      // Price per second for computation
@@ -44,7 +47,7 @@ struct Lease {
 - `withdraw(amount)`: Remove tokens from your account balance
 
 **Lease Management**
-- `startLease(duration, storagePricePerSecond, computePricePerSecond, provider)`: Start a lease for yourself
+- `startLease(startTimestamp, duration, storagePricePerSecond, computePricePerSecond, provider, user)`: Start a lease; storage is billed from startTimestamp and compute from on-chain activation
 - `startLeaseWithUser(duration, storagePricePerSecond, computePricePerSecond, provider, user)`: Admin can start a lease on behalf of another user
 - `pauseLease(leaseId)`: Pause an active lease (only the user or provider can call)
 - `resumeLease(leaseId)`: Resume a paused lease (only the user or provider can call)

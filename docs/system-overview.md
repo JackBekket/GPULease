@@ -1,5 +1,9 @@
 # GPULease System Overview
 
+Current Base `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
+(updated at 2026-08-12T11:45:55Z). Persistent `GPULeaseWallet`:
+`0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`.
+
 This document describes the current GPULease architecture, the money flows, the upgrade model, and the public/external contract functions.
 
 ## High-Level Architecture
@@ -174,7 +178,7 @@ Events:
 - `UserFeeUpdated(user, feePercentage)`
 - `UserFeeCleared(user)`
 - `ReferralManagerUpdated(previousManager, newManager)`
-- `LeaseStarted(leaseId, user, provider, duration, amount)`
+- `LeaseStarted(leaseId, user, provider, startTimestamp, activationTimestamp, duration, amount)`
 - `LeaseCompleted(leaseId)`
 - `LeasePaused(leaseId)`
 - `LeaseResumed(leaseId)`
@@ -208,7 +212,8 @@ Fee functions:
 
 Lease lifecycle functions:
 
-- `startLease(duration, storagePricePerSecond, computePricePerSecond, provider, user) onlyOwner returns (leaseId)`
+- `startLease(startTimestamp, duration, storagePricePerSecond, computePricePerSecond, provider, user) onlyOwner returns (leaseId)`
+  - Requires a positive `startTimestamp` that is not in the future.
   - Requires positive duration.
   - Requires at least one price to be positive.
   - Requires non-zero user and provider.
@@ -218,6 +223,10 @@ Lease lifecycle functions:
     - `frozen = base + fee`
   - Captures current referrer and referral share for the lease.
   - Debits user wallet balance and stores frozen funds.
+  - Charges storage only from `startTimestamp` until on-chain activation.
+  - Stores activation time in `leaseActivationTime[leaseId]`.
+  - Charges storage and compute after activation; pauses reduce compute time.
+  - Counts total `duration` from `startTimestamp`.
   - Creates an active lease.
 
 - `pauseLease(uint leaseId) onlyOwner`
@@ -249,7 +258,7 @@ Internal functions:
 - `_startLease(LeaseRequest request)`
   - Internal implementation for `startLease`.
 
-- `calculateActualCost(uint leaseId) internal view`
+- `calculateActualCost(uint leaseId) public view`
   - Calculates actual storage and compute costs.
 
 - `_referralInfoForLease(address user) internal view`

@@ -12,6 +12,28 @@ describe("GPULease", function () {
   let lease: any;
   let referral: any;
 
+  async function startLeaseNow(
+    target: any,
+    duration: number,
+    storagePricePerSecond: bigint,
+    computePricePerSecond: bigint,
+    providerAddress: string,
+    userAddress: string
+  ) {
+    const block = await ethers.provider.getBlock("latest");
+    if (!block) throw new Error("Cannot fetch latest block");
+    const startTimestamp = block.timestamp + 1;
+    await ethers.provider.send("evm_setNextBlockTimestamp", [startTimestamp]);
+    return target.startLease(
+      startTimestamp,
+      duration,
+      storagePricePerSecond,
+      computePricePerSecond,
+      providerAddress,
+      userAddress
+    );
+  }
+
   beforeEach(async () => {
     [owner, user, provider, treasury] = await ethers.getSigners();
 
@@ -65,8 +87,7 @@ describe("GPULease", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -84,8 +105,7 @@ describe("GPULease", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -107,8 +127,7 @@ describe("GPULease", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -135,8 +154,7 @@ describe("GPULease", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -200,8 +218,7 @@ describe("GPULease", function () {
     const customFee = (baseAmount * 25n) / 100n;
 
     await lease.setUserFee(user.address, 25);
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -228,8 +245,7 @@ describe("GPULease", function () {
     const price = ethers.parseEther("0.001");
 
     await lease.setUserFee(user.address, 20);
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -259,8 +275,7 @@ describe("GPULease", function () {
     const totalFee = (baseAmount * 10n) / 100n;
     const referralFee = totalFee / 2n;
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -299,8 +314,7 @@ describe("GPULease", function () {
     const totalFee = (baseAmount * 7n) / 100n;
     const referralFee = totalFee / 2n;
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -327,8 +341,7 @@ describe("GPULease", function () {
     const duration = 1000;
     const price = ethers.parseEther("0.001");
 
-    await lease.startLease(
-      duration,
+    await startLeaseNow(lease,      duration,
       price,
       price,
       provider.address,
@@ -366,8 +379,7 @@ describe("GPULease", function () {
     await referral.setReferralShareBps(2500);
     await lease.setReferralManager(referral.target);
 
-    await lease.startLease(
-      1000,
+    await startLeaseNow(lease,      1000,
       ethers.parseEther("0.001"),
       ethers.parseEther("0.001"),
       provider.address,
@@ -420,11 +432,10 @@ describe("GPULease", function () {
     const price = ethers.parseEther("0.001");
 
     await expect(
-      lease.startLease(duration, price, price, provider.address, user.address)
+      startLeaseNow(lease, duration, price, price, provider.address, user.address)
     ).to.be.revertedWith("not lease manager");
 
-    await upgradedLease.startLease(
-      duration,
+    await startLeaseNow(upgradedLease,      duration,
       price,
       price,
       provider.address,

@@ -496,7 +496,7 @@
   "linkReferences": {},
   "deployedLinkReferences": {},
   "immutableReferences": {
-    "10336": [
+    "11059": [
       {
         "length": 32,
         "start": 1392
@@ -506,7 +506,7 @@
         "start": 2279
       }
     ],
-    "10339": [
+    "11062": [
       {
         "length": 32,
         "start": 1425
@@ -516,7 +516,7 @@
         "start": 2115
       }
     ],
-    "10341": [
+    "11064": [
       {
         "length": 32,
         "start": 1459
@@ -526,7 +526,7 @@
         "start": 2363
       }
     ],
-    "10343": [
+    "11066": [
       {
         "length": 32,
         "start": 1295
@@ -538,5 +538,5 @@
     ]
   },
   "inputSourceName": "project/contracts/CampaignFactory.sol",
-  "buildInfoId": "solc-0_8_31-8e38037669a08b4b81875fdb139ccc02705400f8"
+  "buildInfoId": "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688"
 }

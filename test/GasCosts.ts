@@ -11,6 +11,28 @@ describe("GPULease Gas Tests (raw wei)", function () {
   let provider: any;
   let treasury: any;
 
+  async function startLeaseNow(
+    target: any,
+    duration: number,
+    storagePricePerSecond: bigint,
+    computePricePerSecond: bigint,
+    providerAddress: string,
+    userAddress: string
+  ) {
+    const block = await ethers.provider.getBlock("latest");
+    if (!block) throw new Error("Cannot fetch latest block");
+    const startTimestamp = block.timestamp + 1;
+    await ethers.provider.send("evm_setNextBlockTimestamp", [startTimestamp]);
+    return target.startLease(
+      startTimestamp,
+      duration,
+      storagePricePerSecond,
+      computePricePerSecond,
+      providerAddress,
+      userAddress
+    );
+  }
+
   async function logGas(tx: any, label: string) {
     const receipt = await tx.wait();
 
@@ -50,8 +72,7 @@ describe("GPULease Gas Tests (raw wei)", function () {
   });
 
   it("startLease gas", async () => {
-    const tx = await lease.startLease(
-      3600,
+    const tx = await startLeaseNow(lease,      3600,
       ethers.parseEther("0.0001"),
       ethers.parseEther("0.0002"),
       provider.address,
@@ -62,8 +83,7 @@ describe("GPULease Gas Tests (raw wei)", function () {
   });
 
   it("pause + resume gas", async () => {
-    await lease.startLease(
-      3600,
+    await startLeaseNow(lease,      3600,
       ethers.parseEther("0.0001"),
       ethers.parseEther("0.0002"),
       provider.address,
@@ -75,8 +95,7 @@ describe("GPULease Gas Tests (raw wei)", function () {
   });
 
   it("completeLease gas", async () => {
-    await lease.startLease(
-      3600,
+    await startLeaseNow(lease,      3600,
       ethers.parseEther("0.0001"),
       ethers.parseEther("0.0002"),
       provider.address,
@@ -88,6 +107,25 @@ describe("GPULease Gas Tests (raw wei)", function () {
     await ethers.provider.send("evm_mine", []);
 
     await logGas(await lease.completeLease(0), "completeLease");
+  });
+
+  it("daily settlement gas", async () => {
+    await startLeaseNow(lease,      3 * 24 * 60 * 60,
+      ethers.parseEther("0.000001"),
+      ethers.parseEther("0.000002"),
+      provider.address,
+      user.address
+    );
+
+    await ethers.provider.send("evm_increaseTime", [24 * 60 * 60]);
+    await ethers.provider.send("evm_mine", []);
+
+    await logGas(await lease.settleLease(0), "settleLease (first payout)");
+
+    await ethers.provider.send("evm_increaseTime", [24 * 60 * 60]);
+    await ethers.provider.send("evm_mine", []);
+
+    await logGas(await lease.settleLease(0), "settleLease (next payout)");
   });
 
   it("deposit + withdraw gas", async () => {
@@ -104,8 +142,7 @@ describe("GPULease Gas Tests (raw wei)", function () {
 
   it("multiple leases scaling gas", async () => {
     for (let i = 0; i < 5; i++) {
-      await lease.startLease(
-        3600,
+      await startLeaseNow(lease,        3600,
         ethers.parseEther("0.0001"),
         ethers.parseEther("0.0002"),
         provider.address,

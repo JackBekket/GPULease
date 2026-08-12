@@ -10,9 +10,13 @@ interface IGPULeaseReferral {
 }
 
 contract GPULease is Ownable {
+    uint public constant SETTLEMENT_INTERVAL = 1 days;
+    uint public constant MAX_SETTLEMENT_BATCH_SIZE = 50;
+
     GPULeaseWallet public immutable wallet;
     IGPULeaseReferral public referralManager;
     address public treasury;
+    address public settlementOperator;
 
      struct Lease {
         address user;
@@ -40,11 +44,19 @@ contract GPULease is Ownable {
     }
 
     struct LeaseRequest {
+        uint startTimestamp;
         uint duration;
         uint storagePricePerSecond;
         uint computePricePerSecond;
         address provider;
         address user;
+    }
+
+    struct LeaseSettlement {
+        uint providerPaid;
+        uint feePaid;
+        uint referralPaid;
+        uint lastSettledAt;
     }
 
     mapping(address => uint[]) public userActiveLeases;
@@ -53,6 +65,8 @@ contract GPULease is Ownable {
     mapping(uint => uint256) public frozenFunds;
     mapping(uint => Lease) public leases;
     mapping(uint => LeaseReferralInfo) public leaseReferralInfo;
+    mapping(uint => LeaseSettlement) public leaseSettlements;
+    mapping(uint => uint) public leaseActivationTime;
     uint public leaseCount = 0;
 
     uint public platformFeePercentage = 10; // 10% default platform fee
@@ -61,18 +75,38 @@ contract GPULease is Ownable {
     event UserFeeUpdated(address indexed user, uint feePercentage);
     event UserFeeCleared(address indexed user);
     event ReferralManagerUpdated(address indexed previousManager, address indexed newManager);
-    event LeaseStarted(uint leaseId, address user, address provider, uint duration, uint amount);
+    event LeaseStarted(
+        uint leaseId,
+        address user,
+        address provider,
+        uint startTimestamp,
+        uint activationTimestamp,
+        uint duration,
+        uint amount
+    );
     event LeaseCompleted(uint leaseId);
     event LeasePaused(uint leaseId);
     event LeaseResumed(uint leaseId);
+    event SettlementOperatorUpdated(address indexed previousOperator, address indexed newOperator);
+    event LeaseSettled(
+        uint indexed leaseId,
+        uint providerAmount,
+        uint platformFee,
+        uint referralAmount,
+        uint settledAt
+    );
 
- 
+    modifier onlySettlementOperator() {
+        require(msg.sender == owner() || msg.sender == settlementOperator, "not settlement operator");
+        _;
+    }
 
     constructor(address wallet_, address treasury_) Ownable(msg.sender) {
         require(wallet_ != address(0), "zero wallet");
         require(treasury_ != address(0), "zero treasury");
         wallet = GPULeaseWallet(wallet_);
         treasury = treasury_;
+        settlementOperator = msg.sender;
     }
 
 
@@ -109,6 +143,13 @@ contract GPULease is Ownable {
         treasury = newTreasury;
     }
 
+
+    function setSettlementOperator(address newSettlementOperator) external onlyOwner {
+        require(newSettlementOperator != address(0), "zero settlement operator");
+        emit SettlementOperatorUpdated(settlementOperator, newSettlementOperator);
+        settlementOperator = newSettlementOperator;
+    }
+
     function feePercentageForUser(address user) public view returns (uint) {
         if (hasCustomUserFee[user]) {
             return userFeePercentage[user];
@@ -120,6 +161,7 @@ contract GPULease is Ownable {
 
     //lease stuff
     function startLease(
+        uint _startTimestamp,
         uint _duration,
         uint _storagePricePerSecond,
         uint _computePricePerSecond,
@@ -127,6 +169,7 @@ contract GPULease is Ownable {
         address _user
     ) public onlyOwner returns (uint leaseId) {
         return _startLease(LeaseRequest({
+            startTimestamp: _startTimestamp,
             duration: _duration,
             storagePricePerSecond: _storagePricePerSecond,
             computePricePerSecond: _computePricePerSecond,
@@ -136,6 +179,8 @@ contract GPULease is Ownable {
     }
 
     function _startLease(LeaseRequest memory request) internal returns (uint leaseId) {
+        require(request.startTimestamp > 0, "invalid start timestamp");
+        require(request.startTimestamp <= block.timestamp, "start in future");
         require(request.duration > 0, "Duration must be > 0");
         require(request.storagePricePerSecond > 0 || request.computePricePerSecond > 0, "At least one price must be > 0");
         require(request.user != address(0), "invalid user");
@@ -166,7 +211,7 @@ contract GPULease is Ownable {
         leases[leaseId] = Lease({
             user: request.user,
             provider: request.provider,
-            startTime: block.timestamp - 5 minutes, //so we won't need any cancel function
+            startTime: request.startTimestamp,
             duration: request.duration,
             storagePricePerSecond: request.storagePricePerSecond,
             computePricePerSecond: request.computePricePerSecond,
@@ -181,8 +226,18 @@ contract GPULease is Ownable {
             referrer: referrer,
             referralShareBps: referralShareBps
         });
+        leaseActivationTime[leaseId] = block.timestamp;
+        leaseSettlements[leaseId].lastSettledAt = block.timestamp;
         userActiveLeases[request.user].push(leaseId);
-        emit LeaseStarted(leaseId, leases[leaseId].user, leases[leaseId].provider, leases[leaseId].duration, frozenFunds[leaseId]);
+        emit LeaseStarted(
+            leaseId,
+            leases[leaseId].user,
+            leases[leaseId].provider,
+            leases[leaseId].startTime,
+            leaseActivationTime[leaseId],
+            leases[leaseId].duration,
+            frozenFunds[leaseId]
+        );
         return leaseId;
     }
 
@@ -205,7 +260,9 @@ contract GPULease is Ownable {
         require(!lease.completed, "Lease already completed");
         require(lease.paused, "Lease is not paused");
         
-        uint pauseDuration = block.timestamp - lease.pausedAt;
+        uint leaseEnd = lease.startTime + lease.duration;
+        uint pauseEnd = block.timestamp < leaseEnd ? block.timestamp : leaseEnd;
+        uint pauseDuration = pauseEnd > lease.pausedAt ? pauseEnd - lease.pausedAt : 0;
         lease.pausedDuration += pauseDuration;
         lease.pausedAt = 0; // Reset last paused time
         lease.paused = false;
@@ -217,30 +274,9 @@ contract GPULease is Ownable {
         Lease storage lease = leases[_leaseId];
         require(lease.active, "Lease is not active");
         require(!lease.completed, "Lease already completed");
-        
-        uint actualStorageCost;
-        uint actualComputeCost;
-        (actualStorageCost, actualComputeCost) = calculateActualCost(_leaseId);
-        
-        // Total cost based on the effective duration
-        uint actualTotalCost = actualStorageCost + actualComputeCost; 
-        
-        
-        // Calculate platform fee from the total actual cost
-        uint platformFee = (actualTotalCost * lease.leaseFeePercentage) / 100;
-        uint referralAmount = 0;
-        LeaseReferralInfo storage referralInfo = leaseReferralInfo[_leaseId];
-        if (referralInfo.referrer != address(0) && referralInfo.referralShareBps > 0) {
-            referralAmount = (platformFee * referralInfo.referralShareBps) / 10_000;
-            wallet.creditBalance(referralInfo.referrer, referralAmount);
-        }
 
-        wallet.creditBalance(treasury, platformFee - referralAmount);
-        frozenFunds[_leaseId] -= platformFee;
-
-        uint providerAmount = actualTotalCost - platformFee;
-        wallet.creditBalance(lease.provider, providerAmount);
-        frozenFunds[_leaseId] -= providerAmount;
+        // Final settlement is always allowed, even if less than one day passed.
+        _settleLease(_leaseId);
 
         wallet.creditBalance(lease.user, frozenFunds[_leaseId]);
 
@@ -262,8 +298,110 @@ contract GPULease is Ownable {
     }
 
 
+    function settleLease(uint _leaseId) external onlySettlementOperator {
+        require(isSettlementDue(_leaseId), "settlement not due");
+        _settleLease(_leaseId);
+    }
+
+
+    function settleLeases(uint[] calldata leaseIds) external onlySettlementOperator {
+        require(leaseIds.length > 0, "empty batch");
+        require(leaseIds.length <= MAX_SETTLEMENT_BATCH_SIZE, "batch too large");
+
+        for (uint i = 0; i < leaseIds.length; i++) {
+            require(isSettlementDue(leaseIds[i]), "settlement not due");
+            _settleLease(leaseIds[i]);
+        }
+    }
+
+
+    function isSettlementDue(uint _leaseId) public view returns (bool) {
+        Lease storage lease = leases[_leaseId];
+        if (!lease.active || lease.completed) {
+            return false;
+        }
+
+        LeaseSettlement storage settlement = leaseSettlements[_leaseId];
+        bool intervalPassed = block.timestamp >= settlement.lastSettledAt + SETTLEMENT_INTERVAL;
+        bool leaseEnded = block.timestamp >= lease.startTime + lease.duration;
+
+        if (!intervalPassed && !leaseEnded) {
+            return false;
+        }
+
+        (uint providerEarned, uint feeEarned, ) = settlementEntitlement(_leaseId);
+        return providerEarned > settlement.providerPaid || feeEarned > settlement.feePaid;
+    }
+
+
+    function settlementEntitlement(uint _leaseId)
+        public
+        view
+        returns (uint providerEarned, uint feeEarned, uint referralEarned)
+    {
+        Lease storage lease = leases[_leaseId];
+        require(lease.startTime > 0, "Lease not started");
+
+        (uint actualStorageCost, uint actualComputeCost) = calculateActualCost(_leaseId);
+        uint actualTotalCost = actualStorageCost + actualComputeCost;
+
+        feeEarned = (actualTotalCost * lease.leaseFeePercentage) / 100;
+        providerEarned = actualTotalCost - feeEarned;
+
+        LeaseReferralInfo storage referralInfo = leaseReferralInfo[_leaseId];
+        if (referralInfo.referrer != address(0) && referralInfo.referralShareBps > 0) {
+            referralEarned = (feeEarned * referralInfo.referralShareBps) / 10_000;
+        }
+    }
+
+
+    function _settleLease(uint _leaseId) internal {
+        Lease storage lease = leases[_leaseId];
+        require(lease.active, "Lease is not active");
+        require(!lease.completed, "Lease already completed");
+
+        LeaseSettlement storage settlement = leaseSettlements[_leaseId];
+        (uint providerEarned, uint feeEarned, uint referralEarned) = settlementEntitlement(_leaseId);
+
+        uint providerAmount = providerEarned - settlement.providerPaid;
+        uint platformFee = feeEarned - settlement.feePaid;
+        uint referralAmount = referralEarned - settlement.referralPaid;
+        uint totalAmount = providerAmount + platformFee;
+
+        settlement.providerPaid = providerEarned;
+        settlement.feePaid = feeEarned;
+        settlement.referralPaid = referralEarned;
+        settlement.lastSettledAt = block.timestamp;
+
+        if (totalAmount == 0) {
+            return;
+        }
+
+        frozenFunds[_leaseId] -= totalAmount;
+
+        LeaseReferralInfo storage referralInfo = leaseReferralInfo[_leaseId];
+        if (referralAmount > 0) {
+            wallet.creditBalance(referralInfo.referrer, referralAmount);
+        }
+        if (platformFee > referralAmount) {
+            wallet.creditBalance(treasury, platformFee - referralAmount);
+        }
+        if (providerAmount > 0) {
+            wallet.creditBalance(lease.provider, providerAmount);
+        }
+
+        emit LeaseSettled(
+            _leaseId,
+            providerAmount,
+            platformFee,
+            referralAmount,
+            block.timestamp
+        );
+    }
+
+
     function calculateActualCost(uint _leaseId)
-    internal
+    public
     view
     returns (uint actualStorageCost, uint actualComputeCost)
 {
@@ -271,26 +409,30 @@ contract GPULease is Ownable {
 
     require(lease.startTime > 0, "Lease not started");
 
-    uint elapsed = block.timestamp - lease.startTime;
-
-    if (elapsed > lease.duration) {
-        elapsed = lease.duration;
-    }
+    uint leaseEnd = lease.startTime + lease.duration;
+    uint calculationTime = block.timestamp < leaseEnd ? block.timestamp : leaseEnd;
+    uint storageDuration = calculationTime - lease.startTime;
+    uint activationTime = leaseActivationTime[_leaseId];
+    uint computeDuration = calculationTime > activationTime
+        ? calculationTime - activationTime
+        : 0;
 
     uint totalPaused = lease.pausedDuration;
 
     if (lease.paused) {
-        uint currentPause = block.timestamp - lease.pausedAt;
-        totalPaused += currentPause;
+        uint pauseEnd = calculationTime;
+        if (pauseEnd > lease.pausedAt) {
+            totalPaused += pauseEnd - lease.pausedAt;
+        }
     }
 
-    if (totalPaused > elapsed) {
-        totalPaused = elapsed;
+    if (totalPaused > computeDuration) {
+        totalPaused = computeDuration;
     }
 
-    uint activeDuration = elapsed - totalPaused;
+    uint activeDuration = computeDuration - totalPaused;
 
-    actualStorageCost = elapsed * lease.storagePricePerSecond;
+    actualStorageCost = storageDuration * lease.storagePricePerSecond;
     actualComputeCost = activeDuration * lease.computePricePerSecond;
 
     return (actualStorageCost, actualComputeCost);

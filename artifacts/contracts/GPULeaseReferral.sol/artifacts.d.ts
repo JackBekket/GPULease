@@ -15,7 +15,7 @@ export interface GPULeaseReferral$Type {
   readonly deployedLinkReferences: {};
   readonly immutableReferences: {};
   readonly inputSourceName: "project/contracts/GPULeaseReferral.sol";
-  readonly buildInfoId: "solc-0_8_31-c47b7f0c0cb163b77d03c1b7061bf5aee3097012";
+  readonly buildInfoId: "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688";
 };
 
 import "hardhat/types/artifacts";

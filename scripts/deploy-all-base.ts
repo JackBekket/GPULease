@@ -68,7 +68,7 @@ async function main() {
 
   const addressesText = [
     `# GPULeaseSC Base deployment`,
-    `# Deployed at: ${deployedAt}`,
+    `# Last updated at: ${deployedAt}`,
     ``,
     `${gpuLeaseAddress} -- GPULease main SC base address`,
     `${walletAddress} -- GPULeaseWallet base address`,
