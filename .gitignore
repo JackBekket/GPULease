@@ -19,3 +19,9 @@
 
 # Hardhat coverage reports
 /coverage
+
+# AI Slop
+.claude
+.zed
+CLAUDE.md
+AGENTS.md
