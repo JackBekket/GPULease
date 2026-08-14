@@ -1,7 +1,7 @@
 // Code generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 
-package gpulease
+package contracts
 
 import (
 	"errors"
@@ -31,7 +31,7 @@ var (
 
 // LLMFundraisingMetaData contains all meta data concerning the LLMFundraising contract.
 var LLMFundraisingMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721IncorrectOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721InsufficientApproval\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"approver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidApprover\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOperator\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidReceiver\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"ERC721InvalidSender\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721NonexistentToken\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"SafeERC20FailedOperation\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"previousGrade\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"newGrade\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalDonated\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"targetShareBps\",\"type\":\"uint256\"}],\"name\":\"BackerGradeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"}],\"name\":\"BackerRewardMinted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalRaised\",\"type\":\"uint256\"}],\"name\":\"CampaignFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalRaised\",\"type\":\"uint256\"}],\"name\":\"CampaignSucceeded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalDonated\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"}],\"name\":\"Donated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FundsTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"backerGrades\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"checkConditions\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"expired\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"reached\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"checkState\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimBackerReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deadline\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"donate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"donations\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"donorAt\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"donorInfo\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"participated\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"donatedAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetShareBps\",\"type\":\"uint256\"},{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"wasRefunded\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"rewardTokenId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"donorShareBps\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"donors\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"donorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"limit\",\"type\":\"uint256\"}],\"name\":\"donorsSlice\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"donors_\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"duration\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gpuLeaseWallet\",\"outputs\":[{\"internalType\":\"contractIGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"gradeForDonation\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"hasDonated\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_targetAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_startTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_templateId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_campaignName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"_usdc\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_gpuLeaseWallet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_participantRegistry\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_metadataRenderer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_campaignOwner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isExpired\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isTargetReached\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"metadataRenderer\",\"outputs\":[{\"internalType\":\"contractICampaignMetadataRenderer\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"limit\",\"type\":\"uint256\"}],\"name\":\"mintBackerRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"minted\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextRewardTokenId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"participantRegistry\",\"outputs\":[{\"internalType\":\"contractICampaignParticipantRegistry\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"refund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"refunded\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"rewardTokenByDonor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"rewardTokenGrades\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"state\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.CampaignState\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"targetAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"templateId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalRaised\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"usdc\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"DonationExceedsTarget\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721IncorrectOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721InsufficientApproval\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"approver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidApprover\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOperator\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidReceiver\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"ERC721InvalidSender\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721NonexistentToken\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InvalidCampaignBalance\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"SafeERC20FailedOperation\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ZeroFeeRecipient\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"previousGrade\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"newGrade\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalDonated\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"targetShareBps\",\"type\":\"uint256\"}],\"name\":\"BackerGradeUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"campaignName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"}],\"name\":\"BackerRewardMinted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalRaised\",\"type\":\"uint256\"}],\"name\":\"CampaignFailed\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"CampaignFeePaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalRaised\",\"type\":\"uint256\"}],\"name\":\"CampaignSucceeded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"totalDonated\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"}],\"name\":\"Donated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"wallet\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"FundsTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"BPS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"CROWDFUNDING_FEE_BPS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"backerGrades\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"campaignName\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"checkConditions\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"expired\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"reached\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"checkState\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"claimBackerReward\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"creatorTargetAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deadline\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"donate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"donations\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"donorAt\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"donorInfo\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"participated\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"donatedAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"targetShareBps\",\"type\":\"uint256\"},{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"grade\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"wasRefunded\",\"type\":\"bool\"},{\"internalType\":\"uint256\",\"name\":\"rewardTokenId\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"donorShareBps\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"donors\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"donorsCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"limit\",\"type\":\"uint256\"}],\"name\":\"donorsSlice\",\"outputs\":[{\"internalType\":\"address[]\",\"name\":\"donors_\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"duration\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"feeRecipient\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"gpuLeaseWallet\",\"outputs\":[{\"internalType\":\"contractIGPULeaseWallet\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"donor\",\"type\":\"address\"}],\"name\":\"gradeForDonation\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"hasDonated\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_campaignId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_creatorTargetAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_duration\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_startTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_templateId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_campaignName\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"_usdc\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_gpuLeaseWallet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_participantRegistry\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_metadataRenderer\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_campaignOwner\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isExpired\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isTargetReached\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"metadataRenderer\",\"outputs\":[{\"internalType\":\"contractICampaignMetadataRenderer\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"limit\",\"type\":\"uint256\"}],\"name\":\"mintBackerRewards\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"minted\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"nextRewardTokenId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"participantRegistry\",\"outputs\":[{\"internalType\":\"contractICampaignParticipantRegistry\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"refund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"refunded\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"rewardTokenByDonor\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"rewardTokenGrades\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.BackerGrade\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startTimestamp\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"state\",\"outputs\":[{\"internalType\":\"enumLLMFundraising.CampaignState\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"targetAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"templateId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalRaised\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"usdc\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // LLMFundraisingABI is the input ABI used to generate the binding from.
@@ -178,6 +178,68 @@ func (_LLMFundraising *LLMFundraisingTransactorRaw) Transfer(opts *bind.Transact
 // Transact invokes the (paid) contract method with params as input values.
 func (_LLMFundraising *LLMFundraisingTransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
 	return _LLMFundraising.Contract.contract.Transact(opts, method, params...)
+}
+
+// BPS is a free data retrieval call binding the contract method 0x249d39e9.
+//
+// Solidity: function BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCaller) BPS(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _LLMFundraising.contract.Call(opts, &out, "BPS")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// BPS is a free data retrieval call binding the contract method 0x249d39e9.
+//
+// Solidity: function BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingSession) BPS() (*big.Int, error) {
+	return _LLMFundraising.Contract.BPS(&_LLMFundraising.CallOpts)
+}
+
+// BPS is a free data retrieval call binding the contract method 0x249d39e9.
+//
+// Solidity: function BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCallerSession) BPS() (*big.Int, error) {
+	return _LLMFundraising.Contract.BPS(&_LLMFundraising.CallOpts)
+}
+
+// CROWDFUNDINGFEEBPS is a free data retrieval call binding the contract method 0x75eeb6ee.
+//
+// Solidity: function CROWDFUNDING_FEE_BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCaller) CROWDFUNDINGFEEBPS(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _LLMFundraising.contract.Call(opts, &out, "CROWDFUNDING_FEE_BPS")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// CROWDFUNDINGFEEBPS is a free data retrieval call binding the contract method 0x75eeb6ee.
+//
+// Solidity: function CROWDFUNDING_FEE_BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingSession) CROWDFUNDINGFEEBPS() (*big.Int, error) {
+	return _LLMFundraising.Contract.CROWDFUNDINGFEEBPS(&_LLMFundraising.CallOpts)
+}
+
+// CROWDFUNDINGFEEBPS is a free data retrieval call binding the contract method 0x75eeb6ee.
+//
+// Solidity: function CROWDFUNDING_FEE_BPS() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCallerSession) CROWDFUNDINGFEEBPS() (*big.Int, error) {
+	return _LLMFundraising.Contract.CROWDFUNDINGFEEBPS(&_LLMFundraising.CallOpts)
 }
 
 // BackerGrades is a free data retrieval call binding the contract method 0x0a19f69c.
@@ -347,6 +409,37 @@ func (_LLMFundraising *LLMFundraisingCallerSession) CheckConditions() (struct {
 	Reached bool
 }, error) {
 	return _LLMFundraising.Contract.CheckConditions(&_LLMFundraising.CallOpts)
+}
+
+// CreatorTargetAmount is a free data retrieval call binding the contract method 0x0be1f999.
+//
+// Solidity: function creatorTargetAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCaller) CreatorTargetAmount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _LLMFundraising.contract.Call(opts, &out, "creatorTargetAmount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// CreatorTargetAmount is a free data retrieval call binding the contract method 0x0be1f999.
+//
+// Solidity: function creatorTargetAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingSession) CreatorTargetAmount() (*big.Int, error) {
+	return _LLMFundraising.Contract.CreatorTargetAmount(&_LLMFundraising.CallOpts)
+}
+
+// CreatorTargetAmount is a free data retrieval call binding the contract method 0x0be1f999.
+//
+// Solidity: function creatorTargetAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCallerSession) CreatorTargetAmount() (*big.Int, error) {
+	return _LLMFundraising.Contract.CreatorTargetAmount(&_LLMFundraising.CallOpts)
 }
 
 // Deadline is a free data retrieval call binding the contract method 0x29dcb0cf.
@@ -660,6 +753,68 @@ func (_LLMFundraising *LLMFundraisingSession) Duration() (*big.Int, error) {
 // Solidity: function duration() view returns(uint256)
 func (_LLMFundraising *LLMFundraisingCallerSession) Duration() (*big.Int, error) {
 	return _LLMFundraising.Contract.Duration(&_LLMFundraising.CallOpts)
+}
+
+// FeeAmount is a free data retrieval call binding the contract method 0x69e15404.
+//
+// Solidity: function feeAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCaller) FeeAmount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _LLMFundraising.contract.Call(opts, &out, "feeAmount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// FeeAmount is a free data retrieval call binding the contract method 0x69e15404.
+//
+// Solidity: function feeAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingSession) FeeAmount() (*big.Int, error) {
+	return _LLMFundraising.Contract.FeeAmount(&_LLMFundraising.CallOpts)
+}
+
+// FeeAmount is a free data retrieval call binding the contract method 0x69e15404.
+//
+// Solidity: function feeAmount() view returns(uint256)
+func (_LLMFundraising *LLMFundraisingCallerSession) FeeAmount() (*big.Int, error) {
+	return _LLMFundraising.Contract.FeeAmount(&_LLMFundraising.CallOpts)
+}
+
+// FeeRecipient is a free data retrieval call binding the contract method 0x46904840.
+//
+// Solidity: function feeRecipient() view returns(address)
+func (_LLMFundraising *LLMFundraisingCaller) FeeRecipient(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _LLMFundraising.contract.Call(opts, &out, "feeRecipient")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// FeeRecipient is a free data retrieval call binding the contract method 0x46904840.
+//
+// Solidity: function feeRecipient() view returns(address)
+func (_LLMFundraising *LLMFundraisingSession) FeeRecipient() (common.Address, error) {
+	return _LLMFundraising.Contract.FeeRecipient(&_LLMFundraising.CallOpts)
+}
+
+// FeeRecipient is a free data retrieval call binding the contract method 0x46904840.
+//
+// Solidity: function feeRecipient() view returns(address)
+func (_LLMFundraising *LLMFundraisingCallerSession) FeeRecipient() (common.Address, error) {
+	return _LLMFundraising.Contract.FeeRecipient(&_LLMFundraising.CallOpts)
 }
 
 // GetApproved is a free data retrieval call binding the contract method 0x081812fc.
@@ -1554,23 +1709,23 @@ func (_LLMFundraising *LLMFundraisingTransactorSession) Donate(amount *big.Int) 
 
 // Initialize is a paid mutator transaction binding the contract method 0x19ae4f0d.
 //
-// Solidity: function initialize(uint256 _campaignId, uint256 _targetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
-func (_LLMFundraising *LLMFundraisingTransactor) Initialize(opts *bind.TransactOpts, _campaignId *big.Int, _targetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
-	return _LLMFundraising.contract.Transact(opts, "initialize", _campaignId, _targetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
+// Solidity: function initialize(uint256 _campaignId, uint256 _creatorTargetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
+func (_LLMFundraising *LLMFundraisingTransactor) Initialize(opts *bind.TransactOpts, _campaignId *big.Int, _creatorTargetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
+	return _LLMFundraising.contract.Transact(opts, "initialize", _campaignId, _creatorTargetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
 }
 
 // Initialize is a paid mutator transaction binding the contract method 0x19ae4f0d.
 //
-// Solidity: function initialize(uint256 _campaignId, uint256 _targetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
-func (_LLMFundraising *LLMFundraisingSession) Initialize(_campaignId *big.Int, _targetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
-	return _LLMFundraising.Contract.Initialize(&_LLMFundraising.TransactOpts, _campaignId, _targetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
+// Solidity: function initialize(uint256 _campaignId, uint256 _creatorTargetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
+func (_LLMFundraising *LLMFundraisingSession) Initialize(_campaignId *big.Int, _creatorTargetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
+	return _LLMFundraising.Contract.Initialize(&_LLMFundraising.TransactOpts, _campaignId, _creatorTargetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
 }
 
 // Initialize is a paid mutator transaction binding the contract method 0x19ae4f0d.
 //
-// Solidity: function initialize(uint256 _campaignId, uint256 _targetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
-func (_LLMFundraising *LLMFundraisingTransactorSession) Initialize(_campaignId *big.Int, _targetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
-	return _LLMFundraising.Contract.Initialize(&_LLMFundraising.TransactOpts, _campaignId, _targetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
+// Solidity: function initialize(uint256 _campaignId, uint256 _creatorTargetAmount, uint256 _duration, uint256 _startTimestamp, uint256 _templateId, string _campaignName, address _usdc, address _gpuLeaseWallet, address _participantRegistry, address _metadataRenderer, address _campaignOwner) returns()
+func (_LLMFundraising *LLMFundraisingTransactorSession) Initialize(_campaignId *big.Int, _creatorTargetAmount *big.Int, _duration *big.Int, _startTimestamp *big.Int, _templateId *big.Int, _campaignName string, _usdc common.Address, _gpuLeaseWallet common.Address, _participantRegistry common.Address, _metadataRenderer common.Address, _campaignOwner common.Address) (*types.Transaction, error) {
+	return _LLMFundraising.Contract.Initialize(&_LLMFundraising.TransactOpts, _campaignId, _creatorTargetAmount, _duration, _startTimestamp, _templateId, _campaignName, _usdc, _gpuLeaseWallet, _participantRegistry, _metadataRenderer, _campaignOwner)
 }
 
 // MintBackerRewards is a paid mutator transaction binding the contract method 0x10641782.
@@ -2488,6 +2643,151 @@ func (_LLMFundraising *LLMFundraisingFilterer) WatchCampaignFailed(opts *bind.Wa
 func (_LLMFundraising *LLMFundraisingFilterer) ParseCampaignFailed(log types.Log) (*LLMFundraisingCampaignFailed, error) {
 	event := new(LLMFundraisingCampaignFailed)
 	if err := _LLMFundraising.contract.UnpackLog(event, "CampaignFailed", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// LLMFundraisingCampaignFeePaidIterator is returned from FilterCampaignFeePaid and is used to iterate over the raw logs and unpacked data for CampaignFeePaid events raised by the LLMFundraising contract.
+type LLMFundraisingCampaignFeePaidIterator struct {
+	Event *LLMFundraisingCampaignFeePaid // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *LLMFundraisingCampaignFeePaidIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(LLMFundraisingCampaignFeePaid)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(LLMFundraisingCampaignFeePaid)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *LLMFundraisingCampaignFeePaidIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *LLMFundraisingCampaignFeePaidIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// LLMFundraisingCampaignFeePaid represents a CampaignFeePaid event raised by the LLMFundraising contract.
+type LLMFundraisingCampaignFeePaid struct {
+	Recipient common.Address
+	Amount    *big.Int
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterCampaignFeePaid is a free log retrieval operation binding the contract event 0xd2b233a0d293ac6bb49e278677c03818e9cd5a2814c7716424fa8fc9691aa1b8.
+//
+// Solidity: event CampaignFeePaid(address indexed recipient, uint256 amount)
+func (_LLMFundraising *LLMFundraisingFilterer) FilterCampaignFeePaid(opts *bind.FilterOpts, recipient []common.Address) (*LLMFundraisingCampaignFeePaidIterator, error) {
+
+	var recipientRule []interface{}
+	for _, recipientItem := range recipient {
+		recipientRule = append(recipientRule, recipientItem)
+	}
+
+	logs, sub, err := _LLMFundraising.contract.FilterLogs(opts, "CampaignFeePaid", recipientRule)
+	if err != nil {
+		return nil, err
+	}
+	return &LLMFundraisingCampaignFeePaidIterator{contract: _LLMFundraising.contract, event: "CampaignFeePaid", logs: logs, sub: sub}, nil
+}
+
+// WatchCampaignFeePaid is a free log subscription operation binding the contract event 0xd2b233a0d293ac6bb49e278677c03818e9cd5a2814c7716424fa8fc9691aa1b8.
+//
+// Solidity: event CampaignFeePaid(address indexed recipient, uint256 amount)
+func (_LLMFundraising *LLMFundraisingFilterer) WatchCampaignFeePaid(opts *bind.WatchOpts, sink chan<- *LLMFundraisingCampaignFeePaid, recipient []common.Address) (event.Subscription, error) {
+
+	var recipientRule []interface{}
+	for _, recipientItem := range recipient {
+		recipientRule = append(recipientRule, recipientItem)
+	}
+
+	logs, sub, err := _LLMFundraising.contract.WatchLogs(opts, "CampaignFeePaid", recipientRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(LLMFundraisingCampaignFeePaid)
+				if err := _LLMFundraising.contract.UnpackLog(event, "CampaignFeePaid", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseCampaignFeePaid is a log parse operation binding the contract event 0xd2b233a0d293ac6bb49e278677c03818e9cd5a2814c7716424fa8fc9691aa1b8.
+//
+// Solidity: event CampaignFeePaid(address indexed recipient, uint256 amount)
+func (_LLMFundraising *LLMFundraisingFilterer) ParseCampaignFeePaid(log types.Log) (*LLMFundraisingCampaignFeePaid, error) {
+	event := new(LLMFundraisingCampaignFeePaid)
+	if err := _LLMFundraising.contract.UnpackLog(event, "CampaignFeePaid", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

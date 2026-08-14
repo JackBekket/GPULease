@@ -8,11 +8,12 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 interface IGPULeaseWallet {
-    function deposit(uint256 amount) external;
+    function depositFor(address beneficiary, uint256 amount) external;
 }
 
 interface ICampaignParticipantRegistry {
     function registerParticipant(address participant) external;
+    function feeRecipient() external view returns (address);
 }
 
 interface ICampaignMetadataRenderer {
@@ -26,11 +27,16 @@ interface ICampaignMetadataRenderer {
 contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     using SafeERC20 for IERC20;
 
+    error ZeroFeeRecipient();
+    error DonationExceedsTarget();
+    error InvalidCampaignBalance();
+
     // Backer tiers are calculated in basis points (bps) of the campaign target.
     // BPS is 100%, so 100 bps = 1%, 500 bps = 5%, and 1,500 bps = 15%.
     // A donor's total donations are divided by targetAmount to find their donated
     // percentage, then compared with these minimum thresholds to assign a grade.
-    uint256 private constant BPS = 10_000;
+    uint256 public constant BPS = 10_000;
+    uint256 public constant CROWDFUNDING_FEE_BPS = 500;
     uint256 private constant CONTRIBUTOR_MIN_BPS = 100;
     uint256 private constant FOUNDING_BACKER_MIN_BPS = 500;
     uint256 private constant LEAD_BACKER_MIN_BPS = 1_500;
@@ -50,6 +56,8 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     }
 
     uint256 public campaignId;
+    uint256 public creatorTargetAmount;
+    uint256 public feeAmount;
     uint256 public targetAmount;
     uint256 public startTimestamp;
     uint256 public duration;
@@ -60,6 +68,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     IGPULeaseWallet public gpuLeaseWallet;
     ICampaignParticipantRegistry public participantRegistry;
     ICampaignMetadataRenderer public metadataRenderer;
+    address public feeRecipient;
 
     CampaignState public state;
     uint256 public totalRaised;
@@ -91,6 +100,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
     event CampaignFailed(uint256 totalRaised);
     event Refunded(address indexed donor, uint256 amount);
     event FundsTransferred(address indexed wallet, uint256 amount);
+    event CampaignFeePaid(address indexed recipient, uint256 amount);
     event BackerRewardMinted(
         address indexed donor,
         uint256 indexed tokenId,
@@ -112,7 +122,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
 
     function initialize(
         uint256 _campaignId,
-        uint256 _targetAmount,
+        uint256 _creatorTargetAmount,
         uint256 _duration,
         uint256 _startTimestamp,
         uint256 _templateId,
@@ -130,12 +140,14 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         require(_gpuLeaseWallet != address(0), "zero wallet");
         require(_participantRegistry != address(0), "zero registry");
         require(_metadataRenderer != address(0), "zero renderer");
-        require(_targetAmount > 0, "zero target");
+        require(_creatorTargetAmount > 0, "zero target");
         require(_duration > 0, "zero duration");
         require(bytes(_campaignName).length > 0, "empty name");
 
         campaignId = _campaignId;
-        targetAmount = _targetAmount;
+        creatorTargetAmount = _creatorTargetAmount;
+        feeAmount = (_creatorTargetAmount * CROWDFUNDING_FEE_BPS) / BPS;
+        targetAmount = _creatorTargetAmount + feeAmount;
         duration = _duration;
         startTimestamp = _startTimestamp;
         templateId = _templateId;
@@ -147,6 +159,9 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
             _participantRegistry
         );
         metadataRenderer = ICampaignMetadataRenderer(_metadataRenderer);
+        feeRecipient = ICampaignParticipantRegistry(_participantRegistry)
+            .feeRecipient();
+        if (feeRecipient == address(0)) revert ZeroFeeRecipient();
 
         state = CampaignState.ACTIVE;
         nextRewardTokenId = 1;
@@ -280,6 +295,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         require(block.timestamp >= startTimestamp, "not started");
         require(!isExpired(), "expired");
         require(amount > 0, "zero amount");
+        if (amount > targetAmount - totalRaised) revert DonationExceedsTarget();
 
         usdc.safeTransferFrom(msg.sender, address(this), amount);
 
@@ -332,11 +348,15 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
         require(state == CampaignState.ACTIVE, "not active");
 
         uint256 balance = usdc.balanceOf(address(this));
-        require(balance >= targetAmount, "insufficient funds");
+        if (balance != targetAmount) revert InvalidCampaignBalance();
 
         state = CampaignState.SUCCESS;
 
-        _transferToWallet(balance);
+        _transferToWallet(creatorTargetAmount);
+        if (feeAmount > 0) {
+            usdc.safeTransfer(feeRecipient, feeAmount);
+            emit CampaignFeePaid(feeRecipient, feeAmount);
+        }
 
         emit CampaignSucceeded(balance);
     }
@@ -354,7 +374,7 @@ contract LLMFundraising is Ownable, ERC721, ReentrancyGuard {
 
         usdc.forceApprove(address(gpuLeaseWallet), amount);
 
-        gpuLeaseWallet.deposit(amount);
+        gpuLeaseWallet.depositFor(owner(), amount);
 
         emit FundsTransferred(address(gpuLeaseWallet), amount);
     }

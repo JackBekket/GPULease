@@ -1,14 +1,23 @@
 # GPULeaseSC Base deployment
-# Last updated at: 2026-08-12T11:45:55Z
+# Last updated at: 2026-08-14T11:10:21Z
+# Latest campaign factory deploy tx: 0x6c3a4cc43bee7da7a8648d399945729717e4ecb4e52c5a434edcab6b0fcb36f3 (block 49958237)
 
-0xCCD732200366886e04F508D12F561ee94Eb03110 -- GPULease main SC base address (updated 2026-08-12T11:45:55Z)
-0xB6E47Eb260160BD6A18A246CC0b27D9240706401 -- previous GPULease base address, retired 2026-08-12T11:45:55Z
-0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340 -- GPULeaseWallet base address
+0x1350d6D31dc4c8B1314aF51d99e61cF0E3da938f -- GPULease main SC base address (updated 2026-08-13T13:50:35Z)
+0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2 -- GPULeaseWallet base address with bonus balances (updated 2026-08-13T13:50:35Z)
 0x2695d98bF8b233539f5a1Fb823298AA055f2a143 -- GPULeaseReferral base address
-0xCACcBAE9C50668d7061702E8077E5f04712e38d6 -- LLMFundraisingFactory base address
-0x804EB1885B23876322199a988DF6E19c9F8e547e -- LLMFundraising implementation base address
+0x40C99f349A8cB30d452c9cdc7808221D57427851 -- LLMFundraisingFactory with 5% fee base address (updated 2026-08-14T11:10:21Z)
+0x0b085C432C4dDAC1C8EF2D4b3C259F5ace69cbd4 -- LLMFundraising implementation with 5% fee base address (updated 2026-08-14T11:10:21Z)
 0x48a862d4ca9aE88699251B38097064B8967F405c -- CampaignMetadataRenderer base address
 0xcacA2090Ae57d990A1A5CbDC43d8128864380511 -- Verifier base address
+
+# Legacy stack retained for lease #9 and existing campaign
+0xCCD732200366886e04F508D12F561ee94Eb03110 -- legacy GPULease base address
+0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340 -- legacy GPULeaseWallet base address (contains 2 USDC at migration preflight)
+0xCACcBAE9C50668d7061702E8077E5f04712e38d6 -- legacy LLMFundraisingFactory base address
+0x804EB1885B23876322199a988DF6E19c9F8e547e -- legacy LLMFundraising implementation base address
+0x85e1327AAE055c4AC7DE4ec9beF0EEAad213c9D3 -- legacy no-fee LLMFundraisingFactory base address
+0xE7A26137951CCf902ED8491f2E8fa8eB790820C9 -- legacy no-fee LLMFundraising implementation base address
+0xB6E47Eb260160BD6A18A246CC0b27D9240706401 -- older retired GPULease base address
 
 0x833589fcd6edb6e08f4c7c32d4f71b54bda02913 -- USDC on base
 0x80CFfF5C710E3e21050AaB272201B574a53A66B3 -- treasury on base

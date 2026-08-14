@@ -19,6 +19,7 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
     IERC20 public immutable usdc;
     IGPULeaseWallet public immutable gpuLeaseWallet;
     address public immutable metadataRenderer;
+    address public immutable feeRecipient;
     address public immutable campaignImplementation;
 
     address[] public campaigns;
@@ -46,15 +47,18 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
     constructor(
         address _usdc,
         address _gpuLeaseWallet,
-        address _metadataRenderer
+        address _metadataRenderer,
+        address _feeRecipient
     ) Ownable(msg.sender) {
         require(_usdc != address(0), "zero usdc");
         require(_gpuLeaseWallet != address(0), "zero wallet");
         require(_metadataRenderer != address(0), "zero renderer");
+        require(_feeRecipient != address(0), "zero fee recipient");
 
         usdc = IERC20(_usdc);
         gpuLeaseWallet = IGPULeaseWallet(_gpuLeaseWallet);
         metadataRenderer = _metadataRenderer;
+        feeRecipient = _feeRecipient;
 
         campaignImplementation = address(new LLMFundraising());
     }
@@ -93,7 +97,7 @@ contract LLMFundraisingFactory is Ownable, ICampaignParticipantRegistry {
             campaignId,
             campaign,
             msg.sender,
-            targetAmount,
+            LLMFundraising(campaign).targetAmount(),
             startTimestamp,
             duration,
             templateId,

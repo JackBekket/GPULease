@@ -1,8 +1,9 @@
 # Обзор системы GPULease
 
-Актуальный Base `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
-(обновлен 2026-08-12T11:45:55Z). Постоянный `GPULeaseWallet`:
-`0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`.
+Актуальный deployment обновлен 2026-08-14T11:10:21Z. Base `GPULease`:
+`0x1350d6D31dc4c8B1314aF51d99e61cF0E3da938f`, bonus wallet:
+`0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2`, fee-enabled CampaignFactory:
+`0x40C99f349A8cB30d452c9cdc7808221D57427851`.
 
 Этот документ описывает текущую архитектуру GPULease, денежные потоки, модель обновлений и публичные/внешние функции контрактов.
 
@@ -29,7 +30,7 @@ Owner / backend
 
 ## Модель Обновлений
 
-`GPULeaseWallet` рассчитан на долгую жизнь. Он хранит токены и балансы, а также предоставляет manager-only функции для учета.
+`GPULeaseWallet` хранит токены и балансы, а также предоставляет manager-only функции для учета.
 
 Чтобы заменить `GPULease`:
 
@@ -37,9 +38,9 @@ Owner / backend
 2. Вызвать `wallet.setLeaseManager(newGPULease)`.
 3. При необходимости вызвать `newGPULease.setReferralManager(existingOrNewReferral)`.
 
-Балансы пользователей остаются в `GPULeaseWallet`.
+Балансы пользователей остаются в этом `GPULeaseWallet`.
 
-Важное ограничение: активные аренды и `frozenFunds` живут в конкретном экземпляре `GPULease`. Заменять `GPULease` безопаснее, когда нет активных аренд, либо нужно заранее добавить явный механизм миграции активных lease.
+Важное ограничение: wallet поддерживает только один `leaseManager`, а активные аренды и `frozenFunds` живут в конкретном `GPULease`. При активных арендах нужен параллельный новый wallet/lease стек либо заранее реализованная миграция. Именно параллельная схема применена в текущем Base deployment.
 
 Чтобы заменить реферальную логику:
 
@@ -57,7 +58,7 @@ Owner / backend
 Назначение:
 
 - Хранит ERC20-токен `credit`.
-- Хранит пользовательские балансы в `balances`.
+- Хранит выводимые балансы в `balances` и невыводимые бонусы в `bonusBalances`.
 - Позволяет обычным пользователям напрямую делать deposit и withdraw.
 - Позволяет текущему `leaseManager` менять балансы при расчетах по арендам.
 
@@ -66,12 +67,19 @@ Owner / backend
 - `credit`: ERC20-токен для платежей.
 - `leaseManager`: авторизованный lease-контракт.
 - `balances[user]`: внутренний баланс пользователя.
+- `bonusBalances[user]`: бонусный баланс, доступный только для аренды.
+- `bonusReserve`: обеспеченный USDC резерв для выдачи бонусов.
 
 События:
 
 - `Deposit(user, amount)`
 - `Withdraw(user, amount)`
 - `LeaseManagerUpdated(previousManager, newManager)`
+- `BonusPoolFunded(funder, amount)`
+- `BonusGranted(user, amount)`
+- `BonusRevoked(user, amount)`
+- `LeaseBalanceDebited(user, cashAmount, bonusAmount)`
+- `LeaseBalanceRefunded(user, cashAmount, bonusAmount)`
 
 Функции:
 
@@ -92,11 +100,23 @@ Owner / backend
   - Полезно для кампаний или backend-потоков, где нужно пополнить баланс другого пользователя.
 
 - `withdraw(uint256 amount)`
-  - Списывает внутренний баланс caller.
+  - Списывает только выводимый баланс caller; бонус вывести нельзя.
   - Переводит токены из кошелька caller.
 
 - `userBalance(address user) view returns (uint256)`
-  - Возвращает внутренний баланс пользователя.
+  - Возвращает сумму выводимого и бонусного балансов.
+
+- `withdrawableBalance`, `bonusBalance`, `spendableBalance`
+  - Возвращают раздельные и суммарный балансы.
+
+- `fundBonusPool`, `grantBonus`, `grantBonuses`, `revokeBonus`
+  - Управляют обеспеченным USDC бонусным резервом и бонусами пользователей.
+
+- `debitForLease(address user, uint256 amount) onlyLeaseManager`
+  - Расходует бонусы раньше обычного баланса и возвращает обе части.
+
+- `refundLeaseBalance(address user, uint256 cashAmount, uint256 bonusAmount)`
+  - Возвращает неиспользованный остаток в исходные типы баланса.
 
 - `debitBalance(address user, uint256 amount) onlyLeaseManager`
   - Списывает внутренний баланс без вывода токенов наружу.
@@ -309,22 +329,23 @@ provider = 930
 - `contracts/CampaignFactory.sol`
 - `contracts/CampaignMetadataRenderer.sol`
 
-Кампании сейчас используют wallet-интерфейс:
+Кампании используют wallet-интерфейс:
 
 ```solidity
 interface IGPULeaseWallet {
-    function deposit(uint256 amount) external;
+    function depositFor(address beneficiary, uint256 amount) external;
 }
 ```
 
 Когда кампания успешно завершается:
 
-1. Campaign делает approve на `GPULeaseWallet`.
-2. Campaign вызывает `gpuLeaseWallet.deposit(amount)`.
-3. `GPULeaseWallet` переводит токены в себя.
-4. Внутренний баланс начисляется на адрес campaign-контракта.
+1. К введённой creator-сумме добавляется фиксированная комиссия 5%; для 100 USDC отображаемая цель равна 105 USDC.
+2. Campaign делает approve чистой creator-суммы на `GPULeaseWallet`.
+3. Campaign вызывает `gpuLeaseWallet.depositFor(owner(), creatorTargetAmount)`.
+4. Выводимый wallet-баланс начисляется владельцу campaign.
+5. `feeAmount` переводится напрямую на immutable `feeRecipient` factory.
 
-Если средства должны начисляться owner кампании или другому пользователю, интеграцию кампании стоит перевести на `GPULeaseWallet.depositFor(beneficiary, amount)`.
+Комиссия взимается только при `SUCCESS`. При `FAILED` donors возвращают полные donations. Перевыполнение gross target запрещено, поэтому creator получает ровно запрошенную сумму, а treasury — ровно 5% сверху.
 
 Metadata для reward NFT рендерится через `CampaignMetadataRenderer`. `tokenURI()` кампании возвращает base64 JSON с:
 
@@ -359,8 +380,9 @@ Metadata для reward NFT рендерится через `CampaignMetadataRend
 
 - Donors отправляют USDC через `donate`.
 - Donations учитываются, grade donor обновляется.
-- Когда target достигнут, состояние кампании становится `SUCCESS`.
-- Успешная кампания переводит средства в `GPULeaseWallet.deposit`.
+- `creatorTargetAmount` — чистая сумма creator, `feeAmount` — 5%, `targetAmount` — их отображаемая сумма.
+- Когда gross target достигнут, состояние кампании становится `SUCCESS`.
+- Успешная кампания начисляет creator-сумму owner через `GPULeaseWallet.depositFor` и отправляет комиссию treasury.
 - Failed campaign позволяет donors сделать refund.
 - Donors успешной кампании могут mint backer reward NFT.
 
@@ -368,7 +390,7 @@ Metadata для reward NFT рендерится через `CampaignMetadataRend
 
 Основные public/external функции:
 
-- `createCampaign(targetAmount, duration, startTimestamp, templateId, campaignName)`
+- `createCampaign(targetAmount, duration, startTimestamp, templateId, campaignName)`; входной `targetAmount` — чистая creator-сумма
 - `campaignsCount()`
 - `campaignsByCreator(address creator)`
 - `registerParticipant(address participant)`
@@ -391,6 +413,7 @@ Metadata для reward NFT рендерится через `CampaignMetadataRend
 - `usdc`
 - `gpuLeaseWallet`
 - `metadataRenderer`
+- `feeRecipient`
 
 ### CampaignMetadataRenderer
 

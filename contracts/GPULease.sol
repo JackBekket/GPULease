@@ -63,6 +63,8 @@ contract GPULease is Ownable {
     mapping(address => uint) public userFeePercentage;
     mapping(address => bool) public hasCustomUserFee;
     mapping(uint => uint256) public frozenFunds;
+    mapping(uint => uint256) public frozenCashFunds;
+    mapping(uint => uint256) public frozenBonusFunds;
     mapping(uint => Lease) public leases;
     mapping(uint => LeaseReferralInfo) public leaseReferralInfo;
     mapping(uint => LeaseSettlement) public leaseSettlements;
@@ -201,9 +203,11 @@ contract GPULease is Ownable {
             (referrer, referralShareBps) = _referralInfoForLease(request.user);
         }
        
-        // Deduct funds from user balance and lock them in lockedFunds mapping by leaseId
-        wallet.debitBalance(request.user, totalAmount);
+        // Spend bonuses first, then withdrawable funds, and preserve the split for refunds.
+        (uint cashUsed, uint bonusUsed) = wallet.debitForLease(request.user, totalAmount);
         frozenFunds[leaseCount] = totalAmount;
+        frozenCashFunds[leaseCount] = cashUsed;
+        frozenBonusFunds[leaseCount] = bonusUsed;
         
         leaseId = leaseCount;
         leaseCount++;
@@ -278,9 +282,15 @@ contract GPULease is Ownable {
         // Final settlement is always allowed, even if less than one day passed.
         _settleLease(_leaseId);
 
-        wallet.creditBalance(lease.user, frozenFunds[_leaseId]);
+        wallet.refundLeaseBalance(
+            lease.user,
+            frozenCashFunds[_leaseId],
+            frozenBonusFunds[_leaseId]
+        );
 
         delete frozenFunds[_leaseId];
+        delete frozenCashFunds[_leaseId];
+        delete frozenBonusFunds[_leaseId];
         
         lease.completed = true;
         lease.active = false;
@@ -377,7 +387,7 @@ contract GPULease is Ownable {
             return;
         }
 
-        frozenFunds[_leaseId] -= totalAmount;
+        _consumeFrozenFunds(_leaseId, totalAmount);
 
         LeaseReferralInfo storage referralInfo = leaseReferralInfo[_leaseId];
         if (referralAmount > 0) {
@@ -397,6 +407,18 @@ contract GPULease is Ownable {
             referralAmount,
             block.timestamp
         );
+    }
+
+
+    function _consumeFrozenFunds(uint _leaseId, uint amount) internal {
+        uint bonusAmount = amount < frozenBonusFunds[_leaseId]
+            ? amount
+            : frozenBonusFunds[_leaseId];
+        uint cashAmount = amount - bonusAmount;
+
+        frozenBonusFunds[_leaseId] -= bonusAmount;
+        frozenCashFunds[_leaseId] -= cashAmount;
+        frozenFunds[_leaseId] -= amount;
     }
 
 

@@ -2,15 +2,23 @@
 
 Короткий гайд для backend-интеграции с текущей архитектурой GPULease.
 
-Актуальный Base deployment на 2026-08-12T11:45:55Z:
+Актуальный Base deployment на 2026-08-14T11:10:21Z:
 
-- `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
-- `GPULeaseWallet`: `0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`
+- `GPULease`: `0x1350d6D31dc4c8B1314aF51d99e61cF0E3da938f`
+- `GPULeaseWallet`: `0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2`
 - `GPULeaseReferral`: `0x2695d98bF8b233539f5a1Fb823298AA055f2a143`
+- `LLMFundraisingFactory`: `0x40C99f349A8cB30d452c9cdc7808221D57427851`
+- `LLMFundraising implementation`: `0x0b085C432C4dDAC1C8EF2D4b3C259F5ace69cbd4`
 
-Предыдущий `GPULease` `0xB6E47Eb260160BD6A18A246CC0b27D9240706401`
-выведен из эксплуатации 2026-08-12T11:45:55Z. Новые аренды нужно создавать
-только на актуальном адресе.
+Legacy связка `GPULease` `0xCCD732200366886e04F508D12F561ee94Eb03110` и
+wallet `0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340` сохранена для завершения
+существующей аренды `#9`. Новые операции нужно выполнять только на актуальных
+адресах.
+
+Предыдущая no-fee factory `0x85e1327AAE055c4AC7DE4ec9beF0EEAad213c9D3`
+не должна использоваться для новых кампаний. Созданные через старые factory
+кампании остаются самостоятельными контрактами и завершаются по своей старой
+логике без комиссии.
 
 ## Что Хранить В Конфиге
 
@@ -31,11 +39,17 @@ Backend должен хранить адреса:
 - `GPULease.deposit`, `GPULease.withdraw`, `GPULease.userBalance`, `GPULease.depositFor` удалены.
 - `deposit`, `depositFor`, `withdraw`, `userBalance` теперь вызываются только на `GPULeaseWallet`.
 - `Campaign` и `CampaignFactory` теперь работают с `GPULeaseWallet`, а не с `GPULease`, для депозитов.
-- `CampaignFactory` constructor теперь принимает `metadataRenderer`.
+- `CampaignFactory` constructor принимает `metadataRenderer` и immutable `feeRecipient` для комиссии crowdfunding.
 - `CampaignFactory` теперь создает кампании через OpenZeppelin `Clones`: один `LLMFundraising` implementation деплоится при создании factory, а каждая кампания это minimal proxy + `initialize(...)`.
 - Reward NFT metadata теперь рендерится через `CampaignMetadataRenderer`.
 - NFT metadata содержит `image` как base64-encoded SVG-карточку с текстом: название кампании и уровень бэкерства.
 - Реферальная выплата теперь считается как доля от комиссии, а не отдельный процент от стоимости аренды.
+- Wallet разделяет выводимый `balances` и невыводимый `bonusBalances`.
+- При аренде бонус расходуется раньше обычного баланса.
+- Потраченный бонус превращается в обычный выводимый доход provider/treasury/referrer.
+- Неиспользованный остаток возвращается пользователю в исходном типе.
+- В crowdfunding к запрошенной creator-сумме добавляется фиксированная комиссия 5%.
+- При успехе creator получает полную запрошенную сумму в `GPULeaseWallet`, а 5% переводятся treasury.
 
 ## Пользовательские Балансы
 
@@ -71,14 +85,36 @@ await gpuLeaseWallet.connect(user).withdraw(amount);
 ### Проверить Баланс
 
 ```ts
-const balance = await gpuLeaseWallet.userBalance(userAddress);
+const spendable = await gpuLeaseWallet.spendableBalance(userAddress);
+const withdrawable = await gpuLeaseWallet.withdrawableBalance(userAddress);
+const bonus = await gpuLeaseWallet.bonusBalance(userAddress);
 ```
 
-Также есть public mapping getter:
+`userBalance(user)` возвращает spendable-сумму `withdrawable + bonus`. Public
+mapping `balances(user)` возвращает только выводимую часть.
+
+### Выдать Бонус
+
+Бонусы обеспечиваются реальными USDC. Сначала bonus treasury пополняет резерв:
 
 ```ts
-const balance = await gpuLeaseWallet.balances(userAddress);
+await usdc.approve(gpuLeaseWalletAddress, poolAmount);
+await gpuLeaseWallet.fundBonusPool(poolAmount);
 ```
+
+После этого owner распределяет резерв:
+
+```ts
+await gpuLeaseWallet.grantBonus(userAddress, bonusAmount);
+
+await gpuLeaseWallet.grantBonuses(
+  [user1, user2],
+  [amount1, amount2]
+);
+```
+
+Пользователь не может вызвать `withdraw` на bonus balance. Owner может отозвать
+только неиспользованный бонус через `revokeBonus`; он возвращается в резерв.
 
 ## Аренды
 
@@ -110,7 +146,8 @@ await gpuLease["startLease(uint256,uint256,uint256,uint256,address,address)"](
 - контракт считает максимальную стоимость аренды;
 - добавляет комиссию пользователя;
 - списывает сумму с баланса пользователя в `GPULeaseWallet`;
-- кладет сумму в `frozenFunds[leaseId]`;
+- расходует bonus balance раньше withdrawable balance;
+- сохраняет сумму в `frozenFunds`, `frozenBonusFunds` и `frozenCashFunds`;
 - фиксирует текущую комиссию пользователя;
 - фиксирует текущие referral-правила для этого lease.
 
@@ -273,7 +310,8 @@ Constructor:
 LLMFundraisingFactory(
   address usdc,
   address gpuLeaseWallet,
-  address metadataRenderer
+  address metadataRenderer,
+  address feeRecipient
 )
 ```
 
@@ -285,13 +323,19 @@ Factory внутри constructor деплоит один `LLMFundraising` implem
 
 ```ts
 await campaignFactory.createCampaign(
-  targetAmount,
+  creatorTargetAmount,
   duration,
   startTimestamp,
   templateId,
   campaignName
 );
 ```
+
+Первый аргумент — чистая сумма, которую должен получить creator. Контракт
+автоматически добавляет сверху `5%`. Например, при `creatorTargetAmount = 100
+USDC` публичный `campaign.creatorTargetAmount()` вернет `100 USDC`,
+`campaign.feeAmount()` — `5 USDC`, а отображаемый `campaign.targetAmount()` —
+`105 USDC`. Событие `CampaignCreated.targetAmount` также содержит `105 USDC`.
 
 Factory вернет/запишет campaign address:
 
@@ -311,10 +355,13 @@ await campaign.connect(donor).donate(amount);
 Когда target достигнут:
 
 - campaign становится `SUCCESS`;
-- campaign переводит собранные средства в `GPULeaseWallet.deposit`;
-- баланс начисляется на адрес campaign-контракта.
+- чистая creator-сумма переводится через `GPULeaseWallet.depositFor(owner, amount)`;
+- выводимый wallet-баланс начисляется владельцу campaign;
+- комиссия 5% переводится напрямую на `feeRecipient`/treasury;
+- donation сверх оставшейся суммы до gross target отклоняется.
 
-Если нужно начислять средства не campaign-контракту, а owner/user, нужно менять campaign integration на `GPULeaseWallet.depositFor(beneficiary, amount)`.
+Если campaign завершается как `FAILED`, комиссия не взимается: каждый donor
+может вернуть полную сумму своего donation через `refund()`.
 
 ## Reward NFT
 
@@ -388,11 +435,12 @@ data:application/json;base64,...
 - `CampaignFailed(totalRaised)`
 - `Refunded(donor, amount)`
 - `FundsTransferred(wallet, amount)`
+- `CampaignFeePaid(recipient, amount)`
 - `BackerRewardMinted(donor, tokenId, campaignName, grade)`
 
 ### CampaignFactory
 
-- `CampaignCreated(campaignId, campaign, creator, targetAmount, startTimestamp, duration, templateId, campaignName)`
+- `CampaignCreated(campaignId, campaign, creator, targetAmount, startTimestamp, duration, templateId, campaignName)`, где `targetAmount` уже включает 5%
 - `CampaignParticipantRegistered(participant, campaign)`
 
 ## Типичные Backend Flows

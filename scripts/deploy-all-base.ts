@@ -50,7 +50,8 @@ async function main() {
   const campaignFactory = await LLMFundraisingFactory.deploy(
     USDC_ADDRESS,
     walletAddress,
-    metadataRendererAddress
+    metadataRendererAddress,
+    TREASURY_ADDRESS
   );
   await campaignFactory.waitForDeployment();
   await campaignFactory.deploymentTransaction()?.wait(1);

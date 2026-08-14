@@ -1,7 +1,11 @@
 # GPULease - Ethereum GPU Leasing Platform
 
-Current Base GPULease address (updated 2026-08-12T11:45:55Z):
-`0xCCD732200366886e04F508D12F561ee94Eb03110`.
+Current Base addresses (updated 2026-08-14T11:10:21Z):
+
+- GPULease: `0x1350d6D31dc4c8B1314aF51d99e61cF0E3da938f`
+- GPULeaseWallet: `0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2`
+- CampaignFactory: `0x40C99f349A8cB30d452c9cdc7808221D57427851`
+- Campaign implementation: `0x0b085C432C4dDAC1C8EF2D4b3C259F5ace69cbd4`
 
 A smart contract for leasing GPU computing resources with flexible pricing and pause/resume functionality.
 
@@ -12,7 +16,10 @@ GPULease is a decentralized smart contract that enables users to lease GPU compu
 ## Features
 
 - **Flexible Pricing**: Separate pricing for storage and computation per second
-- **Platform Fee System**: 5% platform fee (configurable)
+- **Platform Fee System**: 10% default platform fee (configurable globally and per user)
+- **Daily Settlement**: Providers receive accrued income without waiting for lease completion
+- **Bonus USDC Balance**: Owner grants backed, non-withdrawable credits usable for leases
+- **Crowdfunding Fee**: Campaign targets include a fixed 5% fee on top; creators receive their full requested amount
 - **Pause/Resume Functionality**: Leases can be paused during execution with accurate cost calculation
 - **Lease Cancellation**: Within 5 minutes of creation
 - **Refund Mechanism**: Automatic refunds for unused time
@@ -43,19 +50,24 @@ struct Lease {
 ### Key Functions
 
 **Deposit & Withdraw**
-- `deposit(amount)`: Add tokens to your account balance
-- `withdraw(amount)`: Remove tokens from your account balance
+- `GPULeaseWallet.deposit(amount)`: Add tokens to the withdrawable balance
+- `GPULeaseWallet.withdraw(amount)`: Withdraw cash; bonuses cannot be withdrawn
+- `GPULeaseWallet.spendableBalance(user)`: Cash plus bonus available for leases
 
 **Lease Management**
 - `startLease(startTimestamp, duration, storagePricePerSecond, computePricePerSecond, provider, user)`: Start a lease; storage is billed from startTimestamp and compute from on-chain activation
-- `startLeaseWithUser(duration, storagePricePerSecond, computePricePerSecond, provider, user)`: Admin can start a lease on behalf of another user
 - `pauseLease(leaseId)`: Pause an active lease (only the user or provider can call)
 - `resumeLease(leaseId)`: Resume a paused lease (only the user or provider can call)
 - `completeLease(leaseId)`: Complete an active lease and settle payments
 - `cancelLease(leaseId)`: Cancel a lease within 5 minutes
+- `settleLease(leaseId)` / `settleLeases(leaseIds)`: Credit accrued daily income
+
+**Bonus Management (wallet owner)**
+- `fundBonusPool(amount)`: Back the bonus reserve with USDC
+- `grantBonus(user, amount)` / `grantBonuses(users, amounts)`: Grant credits
+- `revokeBonus(user, amount)`: Return unused credits to the reserve
 
 **Utility Functions**
-- `getContractBalance()`: Check contract's token balance
 - `getLeaseStatus(leaseId)`: Get detailed information about a specific lease
 
 ## Security Features
@@ -79,18 +91,20 @@ The contract emits the following events:
 
 ## Usage Flow
 
-1. **Deposit Tokens**: Users must deposit tokens to their account balance before starting leases
+1. **Fund Balance**: Users deposit USDC, receive a bonus, or use both
 2. **Start Lease**: Choose duration and pricing, then start the lease  
 3. **Pause/Resume** (Optional): During execution, pause or resume the lease
 4. **Complete/Cancellation**: Either complete the lease or cancel it within 5 minutes
 
 ## Contract Parameters
 
-- `platformFeePercentage`: Default 5% platform fee (modifiable by admin)
+- `platformFeePercentage`: Default 10% platform fee (modifiable by owner)
+- `SETTLEMENT_INTERVAL`: 1 day
 - All prices are expressed in smallest token units (wei)
 
 ## Access Control
 
-The contract uses OpenZeppelin's AccessControl with:
-- `DEFAULT_ADMIN_ROLE`: Can set platform fees and perform administrative functions
+The contracts use OpenZeppelin `Ownable` and `ReentrancyGuard`:
+- Owner: starts leases and manages fees, referrals, operators, and wallet bonuses
+- Settlement operator: can execute only daily settlements
 - Lease participants: Users and providers can manage their own leases

@@ -1,7 +1,7 @@
 // Code generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 
-package gpulease
+package gpuleasewallet
 
 import (
 	"errors"
@@ -31,7 +31,7 @@ var (
 
 // GPULeaseWalletMetaData contains all meta data concerning the GPULeaseWallet contract.
 var GPULeaseWalletMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"credit_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"SafeERC20FailedOperation\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousManager\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"LeaseManagerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Withdraw\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"credit\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"creditBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"debitBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"depositFor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"moveBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newLeaseManager\",\"type\":\"address\"}],\"name\":\"setLeaseManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"userBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"credit_\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"OwnableInvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"OwnableUnauthorizedAccount\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"SafeERC20FailedOperation\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BonusGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"funder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BonusPoolFunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BonusReserveWithdrawn\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"BonusRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Deposit\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cashAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"bonusAmount\",\"type\":\"uint256\"}],\"name\":\"LeaseBalanceDebited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cashAmount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"bonusAmount\",\"type\":\"uint256\"}],\"name\":\"LeaseBalanceRefunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousManager\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newManager\",\"type\":\"address\"}],\"name\":\"LeaseManagerUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"Withdraw\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"MAX_BONUS_BATCH_SIZE\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"balances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"bonusBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"bonusBalances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"bonusReserve\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"credit\",\"outputs\":[{\"internalType\":\"contractIERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"creditBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"debitBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"debitForLease\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"cashUsed\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bonusUsed\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"depositFor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"fundBonusPool\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"grantBonus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"users\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"amounts\",\"type\":\"uint256[]\"}],\"name\":\"grantBonuses\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"leaseManager\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"moveBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"cashAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bonusAmount\",\"type\":\"uint256\"}],\"name\":\"refundLeaseBalance\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"revokeBonus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newLeaseManager\",\"type\":\"address\"}],\"name\":\"setLeaseManager\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"spendableBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"userBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"recipient\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdrawBonusReserve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"withdrawableBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // GPULeaseWalletABI is the input ABI used to generate the binding from.
@@ -180,6 +180,37 @@ func (_GPULeaseWallet *GPULeaseWalletTransactorRaw) Transact(opts *bind.Transact
 	return _GPULeaseWallet.Contract.contract.Transact(opts, method, params...)
 }
 
+// MAXBONUSBATCHSIZE is a free data retrieval call binding the contract method 0x534b781b.
+//
+// Solidity: function MAX_BONUS_BATCH_SIZE() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) MAXBONUSBATCHSIZE(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "MAX_BONUS_BATCH_SIZE")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// MAXBONUSBATCHSIZE is a free data retrieval call binding the contract method 0x534b781b.
+//
+// Solidity: function MAX_BONUS_BATCH_SIZE() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) MAXBONUSBATCHSIZE() (*big.Int, error) {
+	return _GPULeaseWallet.Contract.MAXBONUSBATCHSIZE(&_GPULeaseWallet.CallOpts)
+}
+
+// MAXBONUSBATCHSIZE is a free data retrieval call binding the contract method 0x534b781b.
+//
+// Solidity: function MAX_BONUS_BATCH_SIZE() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) MAXBONUSBATCHSIZE() (*big.Int, error) {
+	return _GPULeaseWallet.Contract.MAXBONUSBATCHSIZE(&_GPULeaseWallet.CallOpts)
+}
+
 // Balances is a free data retrieval call binding the contract method 0x27e235e3.
 //
 // Solidity: function balances(address ) view returns(uint256)
@@ -209,6 +240,99 @@ func (_GPULeaseWallet *GPULeaseWalletSession) Balances(arg0 common.Address) (*bi
 // Solidity: function balances(address ) view returns(uint256)
 func (_GPULeaseWallet *GPULeaseWalletCallerSession) Balances(arg0 common.Address) (*big.Int, error) {
 	return _GPULeaseWallet.Contract.Balances(&_GPULeaseWallet.CallOpts, arg0)
+}
+
+// BonusBalance is a free data retrieval call binding the contract method 0xb298b771.
+//
+// Solidity: function bonusBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) BonusBalance(opts *bind.CallOpts, user common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "bonusBalance", user)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// BonusBalance is a free data retrieval call binding the contract method 0xb298b771.
+//
+// Solidity: function bonusBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) BonusBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
+// BonusBalance is a free data retrieval call binding the contract method 0xb298b771.
+//
+// Solidity: function bonusBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) BonusBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
+// BonusBalances is a free data retrieval call binding the contract method 0x0c930a4b.
+//
+// Solidity: function bonusBalances(address ) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) BonusBalances(opts *bind.CallOpts, arg0 common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "bonusBalances", arg0)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// BonusBalances is a free data retrieval call binding the contract method 0x0c930a4b.
+//
+// Solidity: function bonusBalances(address ) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) BonusBalances(arg0 common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusBalances(&_GPULeaseWallet.CallOpts, arg0)
+}
+
+// BonusBalances is a free data retrieval call binding the contract method 0x0c930a4b.
+//
+// Solidity: function bonusBalances(address ) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) BonusBalances(arg0 common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusBalances(&_GPULeaseWallet.CallOpts, arg0)
+}
+
+// BonusReserve is a free data retrieval call binding the contract method 0x4651cf61.
+//
+// Solidity: function bonusReserve() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) BonusReserve(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "bonusReserve")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// BonusReserve is a free data retrieval call binding the contract method 0x4651cf61.
+//
+// Solidity: function bonusReserve() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) BonusReserve() (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusReserve(&_GPULeaseWallet.CallOpts)
+}
+
+// BonusReserve is a free data retrieval call binding the contract method 0x4651cf61.
+//
+// Solidity: function bonusReserve() view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) BonusReserve() (*big.Int, error) {
+	return _GPULeaseWallet.Contract.BonusReserve(&_GPULeaseWallet.CallOpts)
 }
 
 // Credit is a free data retrieval call binding the contract method 0xa06d083c.
@@ -304,6 +428,37 @@ func (_GPULeaseWallet *GPULeaseWalletCallerSession) Owner() (common.Address, err
 	return _GPULeaseWallet.Contract.Owner(&_GPULeaseWallet.CallOpts)
 }
 
+// SpendableBalance is a free data retrieval call binding the contract method 0x59150554.
+//
+// Solidity: function spendableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) SpendableBalance(opts *bind.CallOpts, user common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "spendableBalance", user)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// SpendableBalance is a free data retrieval call binding the contract method 0x59150554.
+//
+// Solidity: function spendableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) SpendableBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.SpendableBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
+// SpendableBalance is a free data retrieval call binding the contract method 0x59150554.
+//
+// Solidity: function spendableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) SpendableBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.SpendableBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
 // UserBalance is a free data retrieval call binding the contract method 0x0103c92b.
 //
 // Solidity: function userBalance(address user) view returns(uint256)
@@ -333,6 +488,37 @@ func (_GPULeaseWallet *GPULeaseWalletSession) UserBalance(user common.Address) (
 // Solidity: function userBalance(address user) view returns(uint256)
 func (_GPULeaseWallet *GPULeaseWalletCallerSession) UserBalance(user common.Address) (*big.Int, error) {
 	return _GPULeaseWallet.Contract.UserBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
+// WithdrawableBalance is a free data retrieval call binding the contract method 0x02b62938.
+//
+// Solidity: function withdrawableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCaller) WithdrawableBalance(opts *bind.CallOpts, user common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _GPULeaseWallet.contract.Call(opts, &out, "withdrawableBalance", user)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// WithdrawableBalance is a free data retrieval call binding the contract method 0x02b62938.
+//
+// Solidity: function withdrawableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletSession) WithdrawableBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.WithdrawableBalance(&_GPULeaseWallet.CallOpts, user)
+}
+
+// WithdrawableBalance is a free data retrieval call binding the contract method 0x02b62938.
+//
+// Solidity: function withdrawableBalance(address user) view returns(uint256)
+func (_GPULeaseWallet *GPULeaseWalletCallerSession) WithdrawableBalance(user common.Address) (*big.Int, error) {
+	return _GPULeaseWallet.Contract.WithdrawableBalance(&_GPULeaseWallet.CallOpts, user)
 }
 
 // CreditBalance is a paid mutator transaction binding the contract method 0x5afa3f23.
@@ -377,6 +563,27 @@ func (_GPULeaseWallet *GPULeaseWalletTransactorSession) DebitBalance(user common
 	return _GPULeaseWallet.Contract.DebitBalance(&_GPULeaseWallet.TransactOpts, user, amount)
 }
 
+// DebitForLease is a paid mutator transaction binding the contract method 0x480ae8ae.
+//
+// Solidity: function debitForLease(address user, uint256 amount) returns(uint256 cashUsed, uint256 bonusUsed)
+func (_GPULeaseWallet *GPULeaseWalletTransactor) DebitForLease(opts *bind.TransactOpts, user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "debitForLease", user, amount)
+}
+
+// DebitForLease is a paid mutator transaction binding the contract method 0x480ae8ae.
+//
+// Solidity: function debitForLease(address user, uint256 amount) returns(uint256 cashUsed, uint256 bonusUsed)
+func (_GPULeaseWallet *GPULeaseWalletSession) DebitForLease(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.DebitForLease(&_GPULeaseWallet.TransactOpts, user, amount)
+}
+
+// DebitForLease is a paid mutator transaction binding the contract method 0x480ae8ae.
+//
+// Solidity: function debitForLease(address user, uint256 amount) returns(uint256 cashUsed, uint256 bonusUsed)
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) DebitForLease(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.DebitForLease(&_GPULeaseWallet.TransactOpts, user, amount)
+}
+
 // Deposit is a paid mutator transaction binding the contract method 0xb6b55f25.
 //
 // Solidity: function deposit(uint256 amount) returns()
@@ -419,6 +626,69 @@ func (_GPULeaseWallet *GPULeaseWalletTransactorSession) DepositFor(beneficiary c
 	return _GPULeaseWallet.Contract.DepositFor(&_GPULeaseWallet.TransactOpts, beneficiary, amount)
 }
 
+// FundBonusPool is a paid mutator transaction binding the contract method 0x4b7aeb21.
+//
+// Solidity: function fundBonusPool(uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) FundBonusPool(opts *bind.TransactOpts, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "fundBonusPool", amount)
+}
+
+// FundBonusPool is a paid mutator transaction binding the contract method 0x4b7aeb21.
+//
+// Solidity: function fundBonusPool(uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) FundBonusPool(amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.FundBonusPool(&_GPULeaseWallet.TransactOpts, amount)
+}
+
+// FundBonusPool is a paid mutator transaction binding the contract method 0x4b7aeb21.
+//
+// Solidity: function fundBonusPool(uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) FundBonusPool(amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.FundBonusPool(&_GPULeaseWallet.TransactOpts, amount)
+}
+
+// GrantBonus is a paid mutator transaction binding the contract method 0x968f5eef.
+//
+// Solidity: function grantBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) GrantBonus(opts *bind.TransactOpts, user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "grantBonus", user, amount)
+}
+
+// GrantBonus is a paid mutator transaction binding the contract method 0x968f5eef.
+//
+// Solidity: function grantBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) GrantBonus(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.GrantBonus(&_GPULeaseWallet.TransactOpts, user, amount)
+}
+
+// GrantBonus is a paid mutator transaction binding the contract method 0x968f5eef.
+//
+// Solidity: function grantBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) GrantBonus(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.GrantBonus(&_GPULeaseWallet.TransactOpts, user, amount)
+}
+
+// GrantBonuses is a paid mutator transaction binding the contract method 0x56fb2c52.
+//
+// Solidity: function grantBonuses(address[] users, uint256[] amounts) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) GrantBonuses(opts *bind.TransactOpts, users []common.Address, amounts []*big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "grantBonuses", users, amounts)
+}
+
+// GrantBonuses is a paid mutator transaction binding the contract method 0x56fb2c52.
+//
+// Solidity: function grantBonuses(address[] users, uint256[] amounts) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) GrantBonuses(users []common.Address, amounts []*big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.GrantBonuses(&_GPULeaseWallet.TransactOpts, users, amounts)
+}
+
+// GrantBonuses is a paid mutator transaction binding the contract method 0x56fb2c52.
+//
+// Solidity: function grantBonuses(address[] users, uint256[] amounts) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) GrantBonuses(users []common.Address, amounts []*big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.GrantBonuses(&_GPULeaseWallet.TransactOpts, users, amounts)
+}
+
 // MoveBalance is a paid mutator transaction binding the contract method 0xd1b8631d.
 //
 // Solidity: function moveBalance(address from, address to) returns(uint256 amount)
@@ -440,6 +710,27 @@ func (_GPULeaseWallet *GPULeaseWalletTransactorSession) MoveBalance(from common.
 	return _GPULeaseWallet.Contract.MoveBalance(&_GPULeaseWallet.TransactOpts, from, to)
 }
 
+// RefundLeaseBalance is a paid mutator transaction binding the contract method 0x5ca2c1ca.
+//
+// Solidity: function refundLeaseBalance(address user, uint256 cashAmount, uint256 bonusAmount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) RefundLeaseBalance(opts *bind.TransactOpts, user common.Address, cashAmount *big.Int, bonusAmount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "refundLeaseBalance", user, cashAmount, bonusAmount)
+}
+
+// RefundLeaseBalance is a paid mutator transaction binding the contract method 0x5ca2c1ca.
+//
+// Solidity: function refundLeaseBalance(address user, uint256 cashAmount, uint256 bonusAmount) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) RefundLeaseBalance(user common.Address, cashAmount *big.Int, bonusAmount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.RefundLeaseBalance(&_GPULeaseWallet.TransactOpts, user, cashAmount, bonusAmount)
+}
+
+// RefundLeaseBalance is a paid mutator transaction binding the contract method 0x5ca2c1ca.
+//
+// Solidity: function refundLeaseBalance(address user, uint256 cashAmount, uint256 bonusAmount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) RefundLeaseBalance(user common.Address, cashAmount *big.Int, bonusAmount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.RefundLeaseBalance(&_GPULeaseWallet.TransactOpts, user, cashAmount, bonusAmount)
+}
+
 // RenounceOwnership is a paid mutator transaction binding the contract method 0x715018a6.
 //
 // Solidity: function renounceOwnership() returns()
@@ -459,6 +750,27 @@ func (_GPULeaseWallet *GPULeaseWalletSession) RenounceOwnership() (*types.Transa
 // Solidity: function renounceOwnership() returns()
 func (_GPULeaseWallet *GPULeaseWalletTransactorSession) RenounceOwnership() (*types.Transaction, error) {
 	return _GPULeaseWallet.Contract.RenounceOwnership(&_GPULeaseWallet.TransactOpts)
+}
+
+// RevokeBonus is a paid mutator transaction binding the contract method 0xa45cd7c6.
+//
+// Solidity: function revokeBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) RevokeBonus(opts *bind.TransactOpts, user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "revokeBonus", user, amount)
+}
+
+// RevokeBonus is a paid mutator transaction binding the contract method 0xa45cd7c6.
+//
+// Solidity: function revokeBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) RevokeBonus(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.RevokeBonus(&_GPULeaseWallet.TransactOpts, user, amount)
+}
+
+// RevokeBonus is a paid mutator transaction binding the contract method 0xa45cd7c6.
+//
+// Solidity: function revokeBonus(address user, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) RevokeBonus(user common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.RevokeBonus(&_GPULeaseWallet.TransactOpts, user, amount)
 }
 
 // SetLeaseManager is a paid mutator transaction binding the contract method 0x1dedaca1.
@@ -522,6 +834,607 @@ func (_GPULeaseWallet *GPULeaseWalletSession) Withdraw(amount *big.Int) (*types.
 // Solidity: function withdraw(uint256 amount) returns()
 func (_GPULeaseWallet *GPULeaseWalletTransactorSession) Withdraw(amount *big.Int) (*types.Transaction, error) {
 	return _GPULeaseWallet.Contract.Withdraw(&_GPULeaseWallet.TransactOpts, amount)
+}
+
+// WithdrawBonusReserve is a paid mutator transaction binding the contract method 0x389e6548.
+//
+// Solidity: function withdrawBonusReserve(address recipient, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactor) WithdrawBonusReserve(opts *bind.TransactOpts, recipient common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.contract.Transact(opts, "withdrawBonusReserve", recipient, amount)
+}
+
+// WithdrawBonusReserve is a paid mutator transaction binding the contract method 0x389e6548.
+//
+// Solidity: function withdrawBonusReserve(address recipient, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletSession) WithdrawBonusReserve(recipient common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.WithdrawBonusReserve(&_GPULeaseWallet.TransactOpts, recipient, amount)
+}
+
+// WithdrawBonusReserve is a paid mutator transaction binding the contract method 0x389e6548.
+//
+// Solidity: function withdrawBonusReserve(address recipient, uint256 amount) returns()
+func (_GPULeaseWallet *GPULeaseWalletTransactorSession) WithdrawBonusReserve(recipient common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _GPULeaseWallet.Contract.WithdrawBonusReserve(&_GPULeaseWallet.TransactOpts, recipient, amount)
+}
+
+// GPULeaseWalletBonusGrantedIterator is returned from FilterBonusGranted and is used to iterate over the raw logs and unpacked data for BonusGranted events raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusGrantedIterator struct {
+	Event *GPULeaseWalletBonusGranted // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletBonusGrantedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletBonusGranted)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletBonusGranted)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletBonusGrantedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletBonusGrantedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletBonusGranted represents a BonusGranted event raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusGranted struct {
+	User   common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBonusGranted is a free log retrieval operation binding the contract event 0x67a2781197e80ae155d833dce436679b9851f3fa7f2d6abd4fdd32b73ff3d520.
+//
+// Solidity: event BonusGranted(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterBonusGranted(opts *bind.FilterOpts, user []common.Address) (*GPULeaseWalletBonusGrantedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "BonusGranted", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletBonusGrantedIterator{contract: _GPULeaseWallet.contract, event: "BonusGranted", logs: logs, sub: sub}, nil
+}
+
+// WatchBonusGranted is a free log subscription operation binding the contract event 0x67a2781197e80ae155d833dce436679b9851f3fa7f2d6abd4fdd32b73ff3d520.
+//
+// Solidity: event BonusGranted(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchBonusGranted(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletBonusGranted, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "BonusGranted", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletBonusGranted)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusGranted", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBonusGranted is a log parse operation binding the contract event 0x67a2781197e80ae155d833dce436679b9851f3fa7f2d6abd4fdd32b73ff3d520.
+//
+// Solidity: event BonusGranted(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseBonusGranted(log types.Log) (*GPULeaseWalletBonusGranted, error) {
+	event := new(GPULeaseWalletBonusGranted)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusGranted", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseWalletBonusPoolFundedIterator is returned from FilterBonusPoolFunded and is used to iterate over the raw logs and unpacked data for BonusPoolFunded events raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusPoolFundedIterator struct {
+	Event *GPULeaseWalletBonusPoolFunded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletBonusPoolFundedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletBonusPoolFunded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletBonusPoolFunded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletBonusPoolFundedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletBonusPoolFundedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletBonusPoolFunded represents a BonusPoolFunded event raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusPoolFunded struct {
+	Funder common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBonusPoolFunded is a free log retrieval operation binding the contract event 0x963242895f5f5e2b7e90e067fb00a04d683cf55e9553b3a7e4e2a7e8df53026c.
+//
+// Solidity: event BonusPoolFunded(address indexed funder, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterBonusPoolFunded(opts *bind.FilterOpts, funder []common.Address) (*GPULeaseWalletBonusPoolFundedIterator, error) {
+
+	var funderRule []interface{}
+	for _, funderItem := range funder {
+		funderRule = append(funderRule, funderItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "BonusPoolFunded", funderRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletBonusPoolFundedIterator{contract: _GPULeaseWallet.contract, event: "BonusPoolFunded", logs: logs, sub: sub}, nil
+}
+
+// WatchBonusPoolFunded is a free log subscription operation binding the contract event 0x963242895f5f5e2b7e90e067fb00a04d683cf55e9553b3a7e4e2a7e8df53026c.
+//
+// Solidity: event BonusPoolFunded(address indexed funder, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchBonusPoolFunded(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletBonusPoolFunded, funder []common.Address) (event.Subscription, error) {
+
+	var funderRule []interface{}
+	for _, funderItem := range funder {
+		funderRule = append(funderRule, funderItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "BonusPoolFunded", funderRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletBonusPoolFunded)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusPoolFunded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBonusPoolFunded is a log parse operation binding the contract event 0x963242895f5f5e2b7e90e067fb00a04d683cf55e9553b3a7e4e2a7e8df53026c.
+//
+// Solidity: event BonusPoolFunded(address indexed funder, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseBonusPoolFunded(log types.Log) (*GPULeaseWalletBonusPoolFunded, error) {
+	event := new(GPULeaseWalletBonusPoolFunded)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusPoolFunded", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseWalletBonusReserveWithdrawnIterator is returned from FilterBonusReserveWithdrawn and is used to iterate over the raw logs and unpacked data for BonusReserveWithdrawn events raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusReserveWithdrawnIterator struct {
+	Event *GPULeaseWalletBonusReserveWithdrawn // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletBonusReserveWithdrawnIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletBonusReserveWithdrawn)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletBonusReserveWithdrawn)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletBonusReserveWithdrawnIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletBonusReserveWithdrawnIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletBonusReserveWithdrawn represents a BonusReserveWithdrawn event raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusReserveWithdrawn struct {
+	Recipient common.Address
+	Amount    *big.Int
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterBonusReserveWithdrawn is a free log retrieval operation binding the contract event 0x9ca9c6974b76ca7d7b542c141ada1de2ec06c57cfab6fc9c0710c83a4d8e3189.
+//
+// Solidity: event BonusReserveWithdrawn(address indexed recipient, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterBonusReserveWithdrawn(opts *bind.FilterOpts, recipient []common.Address) (*GPULeaseWalletBonusReserveWithdrawnIterator, error) {
+
+	var recipientRule []interface{}
+	for _, recipientItem := range recipient {
+		recipientRule = append(recipientRule, recipientItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "BonusReserveWithdrawn", recipientRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletBonusReserveWithdrawnIterator{contract: _GPULeaseWallet.contract, event: "BonusReserveWithdrawn", logs: logs, sub: sub}, nil
+}
+
+// WatchBonusReserveWithdrawn is a free log subscription operation binding the contract event 0x9ca9c6974b76ca7d7b542c141ada1de2ec06c57cfab6fc9c0710c83a4d8e3189.
+//
+// Solidity: event BonusReserveWithdrawn(address indexed recipient, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchBonusReserveWithdrawn(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletBonusReserveWithdrawn, recipient []common.Address) (event.Subscription, error) {
+
+	var recipientRule []interface{}
+	for _, recipientItem := range recipient {
+		recipientRule = append(recipientRule, recipientItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "BonusReserveWithdrawn", recipientRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletBonusReserveWithdrawn)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusReserveWithdrawn", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBonusReserveWithdrawn is a log parse operation binding the contract event 0x9ca9c6974b76ca7d7b542c141ada1de2ec06c57cfab6fc9c0710c83a4d8e3189.
+//
+// Solidity: event BonusReserveWithdrawn(address indexed recipient, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseBonusReserveWithdrawn(log types.Log) (*GPULeaseWalletBonusReserveWithdrawn, error) {
+	event := new(GPULeaseWalletBonusReserveWithdrawn)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusReserveWithdrawn", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseWalletBonusRevokedIterator is returned from FilterBonusRevoked and is used to iterate over the raw logs and unpacked data for BonusRevoked events raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusRevokedIterator struct {
+	Event *GPULeaseWalletBonusRevoked // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletBonusRevokedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletBonusRevoked)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletBonusRevoked)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletBonusRevokedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletBonusRevokedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletBonusRevoked represents a BonusRevoked event raised by the GPULeaseWallet contract.
+type GPULeaseWalletBonusRevoked struct {
+	User   common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBonusRevoked is a free log retrieval operation binding the contract event 0xbc57032d6fabab959443c2db92f6b7bdc3dca0a03fa5b8b8a9fb221148f0a2a0.
+//
+// Solidity: event BonusRevoked(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterBonusRevoked(opts *bind.FilterOpts, user []common.Address) (*GPULeaseWalletBonusRevokedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "BonusRevoked", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletBonusRevokedIterator{contract: _GPULeaseWallet.contract, event: "BonusRevoked", logs: logs, sub: sub}, nil
+}
+
+// WatchBonusRevoked is a free log subscription operation binding the contract event 0xbc57032d6fabab959443c2db92f6b7bdc3dca0a03fa5b8b8a9fb221148f0a2a0.
+//
+// Solidity: event BonusRevoked(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchBonusRevoked(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletBonusRevoked, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "BonusRevoked", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletBonusRevoked)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusRevoked", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBonusRevoked is a log parse operation binding the contract event 0xbc57032d6fabab959443c2db92f6b7bdc3dca0a03fa5b8b8a9fb221148f0a2a0.
+//
+// Solidity: event BonusRevoked(address indexed user, uint256 amount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseBonusRevoked(log types.Log) (*GPULeaseWalletBonusRevoked, error) {
+	event := new(GPULeaseWalletBonusRevoked)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "BonusRevoked", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
 }
 
 // GPULeaseWalletDepositIterator is returned from FilterDeposit and is used to iterate over the raw logs and unpacked data for Deposit events raised by the GPULeaseWallet contract.
@@ -663,6 +1576,298 @@ func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchDeposit(opts *bind.WatchOpts
 func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseDeposit(log types.Log) (*GPULeaseWalletDeposit, error) {
 	event := new(GPULeaseWalletDeposit)
 	if err := _GPULeaseWallet.contract.UnpackLog(event, "Deposit", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseWalletLeaseBalanceDebitedIterator is returned from FilterLeaseBalanceDebited and is used to iterate over the raw logs and unpacked data for LeaseBalanceDebited events raised by the GPULeaseWallet contract.
+type GPULeaseWalletLeaseBalanceDebitedIterator struct {
+	Event *GPULeaseWalletLeaseBalanceDebited // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletLeaseBalanceDebitedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletLeaseBalanceDebited)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletLeaseBalanceDebited)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletLeaseBalanceDebitedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletLeaseBalanceDebitedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletLeaseBalanceDebited represents a LeaseBalanceDebited event raised by the GPULeaseWallet contract.
+type GPULeaseWalletLeaseBalanceDebited struct {
+	User        common.Address
+	CashAmount  *big.Int
+	BonusAmount *big.Int
+	Raw         types.Log // Blockchain specific contextual infos
+}
+
+// FilterLeaseBalanceDebited is a free log retrieval operation binding the contract event 0xa2000e7f04276f27a8a01556b7ffa1275c8953e97d21587af6c0164ddc23e83b.
+//
+// Solidity: event LeaseBalanceDebited(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterLeaseBalanceDebited(opts *bind.FilterOpts, user []common.Address) (*GPULeaseWalletLeaseBalanceDebitedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "LeaseBalanceDebited", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletLeaseBalanceDebitedIterator{contract: _GPULeaseWallet.contract, event: "LeaseBalanceDebited", logs: logs, sub: sub}, nil
+}
+
+// WatchLeaseBalanceDebited is a free log subscription operation binding the contract event 0xa2000e7f04276f27a8a01556b7ffa1275c8953e97d21587af6c0164ddc23e83b.
+//
+// Solidity: event LeaseBalanceDebited(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchLeaseBalanceDebited(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletLeaseBalanceDebited, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "LeaseBalanceDebited", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletLeaseBalanceDebited)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "LeaseBalanceDebited", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseLeaseBalanceDebited is a log parse operation binding the contract event 0xa2000e7f04276f27a8a01556b7ffa1275c8953e97d21587af6c0164ddc23e83b.
+//
+// Solidity: event LeaseBalanceDebited(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseLeaseBalanceDebited(log types.Log) (*GPULeaseWalletLeaseBalanceDebited, error) {
+	event := new(GPULeaseWalletLeaseBalanceDebited)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "LeaseBalanceDebited", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// GPULeaseWalletLeaseBalanceRefundedIterator is returned from FilterLeaseBalanceRefunded and is used to iterate over the raw logs and unpacked data for LeaseBalanceRefunded events raised by the GPULeaseWallet contract.
+type GPULeaseWalletLeaseBalanceRefundedIterator struct {
+	Event *GPULeaseWalletLeaseBalanceRefunded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *GPULeaseWalletLeaseBalanceRefundedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(GPULeaseWalletLeaseBalanceRefunded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(GPULeaseWalletLeaseBalanceRefunded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *GPULeaseWalletLeaseBalanceRefundedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *GPULeaseWalletLeaseBalanceRefundedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// GPULeaseWalletLeaseBalanceRefunded represents a LeaseBalanceRefunded event raised by the GPULeaseWallet contract.
+type GPULeaseWalletLeaseBalanceRefunded struct {
+	User        common.Address
+	CashAmount  *big.Int
+	BonusAmount *big.Int
+	Raw         types.Log // Blockchain specific contextual infos
+}
+
+// FilterLeaseBalanceRefunded is a free log retrieval operation binding the contract event 0xdc92c0e134ce4a576fe1abd1e205b2f7d69688ba167e5354f3535c48fad8ea52.
+//
+// Solidity: event LeaseBalanceRefunded(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) FilterLeaseBalanceRefunded(opts *bind.FilterOpts, user []common.Address) (*GPULeaseWalletLeaseBalanceRefundedIterator, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.FilterLogs(opts, "LeaseBalanceRefunded", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return &GPULeaseWalletLeaseBalanceRefundedIterator{contract: _GPULeaseWallet.contract, event: "LeaseBalanceRefunded", logs: logs, sub: sub}, nil
+}
+
+// WatchLeaseBalanceRefunded is a free log subscription operation binding the contract event 0xdc92c0e134ce4a576fe1abd1e205b2f7d69688ba167e5354f3535c48fad8ea52.
+//
+// Solidity: event LeaseBalanceRefunded(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) WatchLeaseBalanceRefunded(opts *bind.WatchOpts, sink chan<- *GPULeaseWalletLeaseBalanceRefunded, user []common.Address) (event.Subscription, error) {
+
+	var userRule []interface{}
+	for _, userItem := range user {
+		userRule = append(userRule, userItem)
+	}
+
+	logs, sub, err := _GPULeaseWallet.contract.WatchLogs(opts, "LeaseBalanceRefunded", userRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(GPULeaseWalletLeaseBalanceRefunded)
+				if err := _GPULeaseWallet.contract.UnpackLog(event, "LeaseBalanceRefunded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseLeaseBalanceRefunded is a log parse operation binding the contract event 0xdc92c0e134ce4a576fe1abd1e205b2f7d69688ba167e5354f3535c48fad8ea52.
+//
+// Solidity: event LeaseBalanceRefunded(address indexed user, uint256 cashAmount, uint256 bonusAmount)
+func (_GPULeaseWallet *GPULeaseWalletFilterer) ParseLeaseBalanceRefunded(log types.Log) (*GPULeaseWalletLeaseBalanceRefunded, error) {
+	event := new(GPULeaseWalletLeaseBalanceRefunded)
+	if err := _GPULeaseWallet.contract.UnpackLog(event, "LeaseBalanceRefunded", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

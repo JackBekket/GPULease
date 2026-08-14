@@ -1,8 +1,9 @@
 # GPULease System Overview
 
-Current Base `GPULease`: `0xCCD732200366886e04F508D12F561ee94Eb03110`
-(updated at 2026-08-12T11:45:55Z). Persistent `GPULeaseWallet`:
-`0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340`.
+Current deployment updated at 2026-08-14T11:10:21Z. Base `GPULease`:
+`0x1350d6D31dc4c8B1314aF51d99e61cF0E3da938f`, bonus wallet:
+`0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2`, fee-enabled CampaignFactory:
+`0x40C99f349A8cB30d452c9cdc7808221D57427851`.
 
 This document describes the current GPULease architecture, the money flows, the upgrade model, and the public/external contract functions.
 
@@ -29,7 +30,7 @@ Owner / backend
 
 ## Upgrade Model
 
-`GPULeaseWallet` is intended to be long-lived. It owns the token balances and exposes manager-only accounting functions.
+`GPULeaseWallet` owns the token balances and exposes manager-only accounting functions.
 
 To replace `GPULease`:
 
@@ -37,9 +38,9 @@ To replace `GPULease`:
 2. Call `wallet.setLeaseManager(newGPULease)`.
 3. Optional: call `newGPULease.setReferralManager(existingOrNewReferral)`.
 
-User wallet balances remain in `GPULeaseWallet`.
+User balances remain in that `GPULeaseWallet`.
 
-Important limitation: active leases and `frozenFunds` live in the specific `GPULease` instance. Replace `GPULease` only when there are no active leases, or add an explicit lease migration path before upgrading with active leases.
+Important limitation: a wallet supports only one `leaseManager`, while active leases and `frozenFunds` live in a specific `GPULease`. With active leases, deploy a parallel wallet/lease stack or implement migration first. The current Base deployment uses the parallel-stack approach.
 
 To replace referral logic:
 
@@ -57,7 +58,7 @@ File: `contracts/GPULeaseWallet.sol`
 Purpose:
 
 - Holds the ERC20 `credit` token.
-- Stores user balances in `balances`.
+- Stores withdrawable balances in `balances` and non-withdrawable credits in `bonusBalances`.
 - Allows normal users to deposit and withdraw directly.
 - Allows the current `leaseManager` to mutate balances for lease settlement.
 
@@ -66,12 +67,16 @@ State:
 - `credit`: ERC20 token used for payments.
 - `leaseManager`: authorized lease contract.
 - `balances[user]`: internal user balance.
+- `bonusBalances[user]`: non-withdrawable balance usable for leases.
+- `bonusReserve`: USDC-backed reserve available for bonus grants.
 
 Events:
 
 - `Deposit(user, amount)`
 - `Withdraw(user, amount)`
 - `LeaseManagerUpdated(previousManager, newManager)`
+- `BonusPoolFunded`, `BonusGranted`, `BonusRevoked`
+- `LeaseBalanceDebited`, `LeaseBalanceRefunded`
 
 Functions:
 
@@ -92,11 +97,20 @@ Functions:
   - This is useful for campaigns or backend flows that fund another user's balance.
 
 - `withdraw(uint256 amount)`
-  - Debits caller's internal balance.
+  - Debits only caller's withdrawable balance; bonuses cannot be withdrawn.
   - Transfers tokens from wallet to caller.
 
 - `userBalance(address user) view returns (uint256)`
-  - Returns internal balance for a user.
+  - Returns total spendable balance: withdrawable plus bonus.
+
+- `withdrawableBalance`, `bonusBalance`, `spendableBalance`
+  - Return separate and combined balances.
+
+- `fundBonusPool`, `grantBonus`, `grantBonuses`, `revokeBonus`
+  - Manage the USDC-backed bonus reserve and user bonus balances.
+
+- `debitForLease` / `refundLeaseBalance`
+  - Spend bonuses before cash and preserve the balance type for unused refunds.
 
 - `debitBalance(address user, uint256 amount) onlyLeaseManager`
   - Debits internal balance without transferring tokens out.
@@ -313,18 +327,19 @@ Campaigns currently use this wallet interface:
 
 ```solidity
 interface IGPULeaseWallet {
-    function deposit(uint256 amount) external;
+    function depositFor(address beneficiary, uint256 amount) external;
 }
 ```
 
 When a campaign succeeds:
 
-1. Campaign approves `GPULeaseWallet`.
-2. Campaign calls `gpuLeaseWallet.deposit(amount)`.
-3. `GPULeaseWallet` transfers tokens into itself.
-4. The internal wallet balance is credited to the campaign contract address.
+1. A fixed 5% fee is added on top of the creator amount; a 100 USDC request displays a 105 USDC target.
+2. Campaign approves the net creator amount for `GPULeaseWallet`.
+3. Campaign calls `gpuLeaseWallet.depositFor(owner(), creatorTargetAmount)`.
+4. The withdrawable wallet balance is credited to the campaign owner.
+5. `feeAmount` is transferred directly to the factory's immutable `feeRecipient`.
 
-If funds should instead credit a campaign owner or another user, switch the campaign integration to `GPULeaseWallet.depositFor(beneficiary, amount)`.
+The fee is charged only on `SUCCESS`. Failed campaigns refund complete donations. Gross-target overfunding is rejected, so the creator receives exactly the requested amount and treasury receives exactly 5% on top.
 
 NFT reward metadata is rendered through `CampaignMetadataRenderer`. The campaign NFT `tokenURI()` returns base64 JSON with:
 
@@ -359,8 +374,9 @@ Main flow:
 
 - Donors send USDC with `donate`.
 - Donations are tracked and donor grade is updated.
-- When target is reached, campaign state becomes `SUCCESS`.
-- Successful campaign transfers funds to `GPULeaseWallet.deposit`.
+- `creatorTargetAmount` is the creator's net amount, `feeAmount` is 5%, and `targetAmount` is their displayed gross sum.
+- When the gross target is reached, campaign state becomes `SUCCESS`.
+- A successful campaign credits the creator through `GPULeaseWallet.depositFor` and transfers the fee to treasury.
 - Failed campaign allows donors to refund.
 - Successful donors can mint backer reward NFTs.
 
@@ -368,7 +384,7 @@ Main flow:
 
 Main public/external functions:
 
-- `createCampaign(targetAmount, duration, startTimestamp, templateId, campaignName)`
+- `createCampaign(targetAmount, duration, startTimestamp, templateId, campaignName)`; input `targetAmount` is the creator's net amount
 - `campaignsCount()`
 - `campaignsByCreator(address creator)`
 - `registerParticipant(address participant)`
@@ -391,6 +407,7 @@ Constructor arguments:
 - `usdc`
 - `gpuLeaseWallet`
 - `metadataRenderer`
+- `feeRecipient`
 
 ### CampaignMetadataRenderer
 

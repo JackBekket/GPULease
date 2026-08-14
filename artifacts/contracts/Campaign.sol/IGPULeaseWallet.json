@@ -6,12 +6,17 @@
     {
       "inputs": [
         {
+          "internalType": "address",
+          "name": "beneficiary",
+          "type": "address"
+        },
+        {
           "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         }
       ],
-      "name": "deposit",
+      "name": "depositFor",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -23,5 +28,5 @@
   "deployedLinkReferences": {},
   "immutableReferences": {},
   "inputSourceName": "project/contracts/Campaign.sol",
-  "buildInfoId": "solc-0_8_31-5b93ddd68719c624f53cfeb558c8fa68d3015688"
+  "buildInfoId": "solc-0_8_31-0a9c217633069b01b5187ec2e0ed6df19bceee63"
 }

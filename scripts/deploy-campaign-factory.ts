@@ -1,7 +1,8 @@
 import { network } from "hardhat";
 
 const USDC_ADDRESS = "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913";
-const GPULEASE_WALLET_ADDRESS = "0xD4352D14Ba7928f6066dd7ec6031C7c0CCF13340";
+const GPULEASE_WALLET_ADDRESS = "0xf6d56d64938b65c6Ad58cFD447Cd1d74b39eEeF2";
+const TREASURY_ADDRESS = "0x80CFfF5C710E3e21050AaB272201B574a53A66B3";
 
 async function main() {
   const { ethers } = await network.connect();
@@ -29,7 +30,8 @@ async function main() {
   const factory = await Factory.deploy(
     USDC_ADDRESS,
     GPULEASE_WALLET_ADDRESS,
-    metadataRendererAddress
+    metadataRendererAddress,
+    TREASURY_ADDRESS
   );
   await factory.waitForDeployment();
 
@@ -39,6 +41,7 @@ async function main() {
   console.log(`  usdc: ${USDC_ADDRESS}`);
   console.log(`  gpuLeaseWallet: ${GPULEASE_WALLET_ADDRESS}`);
   console.log(`  metadataRenderer: ${metadataRendererAddress}`);
+  console.log(`  feeRecipient: ${TREASURY_ADDRESS}`);
 }
 
 main().catch((error) => {

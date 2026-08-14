@@ -16,6 +16,8 @@ describe("LLMFundraising campaigns", function () {
 
   const campaignName = "Open LLM GPU Fund";
   const targetAmount = ethers.parseEther("1000");
+  const feeAmount = ethers.parseEther("50");
+  const fundingTarget = targetAmount + feeAmount;
 
   async function deployCampaign(expectedCampaignId = 1) {
     const block = await ethers.provider.getBlock("latest");
@@ -47,6 +49,10 @@ describe("LLMFundraising campaigns", function () {
       campaignAddress
     );
     expect(await campaign.campaignId()).to.equal(expectedCampaignId);
+    expect(await campaign.creatorTargetAmount()).to.equal(targetAmount);
+    expect(await campaign.feeAmount()).to.equal(feeAmount);
+    expect(await campaign.targetAmount()).to.equal(fundingTarget);
+    expect(await campaign.feeRecipient()).to.equal(treasury.address);
     expect(await campaign.name()).to.equal("LLM Fundraising Backer");
     expect(await campaign.symbol()).to.equal("LLMBACKER");
 
@@ -74,7 +80,8 @@ describe("LLMFundraising campaigns", function () {
     factory = await Factory.deploy(
       token.target,
       wallet.target,
-      metadataRenderer.target
+      metadataRenderer.target,
+      treasury.address
     );
   });
 
@@ -109,7 +116,7 @@ describe("LLMFundraising campaigns", function () {
     const info = await campaign.donorInfo(donor.address);
     expect(info.participated).to.equal(true);
     expect(info.donatedAmount).to.equal(ethers.parseEther("125"));
-    expect(info.targetShareBps).to.equal(1250);
+    expect(info.targetShareBps).to.equal(1190);
     expect(info.grade).to.equal(3);
     expect(info.wasRefunded).to.equal(false);
     expect(info.rewardTokenId).to.equal(0);
@@ -180,10 +187,10 @@ describe("LLMFundraising campaigns", function () {
       .approve(campaignAddress, ethers.parseEther("100"));
     await token
       .connect(secondDonor)
-      .approve(campaignAddress, ethers.parseEther("900"));
+      .approve(campaignAddress, ethers.parseEther("950"));
 
     await campaign.connect(donor).donate(ethers.parseEther("100"));
-    await campaign.connect(secondDonor).donate(ethers.parseEther("900"));
+    await campaign.connect(secondDonor).donate(ethers.parseEther("950"));
 
     expect(await campaign.state()).to.equal(1);
 
@@ -228,7 +235,7 @@ describe("LLMFundraising campaigns", function () {
 
     await token
       .connect(donor)
-      .approve(campaignAddress, ethers.parseEther("1000"));
+      .approve(campaignAddress, fundingTarget);
 
     await campaign.connect(donor).donate(ethers.parseEther("100"));
 
@@ -236,11 +243,75 @@ describe("LLMFundraising campaigns", function () {
       campaign.connect(donor).claimBackerReward()
     ).to.be.revertedWith("not successful");
 
-    await campaign.connect(donor).donate(ethers.parseEther("900"));
+    await campaign.connect(donor).donate(ethers.parseEther("950"));
     await campaign.connect(donor).claimBackerReward();
 
     await expect(
       campaign.connect(donor).claimBackerReward()
     ).to.be.revertedWith("already minted");
+  });
+
+  it("adds a fixed 5 percent fee on top and pays exact proceeds and fee", async () => {
+    const campaign = await deployCampaign();
+    const campaignAddress = await campaign.getAddress();
+
+    await token.connect(donor).approve(campaignAddress, fundingTarget);
+
+    await expect(campaign.connect(donor).donate(fundingTarget))
+      .to.emit(campaign, "CampaignFeePaid")
+      .withArgs(treasury.address, feeAmount);
+
+    expect(await campaign.state()).to.equal(1);
+    expect(await campaign.totalRaised()).to.equal(fundingTarget);
+    expect(await wallet.withdrawableBalance(owner.address)).to.equal(
+      targetAmount
+    );
+    expect(await wallet.withdrawableBalance(campaignAddress)).to.equal(0);
+    expect(await token.balanceOf(treasury.address)).to.equal(feeAmount);
+    expect(await token.balanceOf(campaignAddress)).to.equal(0);
+  });
+
+  it("rejects donations above the displayed target", async () => {
+    const campaign = await deployCampaign();
+    const campaignAddress = await campaign.getAddress();
+    const excessiveAmount = fundingTarget + 1n;
+
+    await token.connect(donor).approve(campaignAddress, excessiveAmount);
+
+    await expect(
+      campaign.connect(donor).donate(excessiveAmount)
+    ).to.be.revertedWithCustomError(campaign, "DonationExceedsTarget");
+  });
+
+  it("refunds the full donation and charges no fee when a campaign fails", async () => {
+    const campaign = await deployCampaign();
+    const campaignAddress = await campaign.getAddress();
+    const donation = ethers.parseEther("100");
+    const donorBalanceBefore = await token.balanceOf(donor.address);
+
+    await token.connect(donor).approve(campaignAddress, donation);
+    await campaign.connect(donor).donate(donation);
+    await ethers.provider.send("evm_increaseTime", [7 * 24 * 60 * 60]);
+    await campaign.checkState();
+
+    expect(await campaign.state()).to.equal(2);
+    expect(await token.balanceOf(treasury.address)).to.equal(0);
+
+    await campaign.connect(donor).refund();
+    expect(await token.balanceOf(donor.address)).to.equal(donorBalanceBefore);
+    expect(await token.balanceOf(treasury.address)).to.equal(0);
+  });
+
+  it("rejects a zero fee recipient in the factory constructor", async () => {
+    const Factory = await ethers.getContractFactory("LLMFundraisingFactory");
+
+    await expect(
+      Factory.deploy(
+        token.target,
+        wallet.target,
+        metadataRenderer.target,
+        ethers.ZeroAddress
+      )
+    ).to.be.revertedWith("zero fee recipient");
   });
 });
